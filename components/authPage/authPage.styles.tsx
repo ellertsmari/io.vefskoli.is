@@ -14,7 +14,6 @@ export const Layout = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* background-image: url("login-graphic-light.svg"); */
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position-y: 25%;
@@ -25,32 +24,32 @@ export const Layout = styled.div`
 export const Wrapper = styled(motion.div)`
   display: flex;
   width: 75rem;
-  height: 65rem;
+  min-height: 65rem;
   background: #ffffff;
   box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
   border-radius: 4.2rem;
   align-items: center;
   justify-content: center;
-  /* transition: 0.1s ease-in-out; */
+  flex-direction: column;
 
   @media screen and (max-width: 1540px) {
     width: 65rem;
-    height: 55rem;
+    min-height: 55rem;
   }
 
   @media screen and (max-width: 1000px) {
     width: 55rem;
-    height: 45rem;
+    min-height: 45rem;
   }
 
   @media screen and (max-width: 600px) {
     width: 35rem;
-    height: 40rem;
+    min-height: 40rem;
   }
 
   @media screen and (max-width: 400px) {
     width: 30rem;
-    height: 35rem;
+    min-height: 35rem;
   }
 `;
 
@@ -190,7 +189,9 @@ export const InputLabel = styled.label`
   }
 `;
 
-export const LoginButton = styled.button`
+export const LoginButton = styled.a`
+    text-decoration: none;
+    text-align: center;
     width: 12rem;
     height: 4rem;
     border-radius: 10.0rem;
@@ -200,6 +201,7 @@ export const LoginButton = styled.button`
     color: white;
     font-weight: 500;
     font-size: 1.6rem;
+    line-height: 4rem;
     cursor: pointer;
     transition: 0.2s ease-in-out;
 
@@ -228,20 +230,17 @@ export const LoginButton = styled.button`
   `
 
   export const CreateAccountButton = styled.button`
-    width: 20rem;
     height: 4rem;
-    border-radius: 10.0rem;
-    background-color: #6563EB;
-    box-shadow: 1px 1px 5px 1px rgba(81, 81, 81, 0.25);
+    background-color: white;
     border-style: none;
-    color: white;
+    color: #999999;
     font-weight: 500;
     font-size: 1.6rem;
     cursor: pointer;
     transition: 0.2s ease-in-out;
 
     &:hover{
-      background-color: #3B3A96;
+      color: #3B3A96;
     }
 
   @media screen and (max-width: 1540px) {
@@ -265,8 +264,8 @@ export const LoginButton = styled.button`
 
   export const Btnwrapper = styled.div `
     display: flex;
-    justify-content: space-between;
-    text-align: right;
+    flex-direction: column-reverse;
+    align-items: end;
     margin-top: 5rem;
     width: 100%;
 

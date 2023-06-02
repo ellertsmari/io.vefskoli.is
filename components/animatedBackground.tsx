@@ -1,18 +1,6 @@
-import { useState } from "react";
-import {
-  Wrapper,
-  Layout,
-  VefskolinnLogo,
-  InputForm,
-  LogInput,
-  InputWrapper,
-  InputLabel,
-  LoginButton,
-  CreateAccountButton,
-  Btnwrapper,
-} from "../components/loginForm/loginForm.styles";
-import styled from "styled-components";
 import { motion } from "framer-motion";
+import styled from "styled-components"
+
 
 const SvgPath = styled.svg`
   width: 100%;
@@ -30,17 +18,9 @@ const SvgPath = styled.svg`
   }
 `;
 
-const login = () => {
-  const [authSwitch, setAuthSwitch] = useState(true);
-
-  const handleAuthSwitch = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setAuthSwitch(!authSwitch);
-  };
-
-  return (
-    <>
-      <SvgPath
+const AnimatedBackground = () => {
+    return (
+        <SvgPath
         width="100%"
         height="100vh"
         viewBox="180 0 1000 690"
@@ -71,8 +51,8 @@ const login = () => {
             y2="0"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#7849DD" />
-            <stop offset="1" stop-color="#D9D9D9" stop-opacity="0" />
+            <stop stopColor="#7849DD" />
+            <stop offset="1" stopColor="#D9D9D9" stopOpacity="0" />
           </motion.linearGradient>
           <motion.linearGradient
             animate={{ x1: 646.999, y1: 243.5, x2: 647.045, y2: 813 }}
@@ -84,8 +64,8 @@ const login = () => {
             y2="0"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#A3A1F3" />
-            <stop offset="1" stop-color="#D9D9D9" stop-opacity="0" />
+            <stop stopColor="#A3A1F3" />
+            <stop offset="1" stopColor="#D9D9D9" stopOpacity="0" />
           </motion.linearGradient>
           <motion.linearGradient
             animate={{ x1: 747.135, y1: 281.095, x2: 747.135, y2: 811.5 }}
@@ -97,58 +77,12 @@ const login = () => {
             y2="0"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#584CDA" />
-            <stop offset="1" stop-color="#D9D9D9" stop-opacity="0" />
+            <stop stopColor="#584CDA" />
+            <stop offset="1" stopColor="#D9D9D9" stopOpacity="0" />
           </motion.linearGradient>
         </defs>
       </SvgPath>
-      <Layout>
-        {authSwitch ? (
-          <Wrapper
-            initial={{ opacity: 0, y: 500 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <InputForm>
-              <VefskolinnLogo>{"{ Vefskolinn }"}</VefskolinnLogo>
-              <InputWrapper>
-                <InputLabel>Email</InputLabel>
-                <LogInput />
-                <InputLabel>Password</InputLabel>
-                <LogInput />
-              </InputWrapper>
-              <Btnwrapper>
-                <CreateAccountButton onClick={handleAuthSwitch}>
-                  REGISTER
-                </CreateAccountButton>
-                <LoginButton>LOGIN</LoginButton>
-              </Btnwrapper>
-            </InputForm>
-          </Wrapper>
-        ) : (
-          <Wrapper
-            initial={{ opacity: 0, y: 500 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <InputForm>
-              <VefskolinnLogo>{"{ Vefskolinn }"}</VefskolinnLogo>
-              <InputWrapper>
-                <InputLabel>Name</InputLabel>
-                <LogInput />
-                <InputLabel>Password</InputLabel>
-                <LogInput />
-              </InputWrapper>
-              <Btnwrapper>
-                <CreateAccountButton onClick={handleAuthSwitch}>
-                  REGISTER
-                </CreateAccountButton>
-                <LoginButton>LOGIN</LoginButton>
-              </Btnwrapper>
-            </InputForm>
-          </Wrapper>
-        )}
-      </Layout>
-    </>
-  );
-};
+    )
+}
 
-export default login;
+export default AnimatedBackground;
