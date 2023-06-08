@@ -5,16 +5,11 @@ import styled from "styled-components"
 const SvgPath = styled.svg`
   width: 100%;
   height: 100%;
-  /* stroke: #7849DD;
-  stroke-width: 1;
-  stroke-linecap: round;
-  stroke-linejoin: round; */
-  position: absolute;
+  position: fixed;
   z-index: -1;
 
   @media screen and (min-width: 1540px) {
-    width: calc(100% + 900px);
-    margin-left: -500px;
+    width: 100%;
   }
 `;
 
