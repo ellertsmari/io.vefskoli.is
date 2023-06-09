@@ -11,7 +11,7 @@ import {
   LoginButton,
   CreateAccountButton,
   Btnwrapper,
-} from "../components/authPage/authPage.styles";
+} from "./authpage.styles";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
 
@@ -21,7 +21,7 @@ type CredentailsData = {
   password: string;
 }
 
-const login = () => {
+const authPage = () => {
   const [authSwitch, setAuthSwitch] = useState(true);
   const [credentials, setCredentials] = useLocalStorage<CredentailsData>("credentails", {email:"", password:""});
   
@@ -118,4 +118,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default authPage;
