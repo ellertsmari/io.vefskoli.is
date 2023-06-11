@@ -6,6 +6,34 @@ interface Success {
   message: string;
 }
 
+/**
+ * @swagger
+ * /api/users/{uid}:
+ *   get:
+ *     description: Returns a user by id
+ *     responses:
+ *       200:
+ *         description: Successfully returned user
+ *       404:
+ *         description: No user with that id found
+ *   put:
+ *     description: Updates a user
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *       400:
+ *         description: Bad request - Invalid user data
+ *       404:
+ *         description: No user with that id found
+ *   delete:
+ *     description: Deletes a user
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       404:
+ *         description: No user with that id found
+ */
+
 export default async function UserByIdHandler(
   req: NextApiRequest,
   res: NextApiResponse<UserType | Error | Success>

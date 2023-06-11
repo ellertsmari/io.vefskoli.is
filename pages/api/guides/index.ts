@@ -6,6 +6,25 @@ interface Success {
   message: string;
 }
 
+/**
+ * @swagger
+ * /api/guides:
+ *   post:
+ *     description: Creates a new guide
+ *     responses:
+ *      200:
+ *       description: guide created successfully
+ *      400:
+ *       description: Bad request - Invalid guide data
+ *   get:
+ *     description: Returns all guides
+ *     responses:
+ *       200:
+ *         description: Successfully returned all guides
+ *       404:
+ *         description: No guides found
+ */
+
 export default async function guidesHandler(
   req: NextApiRequest,
   res: NextApiResponse<GuideType[] | Error | Success>

@@ -6,6 +6,43 @@ interface Success {
   message: string;
 }
 
+/**
+ * @swagger
+ * /api/guides/{uid}:
+ *   get:
+ *     description: Returns a guide by id
+ *     responses:
+ *       200:
+ *         description: Successfully returned guide
+ *       404:
+ *         description: No guide with that id found
+ *   put:
+ *     description: Updates a guide
+ *     parameters:
+ *      - name: testParam
+ *        in: query
+ *        description: This is a test parameter (required)
+ *        required: true
+ *      - name: testParam2
+ *        in: query
+ *        description: This is a test parameter 2 (optional)
+ *        required: false
+ *     responses:
+ *       200:
+ *         description: guide updated successfully
+ *       400:
+ *         description: Bad request - Invalid guide data
+ *       404:
+ *         description: No guide with that id found
+ *   delete:
+ *     description: Deletes a guide
+ *     responses:
+ *       200:
+ *         description: guide deleted successfully
+ *       404:
+ *         description: No guide with that id found
+ */
+
 export default async function guideByIdHandler(
   req: NextApiRequest,
   res: NextApiResponse<GuideType | Error | Success>
