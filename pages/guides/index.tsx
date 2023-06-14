@@ -1,5 +1,5 @@
 import AnimatedBackground from "@/components/animatedBackground"
-import { GuidesContainer, Layout } from "./guides.styles";
+import { GuidesContainer, Layout } from "../../styles/pageStyles/guides.styles";
 import Guide from "@/components/guideCard";
 
  const guides = () => {
