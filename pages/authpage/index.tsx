@@ -11,7 +11,7 @@ import {
   LoginButton,
   CreateAccountButton,
   Btnwrapper,
-} from "./authpage.styles";
+} from "../../styles/pageStyles/authpage.styles";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
 
