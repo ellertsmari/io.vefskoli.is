@@ -1,4 +1,4 @@
-import { Document, Schema, model, models } from "mongoose";
+import { Document, InferSchemaType, Schema, model, models } from "mongoose";
 
 const guideSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, required: true }, // we have Schema.Types for the schema but Types (from Mongoose) are for Mongoose documents
@@ -41,5 +41,8 @@ const guideSchema = new Schema({
   id: { type: Schema.Types.String, required: true },
 });
 
-export type GuideType = Document;
+export type GuideType = InferSchemaType<typeof guideSchema> & {
+  isLoggedIn?: boolean;
+};
+
 export const Guide = models.Guide || model<GuideType>("Guide", guideSchema);
