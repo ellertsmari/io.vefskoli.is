@@ -60,10 +60,12 @@ export default async function guideByIdHandler(
     },
     PUT: async () => {
       // TODO: Add logic to update the guide
+      const guide = await Guide.findOneAndUpdate({id:req.query.uid}, req.body);
       res.status(200).json({ message: "Guide updated successfully" });
     },
     DELETE: async () => {
       // TODO: Add logic to "delete"(disable or add to trash? to prevent accidental deletion?) the guide
+      await Guide.deleteOne({ id: req.query.uid });
       res.status(200).json({ message: "Guide deleted successfully" });
       return;
     },

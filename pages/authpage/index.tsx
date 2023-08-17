@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, MouseEventHandler } from "react";
 import useLocalStorage from "@/utils/useLocalStorage";
 import {
   Wrapper,
@@ -14,6 +14,7 @@ import {
 } from "../../styles/pageStyles/authpage.styles";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
+import login from "../api/auth/login";
 
 
 type CredentailsData = {
@@ -25,7 +26,7 @@ const authPage = () => {
   const [authSwitch, setAuthSwitch] = useState(true);
   const [credentials, setCredentials] = useLocalStorage<CredentailsData>("credentails", {email:"", password:""});
   
-  const handleAuthSwitch = (e: { preventDefault: () => void }) => {
+  const handleAuthSwitch : MouseEventHandler<HTMLButtonElement> = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setAuthSwitch(!authSwitch);
   };
@@ -34,21 +35,23 @@ const authPage = () => {
     const { name, value } = e.target;
     setCredentials({...credentials, [name]: value});
   }
+  const login: MouseEventHandler<HTMLAnchorElement> = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {};
 
   return (
     <>
       <AnimatedBackground />
       <Layout>
       <AnimatePresence>
-        {authSwitch ? (
-          <Wrapper
-            layout
-            initial={{ opacity: 0, y:500}}
-            animate={{ opacity: 1, y:0}}
-            exit={{ opacity: 0 }}
-          >
-            <InputForm>
-              <VefskolinnLogo>{"{ Vefskolinn }"}</VefskolinnLogo>
+      
+        <Wrapper
+          layout
+          initial={{ opacity: 0, y:500}}
+          animate={{ opacity: 1, y:0}}
+          exit={{ opacity: 0 }}
+        >
+          <InputForm>
+            <VefskolinnLogo>{"{ Vefskolinn }"}</VefskolinnLogo>
+            {authSwitch ? (
               <InputWrapper>
                 <InputLabel>Email</InputLabel>
                 <LogInput
@@ -64,54 +67,40 @@ const authPage = () => {
                   value={credentials.password}
                   onChange={handleInputChange}
                 />
-              </InputWrapper>
+              </InputWrapper>):(
+                 <InputWrapper>
+                 {/* Credentials  */}
+                   <InputLabel>Name</InputLabel>
+                   <LogInput />
+                   <InputLabel>Email</InputLabel>
+                   <LogInput />
+                   <InputLabel>Password</InputLabel>
+                   <LogInput />
+                   <InputLabel>Repeat Password</InputLabel>
+                 {/* About you  */}
+   
+                   <LogInput />
+                   <InputLabel>Repeat Password</InputLabel>
+                   <LogInput />
+                   <InputLabel>Repeat Password</InputLabel>
+                   <LogInput />
+                   <InputLabel>Repeat Password</InputLabel>
+                   <LogInput />
+                   <InputLabel>Repeat Password</InputLabel>
+                   <LogInput />
+                 </InputWrapper>
+              )}
               <Btnwrapper>
                 <CreateAccountButton onClick={handleAuthSwitch}>
-                  Create Account
+                  {authSwitch?"Create Account":"I already have an account"}
                 </CreateAccountButton>
-                <LoginButton href="/"> LOGIN </LoginButton>
+                <LoginButton onClick={login} href="/"> {authSwitch? "LOGIN":"REGISTER"} </LoginButton>
               </Btnwrapper>
             </InputForm>
           </Wrapper>
-        ) : (
-          <Wrapper
-            layout
-            initial={{ opacity: 0, y:500}}
-            animate={{ opacity: 1, y:0}}
-            exit={{ opacity: 0 }}
-          >
-            <InputForm>
-              <VefskolinnLogo>{"{ Vefskolinn }"}</VefskolinnLogo>
-              <InputWrapper>
-              {/* Credentials  */}
-                <InputLabel>Name</InputLabel>
-                <LogInput />
-                <InputLabel>Email</InputLabel>
-                <LogInput />
-                <InputLabel>Password</InputLabel>
-                <LogInput />
-                <InputLabel>Repeat Password</InputLabel>
-              {/* About you  */}
 
-                <LogInput />
-                <InputLabel>Repeat Password</InputLabel>
-                <LogInput />
-                <InputLabel>Repeat Password</InputLabel>
-                <LogInput />
-                <InputLabel>Repeat Password</InputLabel>
-                <LogInput />
-                <InputLabel>Repeat Password</InputLabel>
-                <LogInput />
-              </InputWrapper>
-              <Btnwrapper>
-                <CreateAccountButton onClick={handleAuthSwitch}>
-                  I already have an account
-                </CreateAccountButton>
-                <LoginButton>REGISTER</LoginButton>
-              </Btnwrapper>
-            </InputForm>
-          </Wrapper>
-        )}
+         
+       
         </AnimatePresence>
       </Layout>
     </>

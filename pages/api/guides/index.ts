@@ -34,6 +34,7 @@ export default async function guidesHandler(
   const handler = {
     POST: async () => {
       // TODO: Add logic to create a guide
+      Guide.create(req.body);
       res.status(200).json({ message: "Guide created successfully" });
     },
 
