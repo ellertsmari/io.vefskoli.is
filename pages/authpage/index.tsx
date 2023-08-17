@@ -80,13 +80,13 @@ const authPage = () => {
                  {/* About you  */}
    
                    <LogInput />
-                   <InputLabel>Repeat Password</InputLabel>
+                   <InputLabel>Background - what have you studied or worked with?</InputLabel>
                    <LogInput />
-                   <InputLabel>Repeat Password</InputLabel>
+                   <InputLabel>Near future career goals</InputLabel>
                    <LogInput />
-                   <InputLabel>Repeat Password</InputLabel>
+                   <InputLabel>Main interests</InputLabel>
                    <LogInput />
-                   <InputLabel>Repeat Password</InputLabel>
+                   <InputLabel>Favourite band/s or artist/s</InputLabel>
                    <LogInput />
                  </InputWrapper>
               )}
