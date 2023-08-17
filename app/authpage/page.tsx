@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, ChangeEvent, MouseEventHandler } from "react";
 import useLocalStorage from "@/utils/useLocalStorage";
 import {
