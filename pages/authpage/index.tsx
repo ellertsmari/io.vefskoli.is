@@ -8,10 +8,10 @@ import {
   LogInput,
   InputWrapper,
   InputLabel,
-  LoginButton,
-  CreateAccountButton,
   Btnwrapper,
 } from "../../styles/pageStyles/authpage.styles";
+import { FilledButton } from "@/components/buttons/filledButton";
+import { TextButton } from "@/components/buttons/textButton";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
 import login from "../api/auth/login";
@@ -91,10 +91,10 @@ const authPage = () => {
                  </InputWrapper>
               )}
               <Btnwrapper>
-                <CreateAccountButton onClick={handleAuthSwitch}>
+                <TextButton onClick={handleAuthSwitch}>
                   {authSwitch?"Create Account":"I already have an account"}
-                </CreateAccountButton>
-                <LoginButton onClick={login} href="/"> {authSwitch? "LOGIN":"REGISTER"} </LoginButton>
+                </TextButton>
+                <FilledButton onClick={login} href="/"> {authSwitch? "LOGIN":"REGISTER"} </FilledButton>
               </Btnwrapper>
             </InputForm>
           </Wrapper>
