@@ -1,5 +1,8 @@
+'use client';
 import styled from "styled-components";
 import Link from "next/link";
+import { GuideType } from "@/models/guide";
+import { useState } from "react";
 
 const GuideCardContainer = styled.div`
   display: flex;
@@ -60,17 +63,20 @@ const GuideCardReview = styled.div`
     color: white;
   }
 `;
-
-const GuideCard = () => {
+type GuideCardProps = {
+  guide: GuideType;
+  nr: number;
+};
+const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
   return (
     <GuideCardContainer>
         <Link style={{textDecoration:"none", color:"black" }} href="/guide0">
       <GuideCardInfo>
-        <GuideInfo>Guide 0</GuideInfo>
-        <GuideSubInfo>This is the first guide</GuideSubInfo>
+        <GuideInfo>Guide {nr+1}</GuideInfo>
+        <GuideSubInfo>{guide.Title}</GuideSubInfo>
       </GuideCardInfo>
       </Link>
-      <GuideCardReview>Guide not returned</GuideCardReview>
+      <GuideCardReview>{guide.Status}</GuideCardReview>
     </GuideCardContainer>
   );
 };
