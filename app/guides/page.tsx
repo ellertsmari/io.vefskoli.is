@@ -20,7 +20,7 @@ const guides = async () => {
         <Layout>
             <GuidesContainer> 
             {guides.map((guide:GuideType, nr:number) => (
-                <GuideCard guide={guide} nr={nr}/>
+                <GuideCard key={guide._id.toString()} guide={JSON.parse(JSON.stringify(guide))} nr={nr}/>
             ))}
             </GuidesContainer>
         </Layout>

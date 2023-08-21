@@ -18,12 +18,15 @@ export const Layout = styled.div`
     display: flex;
     /* width: 150rem;
     min-height: 95rem; */
-    width: 150rem;
+    width: 130rem;
     height: 80rem;
     background: #ffffff;
     box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5rem;
+    flex-wrap: wrap;
     border-radius: 4.2rem;
-    flex-direction: column;
     padding: 5rem;
 
     @media screen and (max-width: 1540px) {
