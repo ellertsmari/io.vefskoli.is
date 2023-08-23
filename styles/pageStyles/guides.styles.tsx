@@ -2,8 +2,19 @@
 import styled from "styled-components"
 import { motion } from "framer-motion"
 
-export const Header1 = styled.h1`
+export const Title = styled.h1`
     font-style: Poppins;
+`
+
+export const MainContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 130rem;
+    height: 80rem;
+    background: #ffffff;
+    box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
+    border-radius: 4.2rem;
+    padding: 5rem;
 `
 
 export const Layout = styled.div`
@@ -20,12 +31,6 @@ export const Layout = styled.div`
 
   export const GuidesContainer = styled(motion.div) `
     display: flex;
-    /* width: 150rem;
-    min-height: 95rem; */
-    width: 130rem;
-    height: 80rem;
-    background: #ffffff;
-    box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
     justify-content: space-evenly;
     align-items: center;
     gap: 5rem;
