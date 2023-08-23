@@ -25,35 +25,26 @@ interface Success {
  *         description: No guides found
  */
 
-export default async function guidesHandler(
+
+export const POST = async (
   req: NextApiRequest,
   res: NextApiResponse<GuideType[] | Error | Success>
-) {
-  await connectToDatabase();
-
-  const handler = {
-    POST: async () => {
-      // TODO: Add logic to create a guide
-      Guide.create(req.body);
-      res.status(200).json({ message: "Guide created successfully" });
-    },
-
-    GET: async () => {
-      const guides = await Guide.find({});
-      if (guides === null) {
-        res.status(404).json({ message: "Guide not found" });
-        return;
-      }
-      res.status(200).json(guides);
-      return;
-    },
-  };
-
-  if (req.method == "POST") {
-    await handler.POST();
-  } else if (req.method == "GET") {
-    await handler.GET();
-  } else {
-    res.status(405).json({ message: "Method not allowed" });
-  }
+) => {
+  // TODO: Add logic to create a guide
+  Guide.create(req.body);
+  res.status(200).json({ message: "Guide created successfully" });
 }
+
+export const GET = async (
+  req: NextApiRequest,
+  res: NextApiResponse<GuideType[] | Error | Success>
+) => {
+  const guides = await Guide.find({});
+  if (guides === null) {
+    res.status(404).json({ message: "Guide not found" });
+    return;
+  }
+  res.status(200).json(guides);
+  return;
+}
+
