@@ -15,12 +15,27 @@ import { TextButton, FilledButton } from "@/components/buttons";
 import { ShortInput } from "@/components/inputs";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
-import login from "../api/auth/login";
 
 type CredentailsData = {
   email: string;
   password: string;
+  repeatPassword?: string;
+  name?: string;
+  background?: string;
+  careerGoals?: string;
+  interests?: string;
+  favouriteBands?: string;
 };
+
+async function createUser(body: CredentailsData){
+  const res = await fetch("http://localhost:3000/api/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body)
+  })
+}
 
 const authPage = () => {
   const [authSwitch, setAuthSwitch] = useState(true);
@@ -43,6 +58,14 @@ const authPage = () => {
   const login: MouseEventHandler<HTMLAnchorElement> = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {};
+
+  const register: MouseEventHandler<HTMLAnchorElement> = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    if(credentials.password !== credentials.repeatPassword) return;
+    e.preventDefault();
+    createUser(credentials);
+  };
 
   return (
     <>
@@ -78,34 +101,78 @@ const authPage = () => {
                 <InputWrapper>
                   {/* Credentials  */}
                   <InputLabel>Name</InputLabel>
-                  <ShortInput />
+                  <ShortInput 
+                    required 
+                    type="name"
+                    name="name"
+                    value={credentials.name}
+                    onChange={handleInputChange}
+                  />
                   <InputLabel>Email</InputLabel>
-                  <ShortInput />
+                  <ShortInput
+                    required
+                    type="email"
+                    name="email"
+                    value={credentials.email}
+                    onChange={handleInputChange} 
+                  />
                   <InputLabel>Password</InputLabel>
-                  <ShortInput />
+                  <ShortInput
+                    required
+                    type="password"
+                    name="password"
+                    value={credentials.password}
+                    onChange={handleInputChange}
+                  />
                   <InputLabel>Repeat Password</InputLabel>
-                  <ShortInput />
+                  <ShortInput 
+                    required
+                    type="password"
+                    name="repeatPassword"
+                    value={credentials.repeatPassword}
+                    onChange={handleInputChange}
+                  />
 
                   {/* About you  */}
                   <InputLabel>
                     Background - what have you studied or worked with?
                   </InputLabel>
-                  <ShortInput />
+                  <ShortInput 
+                    type="text"
+                    name="background"
+                    value={credentials.background}
+                    onChange={handleInputChange}
+                  />
                   <InputLabel>Near future career goals</InputLabel>
-                  <ShortInput />
+                  <ShortInput 
+                    type="text"
+                    name="careerGoals"
+                    value={credentials.careerGoals}
+                    onChange={handleInputChange}
+                  />
                   <InputLabel>Main interests</InputLabel>
-                  <ShortInput />
+                  <ShortInput
+                    type="text"
+                    name="interests"
+                    value={credentials.interests}
+                    onChange={handleInputChange}
+                  />
                   <InputLabel>Favourite band/s or artist/s</InputLabel>
-                  <ShortInput />
+                  <ShortInput
+                    type="text"
+                    name="favouriteBands"
+                    value={credentials.favouriteBands}
+                    onChange={handleInputChange}
+                  />
                 </InputWrapper>
               )}
               <ButtonWrapper>
                 <TextButton onClick={handleAuthSwitch}>
                   {authSwitch ? "Create Account" : "I already have an account"}
                 </TextButton>
-                <FilledButton onClick={login} href="/">
+                <FilledButton onClick={authSwitch? login : register} href="/">
                   {" "}
-                  {authSwitch ? "LOGIN" : "REGISTER"}{" "}
+                  {authSwitch? "LOGIN" : "REGISTER"}{" "}
                 </FilledButton>
               </ButtonWrapper>
             </InputForm>

@@ -18,7 +18,7 @@ const guides = async () => {
         <>
         <AnimatedBackground/>
         <Layout>
-            {/* <Title>1</Title> */}
+            <Title>1</Title>
             <GuidesContainer> 
             {guides.map((guide:GuideType, nr:number) => (
                 <GuideCard key={guide._id.toString()} guide={JSON.parse(JSON.stringify(guide))} nr={nr}/>
