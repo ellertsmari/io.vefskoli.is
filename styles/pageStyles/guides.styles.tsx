@@ -2,6 +2,10 @@
 import styled from "styled-components"
 import { motion } from "framer-motion"
 
+export const Header1 = styled.h1`
+    font-style: Poppins;
+`
+
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;

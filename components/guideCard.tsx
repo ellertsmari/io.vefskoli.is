@@ -10,7 +10,7 @@ const GuideCardContainer = styled.div`
   flex-direction: column;
 `;
 
-const GuideCardInfo = styled.div`
+const CardInfo = styled.div`
   background-color: #f1f1f1;
   box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
   width: 24rem;
@@ -31,18 +31,18 @@ const GuideCardInfo = styled.div`
   }
 `;
 
-const GuideInfo = styled.h1`
+const Number = styled.h1`
   font-size: 2.5rem;
   font-family: "Poppins";
   font-weight: 500;
 `;
-const GuideSubInfo = styled.h2`
+const Title = styled.h2`
   font-size: 1.5rem;
   font-family: "Poppins";
 
 `;
 
-const GuideCardReview = styled.div`
+const Status = styled.div`
   background-color: #f1f1f1;
   box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
   width: 24rem;
@@ -72,12 +72,12 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
   return (
     <GuideCardContainer>
         <Link style={{textDecoration:"none", color:"black" }} href={`/guide/${guide._id}`} >
-      <GuideCardInfo>
-        <GuideInfo>Guide {nr+1}</GuideInfo>
-        <GuideSubInfo>{guide.Title}</GuideSubInfo>
-      </GuideCardInfo>
+      <CardInfo>
+        <Number>Guide {nr+1}</Number>
+        <Title>{guide.title}</Title>
+      </CardInfo>
       </Link>
-      <GuideCardReview>{guide.Status}</GuideCardReview>
+      <Status>{guide.status}</Status>
     </GuideCardContainer>
   );
 };

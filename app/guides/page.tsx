@@ -1,5 +1,5 @@
 import AnimatedBackground from "@/components/animatedBackground"
-import { GuidesContainer, Layout } from "../../styles/pageStyles/guides.styles";
+import { GuidesContainer, Layout, Title } from "../../styles/pageStyles/guides.styles";
 import GuideCard from "@/components/guideCard";
 
 import { connectToDatabase } from "@/utils/mongoose-connector";
@@ -18,6 +18,7 @@ const guides = async () => {
         <>
         <AnimatedBackground/>
         <Layout>
+            {/* <Title>1</Title> */}
             <GuidesContainer> 
             {guides.map((guide:GuideType, nr:number) => (
                 <GuideCard key={guide._id.toString()} guide={JSON.parse(JSON.stringify(guide))} nr={nr}/>
