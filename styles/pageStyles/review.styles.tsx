@@ -13,6 +13,7 @@ export const MainContainer = styled.div`
     justify-content: space-evenly;
     width: 130rem;
     min-height: 80rem;
+    margin: 15rem;
     background: #ffffff;
     box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
     border-radius: 4.2rem;
@@ -62,7 +63,27 @@ export const Frame = styled.div`
     border-radius: 2rem;
 `
 
+export const Photo = styled.img`
+    
+`
+
 //Review sections and all of it's styles
 export const ReviewSection = styled.div`
     width: 50%;
+`
+export const ReviewFrame = styled.div`
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2rem;
+`
+
+export const BulletList = styled.ul`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`
+export const VotingForm = styled.form`
+    display:flex;
+    flex-direction: column;
 `
