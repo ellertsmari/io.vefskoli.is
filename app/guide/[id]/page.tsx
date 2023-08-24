@@ -1,4 +1,7 @@
 import AnimatedBackground from "@/components/animatedBackground";
+import { connectToDatabase } from "@/utils/mongoose-connector";
+import { Guide as G, GuideType } from "@/models/guide";
+import { Types } from "mongoose";
 import {
   Guide,
   GuideTitle,
@@ -15,8 +18,19 @@ import {
   SkillsWrapper,
   KnowledgeAndSkillsWrapper,
 } from "@/styles/pageStyles/guide0.styles";
+const getGuide = async (id: string) => {
+  await connectToDatabase();
+  const guide: GuideType | null = await G.findOne({ _id: id });
+  console.log(guide);
 
-const guide0 = () => {
+  return guide;
+  
+}
+const guide = async ({ params }: { params: { id: string } }) => {
+  const g = await getGuide(params.id);
+  if (!g) {
+    return <><h1>Guide not found</h1> <h2>{params.id}</h2></>
+  }
   return (
     <>
       <AnimatedBackground />
@@ -24,54 +38,14 @@ const guide0 = () => {
         <Guide>
           <UpperWrapper>
           <MainInfoWrapper>
-            <GuideTitle>Guide for Entrance Exam</GuideTitle>
+            <GuideTitle>{g.title}</GuideTitle>
             <GuideSubtitle>Description</GuideSubtitle>
             <GuideParagraph>
-              In this guide you will get to know the basics so that you can make
-              a basic website with your group in the entrance exam. You will
-              need to get to know a few tools and just focus on the basics that
-              you need to be able to contribute to the project. You can dive
-              deeper into things you are interested in. For example if you are
-              interested in design you might want to spend some more time on
-              Figma than HTML and CSS and if you are interested in coding you
-              might want to get more familiar with VScode and GitHub. The tools
-              you need are: VScode (or any other code editor of your choice) You
-              need to install this on your computer Figma Sign up for it and use
-              either the browser version or desktop version Create an account on
-              GitHub If you have a Windows machine you will need to install
-              Git-SCM Slack There are links to all these tools in the Material
-              section here below.
+              {g.description}
             </GuideParagraph>
             <GuideSubtitle>Example</GuideSubtitle>
-            <ul>
-              <li>
-                <GuideParagraph>
-                  Design a “hello world” website in Figma
-                </GuideParagraph>
-              </li>
-              <br />
-              <li>
-                <GuideParagraph>
-                  Make the design into a live page with HTML and CSS
-                </GuideParagraph>
-              </li>
-              <br />
-              <li>
-                <GuideParagraph>
-                  In VScode or any other code editor
-                </GuideParagraph>
-              </li>
-              <br />
-              <li>
-                <GuideParagraph>Upload the code to GitHub</GuideParagraph>
-              </li>
-              <br />
-              <li>
-                <GuideParagraph>
-                  Use GitHub Pages to make it live
-                </GuideParagraph>
-              </li>
-            </ul>
+            <h1>{g.title}</h1>
+            <p>{g.description}</p>
           </MainInfoWrapper>
 
           <SideOnfoWrapper>
@@ -162,4 +136,4 @@ const guide0 = () => {
   );
 };
 
-export default guide0;
+export default guide;

@@ -43,41 +43,27 @@ interface Success {
  *         description: No guide with that id found
  */
 
-export default async function guideByIdHandler(
-  req: NextApiRequest,
-  res: NextApiResponse<GuideType | Error | Success>
-) {
-  await connectToDatabase();
 
-  const handler = {
-    GET: async () => {
-      const guide = await Guide.findOne({ id: req.query.uid });
-      if (guide === null) {
-        res.status(404).json({ message: "Guide not found" });
-        return;
-      }
-      res.status(200).json(guide);
-    },
-    PUT: async () => {
-      // TODO: Add logic to update the guide
-      const guide = await Guide.findOneAndUpdate({id:req.query.uid}, req.body);
-      res.status(200).json({ message: "Guide updated successfully" });
-    },
-    DELETE: async () => {
-      // TODO: Add logic to "delete"(disable or add to trash? to prevent accidental deletion?) the guide
-      await Guide.deleteOne({ id: req.query.uid });
-      res.status(200).json({ message: "Guide deleted successfully" });
-      return;
-    },
-  };
-
-  if (req.method == "GET") {
-    await handler.GET();
-  } else if (req.method == "PUT") {
-    await handler.PUT();
-  } else if (req.method == "DELETE") {
-    await handler.DELETE();
-  } else {
-    res.status(405).json({ message: "Method not allowed" });
+export const GET = async ( req: NextApiRequest,
+  res: NextApiResponse<GuideType | Error | Success>) => {
+  console.log("this is req.query",req.query);
+  const guide = await Guide.findOne({ id: req.query.uid });
+  if (guide === null) {
+    res.status(404).json({ message: "Guide not found" });
+    return;
   }
+  res.status(200).json(guide);
+}
+export const PUT = async ( req: NextApiRequest,
+  res: NextApiResponse<GuideType | Error | Success>) => {
+  // TODO: Add logic to update the guide
+  const guide = await Guide.findOneAndUpdate({id:req.query.uid}, req.body);
+  res.status(200).json({ message: "Guide updated successfully" });
+}
+export const DELETE = async ( req: NextApiRequest,
+  res: NextApiResponse<GuideType | Error | Success>) => {
+  // TODO: Add logic to "delete"(disable or add to trash? to prevent accidental deletion?) the guide
+  await Guide.deleteOne({ id: req.query.uid });
+  res.status(200).json({ message: "Guide deleted successfully" });
+  return;
 }
