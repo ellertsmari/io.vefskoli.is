@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, ChangeEvent, MouseEventHandler } from "react";
+import { UserType } from "@/models/user";
 import useLocalStorage from "@/utils/useLocalStorage";
 import {
   Wrapper,
@@ -24,16 +25,28 @@ type CredentailsData = {
   background?: string;
   careerGoals?: string;
   interests?: string;
-  favouriteBands?: string;
+  favoriteArtists?: string;
 };
 
 async function createUser(body: CredentailsData){
+  const  user: Omit<UserType, '_id' | '__v'> = {
+    email: body.email,
+    password: body.password,
+    name: body.name || "",
+    background: body.background || "",
+    careerGoals: body.careerGoals || "",
+    interests: body.interests || "",
+    favoriteArtists: body.favoriteArtists || "",
+    createdAt: new Date(),
+    role: "student",
+    avatarUrl: ""  
+  }
   const res = await fetch("http://localhost:3000/api/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(user)
   })
 }
 
@@ -161,7 +174,7 @@ const authPage = () => {
                   <ShortInput
                     type="text"
                     name="favouriteBands"
-                    value={credentials.favouriteBands}
+                    value={credentials.favoriteArtists}
                     onChange={handleInputChange}
                   />
                 </InputWrapper>
