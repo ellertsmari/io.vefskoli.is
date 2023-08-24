@@ -15,6 +15,17 @@ export const MainContainer = styled.div`
     box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
     border-radius: 4.2rem;
     padding: 5rem;
+    overflow: scroll;
+
+    /* hiding scrollbar */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    /*hiding scrollbar for Firefox */
+    scrollbar-width: none;
+    
+    /*hiding scrollbar for IE 10+ */
+    -ms-overflow-style: none;
 `
 
 export const Layout = styled.div`

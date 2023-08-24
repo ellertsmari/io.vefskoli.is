@@ -1,9 +1,13 @@
-import Head from 'next/head'
+"use client";
+
+import Head from "next/head";
+import React from "react";
 // import { Inter } from 'next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
   return (
     <>
       <Head>
@@ -11,7 +15,9 @@ export default function Home() {
         <meta name="description" content="Intranet for Vefskólinn" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div>hellos</div>
+      <div>
+        Hellos
+      </div>
     </>
-  )
+  );
 }
