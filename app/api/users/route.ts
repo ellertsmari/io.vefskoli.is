@@ -1,13 +1,14 @@
 import { NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User, UserType } from "@/models/user";
+import bcrypt from "bcrypt";
 
 interface Success {
   message: string;
 }
 
 type RequestWithBody = Request & {
-  body: Omit<UserType, "_id" | "__v">;
+  body: UserType;
 }
 
 /**
@@ -35,7 +36,9 @@ export const POST = async (req:Request) => {
   const body = await req.json()
   console.log("this is body",body);
   // TODO: Add logic to create a user
- 
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(body.password, salt);
+  body.password = hashedPassword;
   User.create(body);
   return res.json({ message: "User created successfully" }, { status: 200 });
 }

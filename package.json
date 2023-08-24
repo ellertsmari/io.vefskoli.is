@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",
     "@types/styled-components": "^5.1.26",
+    "bcrypt": "^5.1.1",
     "framer-motion": "^10.12.2",
     "iron-session": "^6.3.1",
     "mongoose": "^7.0.3",

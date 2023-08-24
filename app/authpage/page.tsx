@@ -29,7 +29,7 @@ type CredentailsData = {
 };
 
 async function createUser(body: CredentailsData){
-  const  user: Omit<UserType, '_id' | '__v'> = {
+  const  user: UserType = {
     email: body.email,
     password: body.password,
     name: body.name || "",
@@ -41,7 +41,7 @@ async function createUser(body: CredentailsData){
     role: "student",
     avatarUrl: ""  
   }
-  const res = await fetch("http://localhost:3000/api/users", {
+  const res = await fetch("api/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -70,7 +70,18 @@ const authPage = () => {
   };
   const login: MouseEventHandler<HTMLAnchorElement> = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {};
+  ) => {
+    e.preventDefault();
+    console.log("login");
+    const user = fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+    console.log("login success", user);
+  };
 
   const register: MouseEventHandler<HTMLAnchorElement> = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -93,7 +104,7 @@ const authPage = () => {
           >
             <InputForm>
               <VefskolinnLogo>{"{ Vefskolinn }"}</VefskolinnLogo>
-              {authSwitch ? (
+              {authSwitch ? ( //login
                 <InputWrapper>
                   <InputLabel>Email</InputLabel>
                   <ShortInput
@@ -110,7 +121,7 @@ const authPage = () => {
                     onChange={handleInputChange}
                   />
                 </InputWrapper>
-              ) : (
+              ) : ( //register
                 <InputWrapper>
                   {/* Credentials  */}
                   <InputLabel>Name</InputLabel>
@@ -183,7 +194,7 @@ const authPage = () => {
                 <TextButton onClick={handleAuthSwitch}>
                   {authSwitch ? "Create Account" : "I already have an account"}
                 </TextButton>
-                <FilledButton onClick={authSwitch? login : register} href="/">
+                <FilledButton onClick={authSwitch? login : register}>
                   {" "}
                   {authSwitch? "LOGIN" : "REGISTER"}{" "}
                 </FilledButton>

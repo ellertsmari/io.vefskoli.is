@@ -14,7 +14,7 @@ import {
   KnowledgeWrapper,
   SkillsWrapper,
   KnowledgeAndSkillsWrapper,
-} from "../../styles/pageStyles/guide0.styles";
+} from "@/styles/pageStyles/guide0.styles";
 
 const guide0 = () => {
   return (
