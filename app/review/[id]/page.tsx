@@ -1,4 +1,8 @@
 import AnimatedBackground from "@/components/animatedBackground";
+import { connectToDatabase } from "@/utils/mongoose-connector";
+import { Guide as G, GuideType } from "@/models/guide";
+import { Types } from "mongoose";
+
 import {
   MainContainer,
   Layout,
@@ -13,29 +17,37 @@ import {
   BulletList,
   ReviewFrame,
 } from "@/styles/pageStyles/review.styles";
+import { title } from "process";
+import { Module } from "module";
 
-type Props = {
-  //Return Details
-  module: string;
-  guide: string;
-  date: string;
-  url: string;
-  liveVersion: string;
-  comment: string;
-  photo: string;
+// type Props = {
+//   //Return Details
+//   module: string;
+//   guide: string;
+//   date: string;
+//   url: string;
+//   liveVersion: string;
+//   comment: string;
+//   photo: string;
 
-  //Review
-};
+//   //Review
+// };
+const getGuide = async (id: string) => {
+  if (!Types.ObjectId.isValid(id)) {
+    return null;
+  }
+  const objectId = new Types.ObjectId(id);
+  await connectToDatabase();
+  const guide: GuideType | null = await G.findOne({ _id: objectId });
+  return guide; 
+}
 
-const review: React.FC<Props> = ({
-  module,
-  guide,
-  date,
-  url,
-  liveVersion,
-  comment,
-  photo,
-}) => {
+const review = async ({params} : {params: { id: string}}) => {
+  const g = await getGuide(params.id);
+  if (!g) {
+    return <><h1>Guide not found</h1> <h2>{params.id}</h2></>
+  }
+
   return (
     <>
       <AnimatedBackground />
@@ -44,28 +56,28 @@ const review: React.FC<Props> = ({
           <ReturnDetailsSection>
             <SectionTitle>Return Details</SectionTitle>
             <Frame>
-              <SubTitle>{module}</SubTitle>
-              <MainText>{guide}</MainText>
+              <SubTitle>{g.module.title}</SubTitle>
+              <MainText>{g.title}</MainText>
             </Frame>
             <Frame>
               <SubTitle>Return Date</SubTitle>
-              <MainText>{date}</MainText>
+              <MainText>{g.createdAt.toTimeString()}</MainText>
             </Frame>
             <Frame>
               <SubTitle>URL</SubTitle>
-              <LinkText href={url}>{url}</LinkText>
+              <LinkText>{}</LinkText>
             </Frame>
             <Frame>
               <SubTitle>Live Version</SubTitle>
-              <LinkText href={liveVersion}>{liveVersion}</LinkText>
+              <LinkText>Hello</LinkText>
             </Frame>
             <Frame>
               <SubTitle>Comment</SubTitle>
-              <MainText>{comment}</MainText>
+              <MainText>Hello</MainText>
             </Frame>
             <Frame>
               <SubTitle>Photo</SubTitle>
-              <Photo src={photo} />
+              <Photo />
             </Frame>
           </ReturnDetailsSection>
           <ReviewSection>
