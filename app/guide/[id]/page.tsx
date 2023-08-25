@@ -46,8 +46,8 @@ const guide = async ({ params }: { params: { id: string } }) => {
              
             </GuideParagraph>
             <GuideSubtitle>Example</GuideSubtitle>
-            <h1>{g.title}</h1>
-            <p dangerouslySetInnerHTML={{__html: g.description}}></p>
+            <GuideSubtitle>{g.themeIdea.title}</GuideSubtitle>
+            <GuideParagraph dangerouslySetInnerHTML={{__html: g.themeIdea.description}}></GuideParagraph>
           </MainInfoWrapper>
 
           <SideOnfoWrapper>
@@ -64,7 +64,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
             <SideFrame>
               <GuideSubtitle>Topics</GuideSubtitle>
               <ul>
-                  return <li><GuideParagraph>{g.topicsList}</GuideParagraph></li>;
+                  return <li><GuideParagraph dangerouslySetInnerHTML={{__html: g.topicsList}}></GuideParagraph></li>;
               </ul>
             </SideFrame>
             <SideFrame>
