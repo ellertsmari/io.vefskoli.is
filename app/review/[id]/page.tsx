@@ -61,7 +61,7 @@ const review = async ({params} : {params: { id: string}}) => {
             </Frame>
             <Frame>
               <SubTitle>Return Date</SubTitle>
-              <MainText>{g.createdAt.toTimeString()}</MainText>
+              <MainText>{}</MainText>
             </Frame>
             <Frame>
               <SubTitle>URL</SubTitle>

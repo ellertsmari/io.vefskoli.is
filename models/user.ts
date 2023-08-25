@@ -1,6 +1,7 @@
 import { Document, Schema, model, models, InferSchemaType, Types} from "mongoose";
 
 const userSchema = new Schema({
+  _id: { type: Schema.Types.ObjectId, required: false },
   name: { type: Schema.Types.String, required: true },
   email: { type: Schema.Types.String, required: true },
   password: { type: Schema.Types.String, required: true },

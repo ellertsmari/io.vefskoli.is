@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const TextButton = styled.button`
 height: 4rem;
-background-color: white;
+background-color: rgba(255,255,255,0);
 border-style: none;
 color: #999999;
 font-weight: 500;

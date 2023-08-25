@@ -18,7 +18,7 @@ import {
   SkillsWrapper,
   KnowledgeAndSkillsWrapper,
 } from "@/styles/pageStyles/guide0.styles";
-import { FilledButton } from "@/components/buttons";
+import ReturnForm from "@/components/returnFrom/returnForm";
 const getGuide = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
     return null;
@@ -99,9 +99,12 @@ const guide = async ({ params }: { params: { id: string } }) => {
           </SkillsWrapper>
           </KnowledgeAndSkillsWrapper>
           </RequirementsWrapper>
-          <FilledButton style={{width:"100%"}}>RETURN</FilledButton>
+
+          <ReturnForm />
         </Guide>
+        
       </Layout>
+      
     </>
   );
 };

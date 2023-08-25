@@ -9,11 +9,11 @@ import {
   VefskolinnLogo,
   InputForm,
   InputWrapper,
-  InputLabel,
   ButtonWrapper,
 } from "../../styles/pageStyles/authpage.styles";
 import { TextButton, FilledButton } from "@/components/buttons";
 import { ShortInput } from "@/components/inputs";
+import { InputLabel } from "@/components/inputs/lables/lable";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
 
