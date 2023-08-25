@@ -29,11 +29,10 @@ export const GuideParagraph = styled.p`
 
 export const MaterialLinks = styled.a`
     font-size: 1.5rem;
-    line-height: 4rem;
+    line-height: 2rem;
     align-items: center;
     display: flex;
     width: fit-content;
-    height: 3rem;
     text-decoration: none;
     color: #6563eb;
     border: 0.5px solid #6563eb;
