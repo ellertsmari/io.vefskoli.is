@@ -32,7 +32,7 @@ export const POST = async (
   // TODO: Add logic to create a guide
   const body = await req.json();
   Guide.create(body);
-  res.status(200).json({ message: "Guide created successfully" });
+  res.json({ message: "Guide created successfully" }, { status: 200 });
 }
 
 export const GET = async (

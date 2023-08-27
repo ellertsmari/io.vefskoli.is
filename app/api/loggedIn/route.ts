@@ -1,15 +1,15 @@
 import { UserType } from "@/models/user";
 import { getIronSession} from "iron-session/edge";
 import { sessionOptions } from "@/utils/session";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse as res } from "next/server";
 
-export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
-  const session = await getIronSession(req, res, sessionOptions);
+export const POST = async (req: NextRequest) => {
+  const session = await getIronSession(req, res.next(), sessionOptions);
   console.log(session.user);
   if(session.user){
     res.json(session.user);
   }
   else{
-    res.status(500).json({ message: "User not found" });
+    res.json({ message: "User not found", status: 500 });
   }
 }
