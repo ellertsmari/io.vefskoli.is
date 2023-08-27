@@ -68,12 +68,12 @@ const authPage = () => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
   };
-  const login: MouseEventHandler<HTMLAnchorElement> = (
+  const login: MouseEventHandler<HTMLAnchorElement> = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     e.preventDefault();
     console.log("login");
-    const user = fetch("/api/auth/login", {
+    const user = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

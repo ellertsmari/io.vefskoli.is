@@ -6,10 +6,11 @@ import { BackgroundOverlay, FormContainer, Modal } from "./returnFrom.style";
 import { BigInput, MidInput } from "../inputs";
 import { InputLabel } from "../inputs/lables/lable";
 import { ReturnType } from "@/models/return";
+import { UserType } from "@/models/user";
 import { Types } from "mongoose";
 import useUser from "@/utils/useUser";
 
-const ReturnForm = () => {
+const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const [projectUrl, setProjectUrl] = useState("");
@@ -37,8 +38,11 @@ const ReturnForm = () => {
       setComment(value)
     }
 
-      const user = useUser();
+  type UserWithId = UserType & {_id:Types.ObjectId};
+    const {user}: {user:UserWithId | undefined} = useUser();
+    if (!user) return <>edit this code to rederect to login page</>;
     
+
     const createReturn = () => {
       const r: ReturnType = {
         projectUrl,
@@ -46,16 +50,16 @@ const ReturnForm = () => {
         pictureUrl,
         projectName,
         comment,
-        owner: user,
-        createdAt: { type: Schema.Types.Date, required: true },
-        guide:{ type: Schema.Types.ObjectId, required: true },
+        owner: user._id!,
+        createdAt: new Date(),
+        guide: guideId,
       }
       fetch("/api/returns",{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({})
+        body: JSON.stringify(r)
       })
     }
   return (

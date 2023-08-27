@@ -100,7 +100,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
           </KnowledgeAndSkillsWrapper>
           </RequirementsWrapper>
 
-          <ReturnForm />
+          <ReturnForm guideId={JSON.parse(JSON.stringify(g._id))} />
         </Guide>
         
       </Layout>

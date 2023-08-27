@@ -2,12 +2,15 @@ import { useEffect } from 'react'
 import Router from 'next/router'
 import useSWR from 'swr'
 import { UserType } from '../models/user'
+import { Types } from 'mongoose';
 
 export default function useUser({
   redirectTo = '',
   redirectIfFound = false,
 } = {}) {
-  const { data: user, mutate: mutateUser } = useSWR<UserType>('/api/loggedIn')
+
+  type UserWithId = UserType & {_id:Types.ObjectId};
+  const { data: user, mutate: mutateUser } = useSWR<UserWithId>('/api/loggedIn')
 
   useEffect(() => {
     // if no redirect needed, just return (example: already on /dashboard)

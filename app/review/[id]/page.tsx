@@ -1,8 +1,8 @@
 import AnimatedBackground from "@/components/animatedBackground";
+import { FilledButton } from "@/components/buttons";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide as G, GuideType } from "@/models/guide";
 import { Types } from "mongoose";
-
 import {
   MainContainer,
   Layout,
@@ -16,9 +16,12 @@ import {
   Photo,
   BulletList,
   ReviewFrame,
+  Comment,
 } from "@/styles/pageStyles/review.styles";
 import { title } from "process";
 import { Module } from "module";
+import { MouseEvent } from "react";
+import ReviewComment from "@/components/ReviewComment/ReviewComment";
 
 // type Props = {
 //   //Return Details
@@ -32,6 +35,10 @@ import { Module } from "module";
 
 //   //Review
 // };
+
+
+
+
 const getGuide = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
     return null;
@@ -43,6 +50,10 @@ const getGuide = async (id: string) => {
 }
 
 const review = async ({params} : {params: { id: string}}) => {
+
+  // make a styled div with contenteditable that looks nice:
+ 
+
   const g = await getGuide(params.id);
   if (!g) {
     return <><h1>Guide not found</h1> <h2>{params.id}</h2></>
@@ -119,6 +130,7 @@ const review = async ({params} : {params: { id: string}}) => {
                 <label>Hello</label>
               </form>
             </ReviewFrame>
+            <ReviewComment />
 
           </ReviewSection>
         </MainContainer>

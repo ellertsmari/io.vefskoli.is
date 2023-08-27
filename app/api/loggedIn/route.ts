@@ -5,6 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getIronSession(req, res, sessionOptions);
+  console.log(session.user);
   if(session.user){
     res.json(session.user);
   }

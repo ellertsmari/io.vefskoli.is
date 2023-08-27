@@ -87,3 +87,51 @@ export const VotingForm = styled.form`
     display:flex;
     flex-direction: column;
 `
+
+export const Comment = styled.div`
+width: 100%;
+height: 20rem;
+border-radius: 1rem;
+background-color: #F5F5F5;
+box-shadow: 1px 1px 5px 1px rgba(81, 81, 81, 0.25);
+border-style: none;
+color: black;
+font-weight: 500;
+font-size: 1.6rem;
+cursor: cursor;
+transition: 0.2s ease-in-out;
+padding: 1rem;
+margin-bottom: 1rem;
+overflow-y: scroll;
+`
+
+//a nice loader animation div
+export const Loader = styled.div`
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #6563EB; /* Blue */
+    border-radius: 50%;
+    width: 12rem;
+    height: 12rem;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+}`
+
+//a nicely presented tip
+export const Tip = styled.div`
+    background-color: #F0EFFD;
+    padding:3rem;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 2rem;
+    font-family: poppins;
+    font-size: 1.6rem;
+    text-align: left;
+    color: #6563EB;
+`
