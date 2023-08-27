@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Return, ReturnType } from "@/models/return";
 
@@ -26,25 +26,20 @@ interface Success {
  */
 
 
-export const POST = async (
-  req: NextApiRequest,
-  res: NextApiResponse<ReturnType[] | Error | Success>
-) => {
+export const POST = async (req: NextRequest) => {
   // TODO: Add logic to create a return
   connectToDatabase();
   Return.create(req.body);
-  res.status(200).json({ message: "Return created successfully" });
+  return res.json({ message: "Return created successfully" }, {status: 200});
 }
 
-export const GET = async (
-  req: NextApiRequest,
-  res: NextApiResponse<ReturnType[] | Error | Success>
+export const GET = async (req: NextRequest,
 ) => {
   const returns = await Return.find({});
   if (returns === null) {
-    res.status(404).json({ message: "Return not found" });
+    res.json({ message: "Return not found" }, {status: 404});
     return;
   }
-  res.status(200).json(returns);
+  res.json(returns, {status: 200});
   return;
 }
