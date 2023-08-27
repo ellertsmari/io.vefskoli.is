@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide, GuideType } from "@/models/guide";
 
@@ -27,24 +27,21 @@ interface Success {
 
 
 export const POST = async (
-  req: NextApiRequest,
-  res: NextApiResponse<GuideType[] | Error | Success>
+  req: NextRequest
 ) => {
   // TODO: Add logic to create a guide
-  Guide.create(req.body);
+  const body = await req.json();
+  Guide.create(body);
   res.status(200).json({ message: "Guide created successfully" });
 }
 
 export const GET = async (
-  req: NextApiRequest,
-  res: NextApiResponse<GuideType[] | Error | Success>
+  req: NextRequest,
 ) => {
   const guides = await Guide.find({});
   if (guides === null) {
-    res.status(404).json({ message: "Guide not found" });
-    return;
+    return res.json({ message: "Guide not found" }, { status: 404 });
   }
-  res.status(200).json(guides);
-  return;
+   return res.json(guides, { status: 200 });
 }
 
