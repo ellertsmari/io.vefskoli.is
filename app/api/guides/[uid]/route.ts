@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse as res} from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide, GuideType } from "@/models/guide";
 
@@ -44,26 +44,28 @@ interface Success {
  */
 
 
-export const GET = async ( req: NextApiRequest,
-  res: NextApiResponse<GuideType | Error | Success>) => {
-  console.log("this is req.query",req.query);
-  const guide = await Guide.findOne({ id: req.query.uid });
+export const GET = async ( req: NextRequest) => {
+    const { searchParams } = new URL(req.url);
+    const uid = searchParams.get('uid');
+  const guide = await Guide.findOne({ id: uid });
   if (guide === null) {
-    res.status(404).json({ message: "Guide not found" });
-    return;
+    return res.json({ message: "Guide not found" },{status:404});
+    
   }
-  res.status(200).json(guide);
+  return res.json(guide, { status: 200 });
 }
-export const PUT = async ( req: NextApiRequest,
-  res: NextApiResponse<GuideType | Error | Success>) => {
+export const PUT = async ( req: NextRequest) => {
   // TODO: Add logic to update the guide
-  const guide = await Guide.findOneAndUpdate({id:req.query.uid}, req.body);
-  res.status(200).json({ message: "Guide updated successfully" });
+  const { searchParams } = new URL(req.url);
+  const uid = searchParams.get('uid');
+  const guide = await Guide.findOneAndUpdate({id:uid}, req.json());
+  res.json({ message: "Guide updated successfully" }, { status: 200 });
 }
-export const DELETE = async ( req: NextApiRequest,
-  res: NextApiResponse<GuideType | Error | Success>) => {
+export const DELETE = async ( req: NextRequest) => {
   // TODO: Add logic to "delete"(disable or add to trash? to prevent accidental deletion?) the guide
-  await Guide.deleteOne({ id: req.query.uid });
-  res.status(200).json({ message: "Guide deleted successfully" });
+  const { searchParams } = new URL(req.url);
+  const uid = searchParams.get('uid');
+  await Guide.deleteOne({ id: uid });
+  res.json({ message: "Guide deleted successfully" }, { status: 200 });
   return;
 }
