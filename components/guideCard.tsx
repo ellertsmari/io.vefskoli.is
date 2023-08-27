@@ -77,7 +77,7 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
         <Title>{guide.title}</Title>
       </CardInfo>
       </Link>
-      <Status>{guide.status}</Status>
+      <Status>put something here</Status>
     </GuideCardContainer>
   );
 };
