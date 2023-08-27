@@ -22,7 +22,7 @@ const ReviewComment = () => {
         <FilledButton>Submit</FilledButton>
         <FilledButton style={{width:"20rem"}} onClick={improveFeedback}>Improve this feedback</FilledButton>
       </div>
-      {improvement==="Loading..." ? <Loader>Loading...</Loader> : <Tip>{improvement}</Tip>}
+      {improvement==="Loading..." && <Loader>Loading...</Loader>} {improvement? <Tip>{improvement}</Tip> : null}
     </ReviewFrame>
   )
 }

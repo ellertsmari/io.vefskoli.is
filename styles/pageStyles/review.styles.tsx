@@ -126,6 +126,7 @@ export const Tip = styled.div`
     background-color: #F0EFFD;
     padding:3rem;
     margin-top: 3rem;
+    line-height: 2rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
