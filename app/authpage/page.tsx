@@ -48,6 +48,8 @@ async function createUser(body: CredentailsData){
     },
     body: JSON.stringify(user)
   })
+  const x = await res.json();
+  console.log("this is x",x);
 }
 
 const authPage = () => {
@@ -72,7 +74,6 @@ const authPage = () => {
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     e.preventDefault();
-    console.log("login");
     const user = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
@@ -80,7 +81,8 @@ const authPage = () => {
       },
       body: JSON.stringify(credentials),
     });
-    console.log("login success", user);
+    const x = await user.json();
+    console.log("login success", x);
   };
 
   const register: MouseEventHandler<HTMLAnchorElement> = (

@@ -55,7 +55,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
               <GuideSubtitle>Materials</GuideSubtitle>
               {g.classes.map((material) => {
                 return (
-                  <MaterialLinks href={material.link}>
+                  <MaterialLinks key={material.title} href={material.link}>
                     {material.title}
                   </MaterialLinks>
                 );
@@ -85,7 +85,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
           <GuideParagraph>Knoweldge</GuideParagraph>
           <ul>
             {g.knowledge.map((knowledge) => {
-              return <li><GuideParagraph>{knowledge.knowledge}</GuideParagraph></li>;
+              return <li key={knowledge.knowledge}><GuideParagraph>{knowledge.knowledge}</GuideParagraph></li>;
             })}
           </ul>
           </KnowledgeWrapper>

@@ -29,8 +29,10 @@ interface Success {
 export const POST = async (req: NextRequest) => {
   // TODO: Add logic to create a return
   connectToDatabase();
-  Return.create(req.body);
-  return res.json({ message: "Return created successfully" }, {status: 200});
+  const r = await req.json();
+  const result = await Return.create(r);
+  console.log("result is: ",result);
+  return res.json({ message: "Return created successfully", ...result }, {status: 200});
 }
 
 export const GET = async (req: NextRequest,

@@ -1,7 +1,7 @@
 "use client";
 
 import { FilledButton, TextButton } from "../buttons";
-import { useState, KeyboardEventHandler, ChangeEvent } from "react";
+import { useState, KeyboardEventHandler, ChangeEvent, useEffect } from "react";
 import { BackgroundOverlay, FormContainer, Modal } from "./returnFrom.style";
 import { BigInput, MidInput } from "../inputs";
 import { InputLabel } from "../inputs/lables/lable";
@@ -11,57 +11,58 @@ import { Types } from "mongoose";
 import useUser from "@/utils/useUser";
 
 const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [projectUrl, setProjectUrl] = useState("");
+  const [liveVersion, setLiveVersion] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
+  const [projectName, setProjectName] = useState("");
+  const [comment, setComment] = useState("");
 
-    const [projectUrl, setProjectUrl] = useState("");
-    const [liveVersion, setLiveVersion] = useState("");
-    const [pictureUrl, setPictureUrl] = useState("");
-    const [projectName, setProjectName] = useState("");
-    const [comment, setComment] = useState("");
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const stateMap = {
+      projectUrl: setProjectUrl,
+      liveVersion: setLiveVersion,
+      pictureUrl: setPictureUrl,
+      projectName: setProjectName,
+      comment: setComment
+    };
+    (stateMap as any)[name](value);
+  }
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      const stateMap = {
-        projectUrl: setProjectUrl,
-        liveVersion: setLiveVersion,
-        pictureUrl: setPictureUrl,
-        projectName: setProjectName,
-        comment: setComment
-      };
-      (stateMap as any)[name](value);
+  const handleTextArea: KeyboardEventHandler<HTMLTextAreaElement> = (
+    e: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    const { value } = e.currentTarget;
+    setComment(value)
+  }
+  const {user} = useUser();
+  
+  console.log("user is: ",user);
+  if (!user) return <>You are not logged in, if you  want to return this guide you need to log in via authpage</>;
+  
+
+  const createReturn = () => {
+    console.log("creating return")
+    const r: ReturnType = {
+      projectUrl,
+      liveVersion,
+      pictureUrl,
+      projectName,
+      comment,
+      owner: user._id!,
+      createdAt: new Date(),
+      guide: guideId,
     }
-
-    const handleTextArea: KeyboardEventHandler<HTMLTextAreaElement> = (
-      e: React.KeyboardEvent<HTMLTextAreaElement>
-    ) => {
-      const { value } = e.currentTarget;
-      setComment(value)
-    }
-
-  type UserWithId = UserType & {_id:Types.ObjectId};
-    const {user}: {user:UserWithId | undefined} = useUser();
-    if (!user) return <>edit this code to rederect to login page</>;
-    
-
-    const createReturn = () => {
-      const r: ReturnType = {
-        projectUrl,
-        liveVersion,
-        pictureUrl,
-        projectName,
-        comment,
-        owner: user._id!,
-        createdAt: new Date(),
-        guide: guideId,
-      }
-      fetch("/api/returns",{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(r)
-      })
-    }
+    console.log("return is: ",r);
+    fetch("/api/returns",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(r)
+    }).then(res => res.json()).then(data => console.log(data));
+  }
   return (
     <>
       <FilledButton style={{ width: "100%"}} onClick={() => setIsOpen(!isOpen)}>

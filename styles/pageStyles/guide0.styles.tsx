@@ -22,7 +22,7 @@ export const GuideSubtitle = styled.h2`
     font-size: 2.4rem;
 `
 
-export const GuideParagraph = styled.p`
+export const GuideParagraph = styled.div`
     font-size: 1.6rem;
     line-height: 2.5rem;
 `

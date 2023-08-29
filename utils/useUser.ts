@@ -1,20 +1,25 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Router from 'next/router'
 import useSWR from 'swr'
 import { UserType } from '../models/user'
-import { Types } from 'mongoose';
+import { Types } from 'mongoose'
 
 export default function useUser({
   redirectTo = '',
   redirectIfFound = false,
 } = {}) {
-
   type UserWithId = UserType & {_id:Types.ObjectId};
-  const { data: user, mutate: mutateUser } = useSWR<UserWithId>('/api/loggedIn')
+
+  const fetcher = (url:string) => fetch(url).then(r => r.json());
+  const { data: user, mutate: mutateUser, isLoading  } = useSWR<UserWithId>('http://localhost:3000/api/loggedIn',fetcher)
+
 
   useEffect(() => {
+    console.log("effect running")
+    
     // if no redirect needed, just return (example: already on /dashboard)
     // if user data not yet there (fetch in progress, logged in or not) then don't do anything yet
+    
     if (!redirectTo || !user) return
 
     if (
@@ -26,6 +31,6 @@ export default function useUser({
       Router.push(redirectTo)
     }
   }, [user, redirectIfFound, redirectTo])
-
-  return { user, mutateUser }
+  console.log("this is user",user);
+  return { user, mutateUser, isLoading }
 }
