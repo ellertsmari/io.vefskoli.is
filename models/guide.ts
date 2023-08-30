@@ -84,4 +84,5 @@ const guideSchema = new Schema({
 
 export type GuideType = InferSchemaType<typeof guideSchema>;
 
-export const Guide = models.Guide || model<GuideType>("Guide", guideSchema);
+type GuideDocument = GuideType & Document;
+export const Guide = models.Guide || model<GuideDocument>("Guide", guideSchema);

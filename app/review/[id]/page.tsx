@@ -1,7 +1,8 @@
 import AnimatedBackground from "@/components/animatedBackground";
-import { FilledButton } from "@/components/buttons";
 import { connectToDatabase } from "@/utils/mongoose-connector";
-import { Guide as G, GuideType } from "@/models/guide";
+import { Return, ReturnType } from "@/models/return";
+import { GuideType } from "@/models/guide";
+import "@/models/guide"; //this is needed so that the guide model is registered
 import { Types } from "mongoose";
 import {
   MainContainer,
@@ -16,11 +17,7 @@ import {
   Photo,
   BulletList,
   ReviewFrame,
-  Comment,
 } from "@/styles/pageStyles/review.styles";
-import { title } from "process";
-import { Module } from "module";
-import { MouseEvent } from "react";
 import ReviewComment from "@/components/ReviewComment/ReviewComment";
 
 // type Props = {
@@ -38,15 +35,19 @@ import ReviewComment from "@/components/ReviewComment/ReviewComment";
 
 
 
-
 const getGuide = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
     return null;
   }
   const objectId = new Types.ObjectId(id);
   await connectToDatabase();
-  const guide: GuideType | null = await G.findOne({ _id: objectId });
-  return guide; 
+  type OmitGuideFromReturn = Omit<ReturnType, 'guide'>;
+
+  type ReturnWithGuide = OmitGuideFromReturn & {
+    guide: GuideType;
+  };
+  const r: ReturnWithGuide | null = await Return.findOne({ _id: objectId }).populate('guide') as ReturnWithGuide | null;
+  return r; 
 }
 
 const review = async ({params} : {params: { id: string}}) => {
@@ -54,8 +55,8 @@ const review = async ({params} : {params: { id: string}}) => {
   // make a styled div with contenteditable that looks nice:
  
 
-  const g = await getGuide(params.id);
-  if (!g) {
+  const r = await getGuide(params.id);
+  if (!r) {
     return <><h1>Guide not found</h1> <h2>{params.id}</h2></>
   }
 
@@ -67,28 +68,28 @@ const review = async ({params} : {params: { id: string}}) => {
           <ReturnDetailsSection>
             <SectionTitle>Return Details</SectionTitle>
             <Frame>
-              <SubTitle>{g.module.title}</SubTitle>
-              <MainText>{g.title}</MainText>
+              <SubTitle>{r.guide.module.title}</SubTitle>
+              <MainText>{r.guide.title}</MainText>
             </Frame>
             <Frame>
               <SubTitle>Return Date</SubTitle>
-              <MainText>{}</MainText>
+              <MainText>{r.createdAt.toLocaleDateString()}</MainText>
             </Frame>
             <Frame>
               <SubTitle>URL</SubTitle>
-              <LinkText>{}</LinkText>
+              <LinkText>{r.projectUrl}</LinkText>
             </Frame>
             <Frame>
               <SubTitle>Live Version</SubTitle>
-              <LinkText>Hello</LinkText>
+              <LinkText href={r.liveVersion}>Click here</LinkText>
             </Frame>
             <Frame>
               <SubTitle>Comment</SubTitle>
-              <MainText>Hello</MainText>
+              <MainText>{r.comment}</MainText>
             </Frame>
             <Frame>
               <SubTitle>Photo</SubTitle>
-              <Photo />
+              <Photo src={r.pictureUrl} />
             </Frame>
           </ReturnDetailsSection>
           <ReviewSection>
@@ -97,13 +98,12 @@ const review = async ({params} : {params: { id: string}}) => {
             <ReviewFrame>
               <SubTitle>Requirements to Pass</SubTitle>
               <BulletList>
-                <li>
-                  Understand what you can gain from having even the simplest
-                  animations in your prototype.
-                </li>
-                <li>
-                  Ability to create simple and complex animations in figma.
-                </li>
+                {r.guide.knowledge.map((know, index) => {
+                  return <li key={index}>{know.knowledge}</li>;
+                })}
+                {r.guide.skills.map((skill, index) => {
+                  return <li key={index}>{skill.skill}</li>;
+                })}
               </BulletList>
             </ReviewFrame>
 
@@ -123,11 +123,11 @@ const review = async ({params} : {params: { id: string}}) => {
               <SubTitle>Vote</SubTitle>
               <form>
                 <input type="radio" />
-                <label>Pass</label><br />
+                <label>pass</label><br />
                 <input type="radio" />
-                <label>Hello</label><br />
+                <label>no pass</label><br />
                 <input type="radio" />
-                <label>Hello</label>
+                <label>recommend to gallery</label>
               </form>
             </ReviewFrame>
             <ReviewComment />

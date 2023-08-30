@@ -16,5 +16,6 @@ const userSchema = new Schema({
 export type UserType = InferSchemaType<typeof userSchema> & {
   isLoggedIn?: boolean;
 };
+export type UserWithIdType = UserType & { _id: Types.ObjectId };
 type UserDocument = UserType & Document;
 export const User = models.User || model<UserDocument>("User", userSchema);

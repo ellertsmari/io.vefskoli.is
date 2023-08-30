@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import Router from 'next/router'
 import useSWR from 'swr'

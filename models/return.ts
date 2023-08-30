@@ -6,9 +6,9 @@ const returnSchema = new Schema({
   pictureUrl: { type: Schema.Types.String, required: false },
   projectName: { type: Schema.Types.String, required: false },
   comment: { type: Schema.Types.String, required: false },
-  owner: { type: Schema.Types.ObjectId, required: true },
-  createdAt: { type: Schema.Types.Date, required: true },
-  guide:{ type: Schema.Types.ObjectId, required: true },
+  owner: { type: Schema.Types.ObjectId, required: true, ref:"User" },
+  createdAt: { type: Schema.Types.Date, required: true, default: Date.now },
+  guide:{ type: Schema.Types.ObjectId, required: true, ref:"Guide" },
 });
 
 export type ReturnType = InferSchemaType<typeof returnSchema>
