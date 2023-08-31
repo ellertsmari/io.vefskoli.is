@@ -47,8 +47,6 @@ $marginLeftRight: 1.5rem;
 
 
 .default-profile-picture{
-  width: 16rem;
-  height: 15rem;
   object-fit: cover;
 }
 
@@ -59,8 +57,7 @@ a {
 
 .sidebar-container {
   width: 30rem;
-  position: absolute;
-  top: 10rem;
+  margin-top: 10rem;
   text-align: center;
   align-items: center;
   display: flex;

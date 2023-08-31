@@ -12,7 +12,7 @@ export default function useUser({
   type UserWithId = UserType & {_id:Types.ObjectId};
 
   const fetcher = (url:string) => fetch(url).then(r => r.json());
-  const { data: user, mutate: mutateUser, isLoading  } = useSWR<UserWithId>('http://localhost:3000/api/loggedIn',fetcher)
+  const { data: user, mutate: mutateUser, isLoading  } = useSWR<UserWithId>('/api/loggedIn',fetcher)
 
 
   useEffect(() => {

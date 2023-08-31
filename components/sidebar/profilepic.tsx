@@ -2,7 +2,6 @@
 import './sidebar.scss'
 import { useState, useRef } from 'react'
 import Link from 'next/link'
-import image from '@/images/default-profile-picture.svg'
 import { UserWithIdType } from '@/models/user'
 import { ChangeEvent } from 'react'
 
@@ -36,12 +35,12 @@ const ProfilePic = ( { user }:Props ) => {
   const x = { logout: () => {} }
   return(
     <div>
-      <img onClick={() => setProfilePopup(true)} className='default-profile-picture' src={image} alt="user-pic"/>
+      <img onClick={() => setProfilePopup(!profilePopup)} className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
       <div style={{display:profilePopup?'block':'none'}} className='profile-modal' ref={menuRef}>
           <div className="user-pic/name">
           <Link className="logout" onClick={x.logout} href="/loginpage">Logout</Link>
           <div>
-            <img className='default-profile-picture' src={image} alt="user-pic"/>
+            <img className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
           </div>
           <div className="user-name">
             <h3 style={{fontSize: "1.8rem", fontWeight: "400"}}>{student?.name}</h3>
