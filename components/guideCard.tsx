@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Link from "next/link";
 import { GuideType } from "@/models/guide";
 import mongoose from "mongoose";
+import guide from "@/app/guide/[id]/page";
+import type { AggregatedGuide } from "@/utils/types/types";
 
 const GuideCardContainer = styled.div`
   display: flex;
@@ -64,20 +66,46 @@ const Status = styled.div`
   }
 `;
 type GuideCardProps = {
-  guide: GuideType;
+  guide: AggregatedGuide;
   nr: number;
   key: string;
 };
+
 const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
+  const { isReturned, isReviewed, gotReviews, grade } = guide;
+  const status = 
+    gotReviews && !grade ? {
+      text: "Please grade the review",
+      color: "#72BBFF",
+      href: `/review/${guide._id}`
+    }: isReturned && isReviewed && gotReviews ?{
+      text: "Grade: "+grade,
+      color: "#B5E2A8"
+    }: isReturned && isReviewed ? {
+      text: "Waiting for other reviews",
+      color: "#FFFFFF"
+    }: isReturned ? {
+      text: "Please review this guide",
+      color: "#FECA9D"
+    }:{
+      text: "Guide not returned",
+      color: "#F1F1F1"
+    };
+  const color = 
+  isReturned && isReviewed ? "#B5E2A8" :
+  gotReviews && !grade ? "#72BBFF" :
+  isReturned ? "#FECA9D" :
+  "Guide not returned";
+  console.log(guide);
   return (
     <GuideCardContainer>
-        <Link style={{textDecoration:"none", color:"black" }} href={`/guide/${guide._id}`} >
-      <CardInfo>
-        <Number>Guide {nr+1}</Number>
-        <Title>{guide.title}</Title>
-      </CardInfo>
+      <Link style={{textDecoration:"none", color:"black" }} href={`/guide/${guide._id}`} >
+        <CardInfo style={{backgroundColor: status.color}}>
+          <Number>Guide {nr+1}</Number>
+          <Title>{guide.title}</Title>
+        </CardInfo>
       </Link>
-      <Status>put something here</Status>
+      <Status>{status.text}</Status>
     </GuideCardContainer>
   );
 };

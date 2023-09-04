@@ -13,6 +13,8 @@ import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide, GuideType } from "@/models/guide";
 import useServerUser from "@/utils/useServerUser";
 import { UserType } from "@/models/user";
+import { ObjectId } from "mongodb";
+import type { AggregatedGuide } from "@/utils/types/types";
 
 const options = [
     "MODULE 0",
@@ -30,7 +32,8 @@ const getGuides = async () => {
   await connectToDatabase();
   //const guides: GuideType[] = await Guide.find({});
   const user = await useServerUser() as UserType & { _id: string };
-  const userId = user._id;
+  const userId =new ObjectId(user._id);
+  //console.log(userId);
   try{
     const guides = await Guide.aggregate([
       {
@@ -94,28 +97,29 @@ const getGuides = async () => {
         $project: {
           title: 1,
           description: 1,
+          _id: 1,
+          module: 1,
           // other fields you want to display
-          hasUserReturned: { $gt: [{ $size: '$userReturns' }, 0] },
-          hasUserReviewed: { $gt: [{ $size: '$userReviews' }, 0] },
-          hasOtherReviews: { $gt: [{ $size: '$otherReviews' }, 0] }
+          isReturned: { $gt: [{ $size: '$userReturns' }, 0] },
+          isReviewed: { $gt: [{ $size: '$userReviews' }, 0] },
+          gotReviews: { $gt: [{ $size: '$otherReviews' }, 0] },
+          grade: { $arrayElemAt: ["$userReviews.grade", 0] }
         }
       }
     ]).exec();
-    console.log(guides);
+    return guides;
   } catch (e) {
     console.log(e);
   }
   
   
-  return guides;
+  
 };
 
+
 const guides = async () => {
-  const guides = await getGuides();
-
-
-  return (<>temporary testing</>)
-  /*
+  const guides: AggregatedGuide[] | undefined = await getGuides();
+  if (!guides) return <>No guides found</>;
   return (
     <>
       <AnimatedBackground />
@@ -125,7 +129,7 @@ const guides = async () => {
             options={options}
           />
           <GuidesContainer>
-            {guides.map((guide: GuideType, nr: number) => (
+            {guides.map((guide: AggregatedGuide, nr: number) => (
               <GuideCard
                 key={guide._id.toString()}
                 guide={JSON.parse(JSON.stringify(guide))}
@@ -136,7 +140,7 @@ const guides = async () => {
         </MainContainer>
       </Layout>
     </>
-  );*/
+  );
 };
 
 export default guides;
