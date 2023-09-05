@@ -19,6 +19,9 @@ import {
   ReviewFrame,
 } from "@/styles/pageStyles/review.styles";
 import ReviewComment from "@/components/ReviewComment/ReviewComment";
+import useServerUser from "@/utils/useServerUser";
+import { OmitPassword } from "@/utils/types/types";
+
 
 // type Props = {
 //   //Return Details
@@ -36,22 +39,33 @@ import ReviewComment from "@/components/ReviewComment/ReviewComment";
 
 
 const getGuide = async (id: string) => {
+  
+
   if (!Types.ObjectId.isValid(id)) {
     return null;
   }
+ 
+  
   const objectId = new Types.ObjectId(id);
   await connectToDatabase();
-  type OmitGuideFromReturn = Omit<ReturnType, 'guide'>;
+  type OmitGuideFromReturn = Omit<ReturnType, 'guide'>; //because we want the guide populated but not the id
 
   type ReturnWithGuide = OmitGuideFromReturn & {
     guide: GuideType;
+    _id: string;
   };
   const r: ReturnWithGuide | null = await Return.findOne({ _id: objectId }).populate('guide') as ReturnWithGuide | null;
   return r; 
 }
 
 const review = async ({params} : {params: { id: string}}) => {
-
+  const user : OmitPassword | string = await useServerUser();
+  if (!user) {
+    return <>You need to be logged in to view this page</>;
+  }
+  if(typeof user === "string") {
+    return <>{user}</>;
+  }
   // make a styled div with contenteditable that looks nice:
  
 
@@ -120,17 +134,9 @@ const review = async ({params} : {params: { id: string}}) => {
             </ReviewFrame>
 
             <ReviewFrame>
-              <SubTitle>Vote</SubTitle>
-              <form>
-                <input type="radio" />
-                <label>pass</label><br />
-                <input type="radio" />
-                <label>no pass</label><br />
-                <input type="radio" />
-                <label>recommend to gallery</label>
-              </form>
+             
             </ReviewFrame>
-            <ReviewComment />
+            <ReviewComment returnId={JSON.parse(JSON.stringify(r._id))} userId={user._id} guideId={JSON.parse(JSON.stringify(r.guide._id))} />
 
           </ReviewSection>
         </MainContainer>

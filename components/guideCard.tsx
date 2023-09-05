@@ -71,9 +71,8 @@ type GuideCardProps = {
 };
 
 const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
-  const { isReturned, isReviewed, gotReviews, grade } = guide;
-
   const [isHovered, setIsHovered] = useState(false)
+  const { isReturned, isReviewed, gotReviews, grade, oldestReturnId } = guide;
   const status = 
     gotReviews && !grade ? {
       text: "Please grade the review",
@@ -81,16 +80,20 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
       href: `/review/${guide._id}`
     }: isReturned && isReviewed && gotReviews ?{
       text: "Grade: "+grade,
-      color: "#B5E2A8"
+      color: "#B5E2A8",
+      href: `/review/${guide._id}`
     }: isReturned && isReviewed ? {
       text: "Waiting for other reviews",
-      color: "#FFFFFF"
+      color: "#FFFFFF",
+      href: `/review/${guide._id}`
     }: isReturned ? {
       text: "Please review this guide",
-      color: "#FECA9D"
+      color: "#FECA9D",
+      href: `/review/${oldestReturnId}`
     }:{
       text: "Guide not returned",
-      color: "#F1F1F1"
+      color: "#F1F1F1",
+      href: `/review/${guide._id}`
     };
   const color = 
   isReturned && isReviewed ? "#B5E2A8" :
@@ -116,7 +119,7 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
           <Title>{guide.title}</Title>
         </CardInfo>
       </Link>
-      <Status>{status.text}</Status>
+      <Link href={status.href}><Status>{status.text}</Status></Link>
     </GuideCardContainer>
   );
 };
