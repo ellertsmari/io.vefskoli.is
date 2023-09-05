@@ -116,6 +116,8 @@ const getGuides = async () => {
   
 };
 
+// const filterGuides = getGuides.filter(guide => guide.module === selectedModule)
+
 
 const guides = async () => {
   const guides: AggregatedGuide[] | undefined = await getGuides();

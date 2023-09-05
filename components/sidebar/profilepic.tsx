@@ -38,7 +38,7 @@ const ProfilePic = ( { user }:Props ) => {
       <img onClick={() => setProfilePopup(!profilePopup)} className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
       <div style={{display:profilePopup?'block':'none'}} className='profile-modal' ref={menuRef}>
           <div className="user-pic/name">
-          <Link className="logout" onClick={x.logout} href="/loginpage">Logout</Link>
+          <Link className="logout" onClick={x.logout} href="/authpage">Logout</Link>
           <div>
             <img className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
           </div>

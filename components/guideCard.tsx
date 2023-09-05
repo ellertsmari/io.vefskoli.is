@@ -5,6 +5,7 @@ import { GuideType } from "@/models/guide";
 import mongoose from "mongoose";
 import guide from "@/app/guide/[id]/page";
 import type { AggregatedGuide } from "@/utils/types/types";
+import { useState } from "react";
 
 const GuideCardContainer = styled.div`
   display: flex;
@@ -26,11 +27,6 @@ const CardInfo = styled.div`
   flex-direction: column;
   gap: 3rem;
   transition: 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #6563eb;
-    color: white;
-  }
 `;
 
 const Number = styled.h1`
@@ -41,6 +37,8 @@ const Number = styled.h1`
 const Title = styled.h2`
   font-size: 1.5rem;
   font-family: "Poppins";
+  text-align: center;
+  padding: 2rem;
 
 `;
 
@@ -57,6 +55,7 @@ const Status = styled.div`
   align-items: center;
   font-size: 1.5rem;
   font-family: "Poppins";
+  z-index: 1;
 
   transition: 0.2s ease-in-out;
 
@@ -73,6 +72,8 @@ type GuideCardProps = {
 
 const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
   const { isReturned, isReviewed, gotReviews, grade } = guide;
+
+  const [isHovered, setIsHovered] = useState(false)
   const status = 
     gotReviews && !grade ? {
       text: "Please grade the review",
@@ -97,10 +98,20 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
   isReturned ? "#FECA9D" :
   "Guide not returned";
   console.log(guide);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
+
+  const modifiedColor = isHovered ? "brightness(80%)" : "brightness(100%)"
   return (
     <GuideCardContainer>
       <Link style={{textDecoration:"none", color:"black" }} href={`/guide/${guide._id}`} >
-        <CardInfo style={{backgroundColor: status.color}}>
+        <CardInfo style={{backgroundColor: status.color, filter: modifiedColor}} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <Number>Guide {nr+1}</Number>
           <Title>{guide.title}</Title>
         </CardInfo>
