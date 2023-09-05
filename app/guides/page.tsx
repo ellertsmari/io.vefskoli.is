@@ -12,7 +12,7 @@ import Dropdown from "@/components/dropDown";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide, GuideType } from "@/models/guide";
 import useServerUser from "@/utils/useServerUser";
-import { UserType } from "@/models/user";
+import { OmitPassword } from "@/utils/types/types";
 import { ObjectId } from "mongodb";
 import type { AggregatedGuide } from "@/utils/types/types";
 
@@ -31,8 +31,9 @@ const options = [
 const getGuides = async () => {
   await connectToDatabase();
   //const guides: GuideType[] = await Guide.find({});
-  const user = await useServerUser() as UserType & { _id: string };
-  const userId =new ObjectId(user._id);
+  const user: OmitPassword | string = await useServerUser();
+  if (!user) return null;
+  const userId =new ObjectId((user as OmitPassword)._id);
   //console.log(userId);
   try{
     const guides = await Guide.aggregate([
@@ -49,6 +50,12 @@ const getGuides = async () => {
                     { $eq: ['$owner', userId] }
                   ]
                 }
+              }
+            },
+            {
+              $sort: {
+                reviewedAt: 1, // Ascending order by reviewedAt
+                createdAt: 1  // Ascending order by createdAt
               }
             }
           ],
@@ -99,6 +106,7 @@ const getGuides = async () => {
           description: 1,
           _id: 1,
           module: 1,
+          oldestReturnId: { $arrayElemAt: ['$userReturns._id', 0] },
           // other fields you want to display
           isReturned: { $gt: [{ $size: '$userReturns' }, 0] },
           isReviewed: { $gt: [{ $size: '$userReviews' }, 0] },
@@ -118,7 +126,7 @@ const getGuides = async () => {
 
 
 const guides = async () => {
-  const guides: AggregatedGuide[] | undefined = await getGuides();
+  const guides: AggregatedGuide[] | undefined | null = await getGuides();
   if (!guides) return <>No guides found</>;
   return (
     <>

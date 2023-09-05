@@ -69,3 +69,11 @@ export const Layout = styled.div`
         min-height: 35rem;
     }
   ` 
+
+  export const Error = styled.p`
+    color: red;
+    font-size: 1.5rem;
+    font-family: "Poppins";
+    font-weight: 500;
+    margin: 0;
+    `
