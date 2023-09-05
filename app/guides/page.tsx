@@ -51,6 +51,25 @@ const getGuides = async () => {
                   ]
                 }
               }
+            }
+          ],
+          as: 'userReturns'
+        }
+      },
+      {
+        $lookup: {
+          from: 'returns',
+          let: { guideId: '$_id' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$guide', '$$guideId'] },
+                    { $ne: ['$owner', userId] }
+                  ]
+                }
+              }
             },
             {
               $sort: {
