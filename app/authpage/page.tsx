@@ -16,6 +16,9 @@ import { ShortInput } from "@/components/inputs";
 import { InputLabel } from "@/components/inputs/lables/lable";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+
+
 
 type CredentailsData = {
   email: string;
@@ -52,12 +55,16 @@ async function createUser(body: CredentailsData){
   console.log("this is x",x);
 }
 
+
+
 const authPage = () => {
   const [authSwitch, setAuthSwitch] = useState(true);
   const [credentials, setCredentials] = useLocalStorage<CredentailsData>(
     "credentails",
     { email: "", password: "" }
   );
+
+  const router = useRouter();
 
   const handleAuthSwitch: MouseEventHandler<HTMLButtonElement> = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -83,6 +90,7 @@ const authPage = () => {
     });
     const x = await user.json();
     console.log("login success", x);
+    router.push("/guides")
   };
 
   const register: MouseEventHandler<HTMLAnchorElement> = (
