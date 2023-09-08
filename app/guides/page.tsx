@@ -15,6 +15,7 @@ import useServerUser from "@/utils/useServerUser";
 import { OmitPassword } from "@/utils/types/types";
 import { ObjectId } from "mongodb";
 import type { AggregatedGuide } from "@/utils/types/types";
+import GradingForm from "@/components/gradingForm/gradingForm";
 
 const options = [
     "MODULE 0",
@@ -111,7 +112,7 @@ const getGuides = async () => {
           isReturned: { $gt: [{ $size: '$userReturns' }, 0] },
           isReviewed: { $gt: [{ $size: '$userReviews' }, 0] },
           gotReviews: { $gt: [{ $size: '$otherReviews' }, 0] },
-          grade: { $arrayElemAt: ["$userReviews.grade", 0] }
+          grade: { $arrayElemAt: ["$userReviews.grade", 0] },
         }
       }
     ]).exec();
