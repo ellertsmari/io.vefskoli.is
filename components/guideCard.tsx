@@ -127,7 +127,7 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
         </CardInfo>
       </Link>
       <Link href={status.href}><Status>{status.text}</Status></Link>
-      <GradingForm />
+      {status.text==="Please grade the review" && <GradingForm /> }
     </GuideCardContainer>
   );
 };
