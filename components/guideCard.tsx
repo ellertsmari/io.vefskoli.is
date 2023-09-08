@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import guide from "@/app/guide/[id]/page";
 import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
+import GradingForm from "./gradingForm/gradingForm";
 
 const GuideCardContainer = styled.div`
   display: flex;
@@ -126,6 +127,7 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
         </CardInfo>
       </Link>
       <Link href={status.href}><Status>{status.text}</Status></Link>
+      <GradingForm />
     </GuideCardContainer>
   );
 };

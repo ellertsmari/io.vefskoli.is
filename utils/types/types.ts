@@ -1,3 +1,4 @@
+import { GuideType } from "@/models/guide";
 import { ReturnType } from "@/models/return";
 import { UserWithIdType } from "@/models/user";
 
@@ -15,6 +16,7 @@ export type AggregatedGuide = {
   isReviewed: boolean;
   gotReviews: boolean;
   grade: number;
+  guide: GuideType;
 }
 
 export type OmitPassword = Omit<UserWithIdType, 'password'> & {password?:string};

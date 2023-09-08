@@ -1,47 +1,38 @@
-import { useState } from "react";
+"use client";
+
 import {
   BackgroundOverlay,
   FeedbackGrade,
   FormContainer,
+  GradeSlider,
+  SliderContainer,
+  SliderLables,
   Modal,
   ProjectTitle,
   ReturnDetails,
+  SubTitle,
+  Text,
+  Grades,
 } from "./gradingForm.style";
 import { FilledButton } from "../buttons";
-import { Types } from "mongoose";
-import { connectToDatabase } from "@/utils/mongoose-connector";
-import { Return, ReturnType } from "@/models/return";
-import { GuideType } from "@/models/guide"; 
+import { useState } from "react";
 
-const getGuide = async (id: string) => {
-  if (!Types.ObjectId.isValid(id)) {
-    return null;
-  }
-  const objectId = new Types.ObjectId(id);
-  await connectToDatabase();
-  type OmitGuideFromReturn = Omit<ReturnType, "guide">;
+interface GradeSliderProps {
+  onChange?: (value: number) => void;
+}
 
-  type ReturnWithGuide = OmitGuideFromReturn & {
-    guide: GuideType;
-  };
-  const r: ReturnWithGuide | null = (await Return.findOne({
-    _id: objectId,
-  }).populate("guide")) as ReturnWithGuide | null;
-  return r;
-};
-
-const GradingForm = async ({ params }: { params: { id: string } }) => {
+const GradingForm: React.FC<GradeSliderProps> = ({onChange}) => {
   const [isOpen, setIsOpen] = useState(false);
-  // make a styled div with contenteditable that looks nice:
+  const [currentValue, setCurrentValue] = useState(5)
 
-  const r = await getGuide(params.id);
-  if (!r) {
-    return (
-      <>
-        <h1>Guide not found</h1> <h2>{params.id}</h2>
-      </>
-    );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    setCurrentValue(value);
+    if(onChange){
+      onChange(value);
+    }
   }
+  console.log(currentValue)
 
   return (
     <>
@@ -49,10 +40,29 @@ const GradingForm = async ({ params }: { params: { id: string } }) => {
       {isOpen && (
         <BackgroundOverlay>
           <Modal>
-            <ProjectTitle></ProjectTitle>
+            <ProjectTitle>Design UX - Design Thinking </ProjectTitle>
             <FormContainer>
               <ReturnDetails></ReturnDetails>
               <FeedbackGrade>
+                <SubTitle>Feedback</SubTitle>
+                <Text>
+                  WOW!! Amazing design, good job You really know Figma well and
+                  I can see that you spent a lot of time making such a good
+                  design thinking project. I reccomend checking this link to
+                  gain even more knowledge in figma: www.greatfigmainfo.com Hope
+                  you do well in the group project! :D
+                </Text>
+                <SubTitle>Grade this feedback</SubTitle>
+                <SliderContainer>
+                <GradeSlider type="range" min='1' max='10' step='1' value={currentValue} onChange={handleInputChange}/>
+                <SliderLables>
+                  {Array.from({ length: 10 }, (_,i) => (
+                    <Grades key={i} isActive={i + 1 === currentValue}>
+                      {i + 1}
+                    </Grades>
+                  ))}
+                </SliderLables>
+                </SliderContainer>
                 <FilledButton onClick={() => setIsOpen(!isOpen)}>
                   SUBMIT
                 </FilledButton>
