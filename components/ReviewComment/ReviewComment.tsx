@@ -4,6 +4,8 @@ import { FilledButton } from '../buttons/filledButton';
 import { Comment, SubTitle, ReviewFrame, Loader, Tip } from '@/styles/pageStyles/review.styles';
 import { ObjectId } from "mongodb";
 import { Error } from '@/styles/pageStyles/guides.styles';
+import { useRouter } from 'next/navigation';
+
 
 type Props = {
   returnId: string;
@@ -15,7 +17,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
   const [improvement, setImprovement] = useState<string>("");
   const [vote, setVote] = useState<string>("");
   const [error, setError] = useState<string>("");
-
+  const router = useRouter();
   const improveFeedback = async (e:MouseEvent) => {
     setImprovement("Loading...");
     const improvedFeedback = await fetch(`/api/improveFeedback?feedback=${commentRef.current?.innerText}`);
@@ -45,7 +47,8 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
       })
     });
     const json = await review.json();
-    console.log(json);
+    console.log("review", json);
+    router.push(`/guides`);
   }
   const createVote = (e:FormEvent<HTMLInputElement>)=>
   {

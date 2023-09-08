@@ -5,6 +5,7 @@ export type AggregatedGuide = {
   _id: string;
   title: string;
   description: string;
+  userReturns: ReturnType[];
   module: {
     title: string;
     description: string;

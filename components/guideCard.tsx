@@ -73,6 +73,7 @@ type GuideCardProps = {
 const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
   const [isHovered, setIsHovered] = useState(false)
   const { isReturned, isReviewed, gotReviews, grade, oldestReturnId } = guide;
+  console.log("guides reviews: ", nr, isReviewed);
   const status = 
     gotReviews && !grade ? {
       text: "Please grade the review",
@@ -86,11 +87,17 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
       text: "Waiting for other reviews",
       color: "#FFFFFF",
       href: `/review/${guide._id}`
-    }: isReturned ? {
+    }: isReturned ? oldestReturnId ?{
       text: "Please review this guide",
       color: "#FECA9D",
       href: `/review/${oldestReturnId}`
-    }:{
+    }:
+    {
+      text: "You should be able to review this guide as soon as someone returns it",
+      color: "#008800",
+      href: `/review/${guide._id}`
+    }:
+    {
       text: "Guide not returned",
       color: "#F1F1F1",
       href: `/review/${guide._id}`
@@ -100,7 +107,6 @@ const GuideCard : React.FC<GuideCardProps> = ({guide, nr}) => {
   gotReviews && !grade ? "#72BBFF" :
   isReturned ? "#FECA9D" :
   "Guide not returned";
-  console.log(guide);
 
   const handleMouseEnter = () => {
     setIsHovered(true)

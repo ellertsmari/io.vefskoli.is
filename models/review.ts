@@ -15,4 +15,4 @@ const reviewSchema = new Schema({
 export type ReviewType = InferSchemaType<typeof reviewSchema>
 
 type ReviewDocument = ReviewType & Document;
-export const Review = models.Return || model<ReviewDocument>("Return", reviewSchema);
+export const Review = models.Review || model<ReviewDocument>("Review", reviewSchema);

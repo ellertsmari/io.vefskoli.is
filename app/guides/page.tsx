@@ -53,7 +53,7 @@ const getGuides = async () => {
               }
             }
           ],
-          as: 'userReturns'
+          as: 'userReturns' //to be able to check if user has returned the guide
         }
       },
       {
@@ -78,7 +78,7 @@ const getGuides = async () => {
               }
             }
           ],
-          as: 'userReturns'
+          as: 'returnsToReview' // to be able to check if user has returns to review
         }
       },
       {
@@ -97,7 +97,7 @@ const getGuides = async () => {
               }
             }
           ],
-          as: 'userReviews'
+          as: 'userReviews' // to be able to check if user has reviewed the guide
         }
       },
       {
@@ -116,7 +116,7 @@ const getGuides = async () => {
               }
             }
           ],
-          as: 'otherReviews'
+          as: 'otherReviews' // to be able to check if user has reviews to grade
         }
       },
       {
@@ -125,7 +125,7 @@ const getGuides = async () => {
           description: 1,
           _id: 1,
           module: 1,
-          oldestReturnId: { $arrayElemAt: ['$userReturns._id', 0] },
+          oldestReturnId: { $arrayElemAt: ['$returnsToReview._id', 0] },
           // other fields you want to display
           isReturned: { $gt: [{ $size: '$userReturns' }, 0] },
           isReviewed: { $gt: [{ $size: '$userReviews' }, 0] },

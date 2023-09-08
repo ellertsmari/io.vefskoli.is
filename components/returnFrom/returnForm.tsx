@@ -7,7 +7,7 @@ import { BigInput, MidInput } from "../inputs";
 import { InputLabel } from "../inputs/lables/lable";
 import { ReturnType } from "@/models/return";
 import { UserType } from "@/models/user";
-import { Types } from "mongoose";
+import { Types, set } from "mongoose";
 import useUser from "@/utils/useUser";
 
 const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
@@ -61,7 +61,10 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(r)
-    }).then(res => res.json()).then(data => console.log(data));
+    }).then(res => res.json()).then(data => {
+      console.log(data)
+      setIsOpen(!false); // make a confetti animation
+    });
   }
   return (
     <>
