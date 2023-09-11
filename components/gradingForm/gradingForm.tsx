@@ -38,14 +38,17 @@ const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
   }
   console.log(currentValue)
 
-  const updateReview = async (e: React.FormEvent<HTMLFormElement>) => {
+  const updateReview = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setIsOpen(!isOpen)
+    console.log("update review");
     e.preventDefault();
     const updatedReview = await fetch(`/api/reviews/${review._id}`, {
       method: "PATCH",
       body: JSON.stringify({
-        vote: currentValue,
+        grade: currentValue,
       }),
     });//TODO: add error handling
+    console.log(updatedReview)
   }
   return (
     <>
@@ -53,7 +56,7 @@ const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
         <BackgroundOverlay>
           <Modal>
             <ProjectTitle>{guide.title}</ProjectTitle>
-            <FormContainer onSubmit={updateReview}>
+            <FormContainer>
               <ReturnDetails></ReturnDetails>
               <FeedbackGrade>
                 <SubTitle>Feedback</SubTitle>
@@ -71,7 +74,7 @@ const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
                   ))}
                 </SliderLables>
                 </SliderContainer>
-                <FilledButton onClick={() => setIsOpen(!isOpen)}>
+                <FilledButton onClick={updateReview}>
                   SUBMIT
                 </FilledButton>
               </FeedbackGrade>

@@ -9,10 +9,13 @@ export const GET = async (req: NextRequest) => {
 
 export const PATCH = async (req: NextRequest) => {
   connectToDatabase();
-  const vote = await req.json();
+  const grade = await req.json();
   const { searchParams } = new URL(req.url);
+  
+  console.log("grade: ",grade)
   const id = searchParams.get('id');
-  const review = await Review.findByIdAndUpdate(id, vote);
+  console.log("id: ",id);
+  const review = await Review.findByIdAndUpdate(id, grade);
 
   return res.json(review);
 }
