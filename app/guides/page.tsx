@@ -126,12 +126,16 @@ const getGuides = async () => {
           description: 1,
           _id: 1,
           module: 1,
+          returnDate: { $arrayElemAt: ['$userReturns.createdAt', 0] },
           oldestReturnId: { $arrayElemAt: ['$returnsToReview._id', 0] },
           // other fields you want to display
           isReturned: { $gt: [{ $size: '$userReturns' }, 0] },
           isReviewed: { $gt: [{ $size: '$userReviews' }, 0] },
-          gotReviews: { $gt: [{ $size: '$otherReviews' }, 0] },
-          grade: { $arrayElemAt: ["$userReviews.grade", 0] },
+          isReviewedx2: { $gt: [{ $size: '$userReviews' }, 1] },
+          //gotReviews: { $gt: [{ $size: '$otherReviews' }, 0] },
+          //grade: { $arrayElemAt: ["$userReviews.grade", 0] },
+          otherReviews: 1,
+          userReviews: 1,
         }
       }
     ]).exec();

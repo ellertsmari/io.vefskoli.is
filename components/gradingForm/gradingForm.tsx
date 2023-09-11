@@ -16,41 +16,49 @@ import {
 } from "./gradingForm.style";
 import { FilledButton } from "../buttons";
 import { useState } from "react";
+import { ReviewType } from "@/models/review";
+import { AggregatedGuide } from "@/utils/types/types";
 
-interface GradeSliderProps {
-  onChange?: (value: number) => void;
+
+type ReviewWithId = ReviewType & { _id: string };
+
+interface Props {
+  review: ReviewWithId;
+  guide: AggregatedGuide;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-const GradingForm: React.FC<GradeSliderProps> = ({onChange}) => {
-  const [isOpen, setIsOpen] = useState(false);
+const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
   const [currentValue, setCurrentValue] = useState(5)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     setCurrentValue(value);
-    if(onChange){
-      onChange(value);
-    }
   }
   console.log(currentValue)
 
+  const updateReview = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const updatedReview = await fetch(`/api/reviews/${review._id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        vote: currentValue,
+      }),
+    });//TODO: add error handling
+  }
   return (
     <>
-      <FilledButton onClick={() => setIsOpen(!isOpen)}>Open</FilledButton>
       {isOpen && (
         <BackgroundOverlay>
           <Modal>
-            <ProjectTitle>Design UX - Design Thinking </ProjectTitle>
-            <FormContainer>
+            <ProjectTitle>{guide.title}</ProjectTitle>
+            <FormContainer onSubmit={updateReview}>
               <ReturnDetails></ReturnDetails>
               <FeedbackGrade>
                 <SubTitle>Feedback</SubTitle>
                 <Text>
-                  WOW!! Amazing design, good job You really know Figma well and
-                  I can see that you spent a lot of time making such a good
-                  design thinking project. I reccomend checking this link to
-                  gain even more knowledge in figma: www.greatfigmainfo.com Hope
-                  you do well in the group project! :D
+               {review.comment}
                 </Text>
                 <SubTitle>Grade this feedback</SubTitle>
                 <SliderContainer>

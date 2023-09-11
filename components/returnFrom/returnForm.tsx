@@ -9,6 +9,7 @@ import { ReturnType } from "@/models/return";
 import { UserType } from "@/models/user";
 import { Types, set } from "mongoose";
 import useUser from "@/utils/useUser";
+import { useRouter } from "next/navigation";
 
 const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [pictureUrl, setPictureUrl] = useState("");
   const [projectName, setProjectName] = useState("");
   const [comment, setComment] = useState("");
+  const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -63,7 +65,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
       body: JSON.stringify(r)
     }).then(res => res.json()).then(data => {
       console.log(data)
-      setIsOpen(!false); // make a confetti animation
+      router.push("/guides"); //guide shows as not returned but will get fixed when confetti is added
     });
   }
   return (
