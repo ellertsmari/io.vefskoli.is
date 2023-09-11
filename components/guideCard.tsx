@@ -79,7 +79,7 @@ const GuideCard = ({guide, nr}:GuideCardProps) => {
   const { isReturned, isReviewed, userReviews, oldestReturnId, otherReviews } = guide;
   const nrOfReviews = userReviews.length;
   const ungradedReviews = otherReviews.filter(review => !review.grade);
-  //console.log(otherReviews);
+  otherReviews.length && console.log(otherReviews);
   const needsGrading = ungradedReviews.length>0;
   let grade = 0;
   if(nrOfReviews===1) {

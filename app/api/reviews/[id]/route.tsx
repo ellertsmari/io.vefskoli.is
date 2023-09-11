@@ -7,13 +7,12 @@ export const GET = async (req: NextRequest) => {
   return res.json({ message: "Hello world" });
 }
 
-export const PATCH = async (req: NextRequest) => {
+export const PATCH = async (req: NextRequest, {params}:{params: {id:string}}) => {
   connectToDatabase();
   const grade = await req.json();
-  const { searchParams } = new URL(req.url);
   
   console.log("grade: ",grade)
-  const id = searchParams.get('id');
+  const id = params.id;
   console.log("id: ",id);
   const review = await Review.findByIdAndUpdate(id, grade);
 
