@@ -2,12 +2,13 @@
 
 import Head from "next/head";
 import React from "react";
-// import { Inter } from 'next/font/google'
-
-// const inter = Inter({ subsets: ['latin'] })
-import GradingForm from "../components/gradingForm/gradingForm"
+import useUser from "@/utils/useUser";
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  const { user } = useUser({ redirectTo: "/authpage" });
+  
+  if(user) redirect("/guides"); 
 
   return (
     <>

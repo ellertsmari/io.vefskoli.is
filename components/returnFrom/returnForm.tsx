@@ -9,17 +9,21 @@ import { ReturnType } from "@/models/return";
 import { UserType } from "@/models/user";
 import { Types, set } from "mongoose";
 import useUser from "@/utils/useUser";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   const [projectUrl, setProjectUrl] = useState("");
   const [liveVersion, setLiveVersion] = useState("");
   const [pictureUrl, setPictureUrl] = useState("");
   const [projectName, setProjectName] = useState("");
   const [comment, setComment] = useState("");
-  const router = useRouter();
 
+  useEffect(() => {
+    if(shouldRedirect) redirect(`/guides`);
+  },[shouldRedirect])
+  
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const stateMap = {
@@ -65,9 +69,13 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
       body: JSON.stringify(r)
     }).then(res => res.json()).then(data => {
       console.log(data)
-      router.push("/guides"); //guide shows as not returned but will get fixed when confetti is added
+      setShouldRedirect(true);
+       //guide shows as not returned but will get fixed when confetti is added
     });
   }
+
+
+
   return (
     <>
       <FilledButton style={{ width: "100%"}} onClick={() => setIsOpen(!isOpen)}>

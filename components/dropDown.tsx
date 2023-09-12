@@ -71,9 +71,11 @@ export const ArrowImage = styled(motion.div)`
 
 type Props = {
   options: string[];
+  selected: string;
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Dropdown: React.FC<Props> = ({ options }) => {
+const Dropdown = ({ options, selected, setSelected }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const slideAnimation = {
@@ -87,7 +89,6 @@ const Dropdown: React.FC<Props> = ({ options }) => {
     open: { rotate: 0 },
   };
 
-  const [selected, setSelected] = useState<string>(options[0]);
 
   const onSelect = (option: string) => {
     setSelected(option);

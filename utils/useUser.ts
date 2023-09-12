@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import Router from 'next/router'
+import { redirect } from 'next/navigation'
 import useSWR from 'swr'
 import { UserType } from '../models/user'
 import { Types } from 'mongoose'
@@ -29,7 +29,7 @@ export default function useUser({
       // If redirectIfFound is also set, redirect if the user was found
       (redirectIfFound && user?.isLoggedIn)
     ) {
-      Router.push(redirectTo)
+      redirect(redirectTo)
     }
   }, [user, redirectIfFound, redirectTo])
   console.log("this is user",user);
