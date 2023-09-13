@@ -49,6 +49,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
     const json = await review.json();
     console.log("review", json);
     router.push(`/guides`);
+    router.refresh();
   }
   const createVote = (e:FormEvent<HTMLInputElement>)=>
   {

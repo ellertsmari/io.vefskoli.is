@@ -6,10 +6,9 @@ import { BackgroundOverlay, FormContainer, Modal } from "./returnFrom.style";
 import { BigInput, MidInput } from "../inputs";
 import { InputLabel } from "../inputs/lables/lable";
 import { ReturnType } from "@/models/return";
-import { UserType } from "@/models/user";
-import { Types, set } from "mongoose";
+import { Types } from "mongoose";
 import useUser from "@/utils/useUser";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +18,13 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [pictureUrl, setPictureUrl] = useState("");
   const [projectName, setProjectName] = useState("");
   const [comment, setComment] = useState("");
+  const router = useRouter();
 
-  useEffect(() => {
-    if(shouldRedirect) redirect(`/guides`);
+  useEffect(() => { //needed because if redirect is called in returnForm it will not work because it is an event handler
+    if(shouldRedirect){
+      router.push("/guides");
+      router.refresh();
+    }
   },[shouldRedirect])
   
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +48,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const {user} = useUser();
   
   console.log("user is: ",user);
-  if (!user) return <>You are not logged in, if you  want to return this guide you need to log in via authpage</>;
+  if (!user?._id) return <>You are not logged in, if you  want to return this guide you need to log in via authpage</>;
   
 
   const createReturn = () => {

@@ -31,29 +31,6 @@ type CredentailsData = {
   favoriteArtists?: string;
 };
 
-async function createUser(body: CredentailsData){
-  const  user: UserType = {
-    email: body.email,
-    password: body.password,
-    name: body.name || "",
-    background: body.background || "",
-    careerGoals: body.careerGoals || "",
-    interests: body.interests || "",
-    favoriteArtists: body.favoriteArtists || "",
-    createdAt: new Date(),
-    role: "student",
-    avatarUrl: ""  
-  }
-  const res = await fetch("api/users", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user)
-  })
-  const x = await res.json();
-  console.log("this is x",x);
-}
 
 
 
@@ -77,10 +54,7 @@ const authPage = () => {
     const { name, value } = e.target;
     setCredentials({ ...credentials, [name]: value });
   };
-  const login: MouseEventHandler<HTMLAnchorElement> = async (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  const login = async ({email, password}:CredentailsData) => {
     const user = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
@@ -91,14 +65,37 @@ const authPage = () => {
     const x = await user.json();
     console.log("login success", x);
     router.push("/guides")
+    router.refresh();
   };
-
-  const register: MouseEventHandler<HTMLAnchorElement> = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    if(credentials.password !== credentials.repeatPassword) return;
+  async function createUser({email, password, name, background, careerGoals, interests, favoriteArtists}: CredentailsData){
+    const  user: UserType = {
+      email,
+      password,
+      name: name || "",
+      background: background || "",
+      careerGoals: careerGoals || "",
+      interests: interests || "",
+      favoriteArtists: favoriteArtists || "",
+      createdAt: new Date(),
+      role: "student",
+      avatarUrl: ""  
+    }
+    const res = await fetch("api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user)
+    })
+    const x = await res.json();
+    console.log("this is x",x);
+    login({email, password});
+  }
+  
+  const submit: MouseEventHandler<HTMLAnchorElement> = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if(!authSwitch && (credentials.password !== credentials.repeatPassword) ) return;
     e.preventDefault();
-    createUser(credentials);
+    authSwitch?login(credentials):createUser(credentials);
   };
 
   return (
@@ -204,7 +201,7 @@ const authPage = () => {
                 <TextButton onClick={handleAuthSwitch}>
                   {authSwitch ? "Create Account" : "I already have an account"}
                 </TextButton>
-                <FilledButton onClick={authSwitch? login : register}>
+                <FilledButton onClick={submit}>
                   {" "}
                   {authSwitch? "LOGIN" : "REGISTER"}{" "}
                 </FilledButton>

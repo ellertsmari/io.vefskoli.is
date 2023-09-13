@@ -53,7 +53,7 @@ const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
   return (
     <>
       {isOpen && (
-        <BackgroundOverlay>
+        <BackgroundOverlay style={{zIndex:3}}>
           <Modal>
             <ProjectTitle>{guide.title}</ProjectTitle>
             <FormContainer>

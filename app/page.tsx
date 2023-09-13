@@ -7,8 +7,9 @@ import { redirect } from "next/navigation";
 
 export default function Home() {
   const { user } = useUser({ redirectTo: "/authpage" });
-  
-  if(user) redirect("/guides"); 
+  console.log(user);
+  if (!user) return <div>loading...</div>;
+  if(user._id) redirect("/guides"); 
 
   return (
     <>

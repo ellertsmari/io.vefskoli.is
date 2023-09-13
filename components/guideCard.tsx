@@ -163,7 +163,7 @@ const GuideCard = ({guide, nr}:GuideCardProps) => {
         </CardInfo>
       </Link>
       <Link onClick={()=>setIsOpen(!isOpen)} href={status.href}><Status style={{background: status.color, filter: modifiedColor}} >{status.action}</Status></Link>
-      {status.text==="Please grade the review" && <GradingForm guide={guide} review={ungradedReviews[0]} isOpen={isOpen} setIsOpen={setIsOpen}/> }
+      {status.text==="You have got a review, please grade it" && <GradingForm guide={guide} review={ungradedReviews[0]} isOpen={isOpen} setIsOpen={setIsOpen}/> }
     </GuideCardContainer>
   );
 };
