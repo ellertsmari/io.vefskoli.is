@@ -156,8 +156,8 @@ const GuideCard = ({guide, nr}:GuideCardProps) => {
   const modifiedColor = isHovered ? "brightness(80%)" : "brightness(100%)"
   return (
     <GuideCardContainer>
-      <Link style={{textDecoration:"none", color:"black" }} href={`/guide/${guide._id}`} >
-        <CardInfo style={{backgroundColor: status.text==="Guide not returned"?"#F1F1F1":"#B5E2A8", filter: modifiedColor}} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <Link style={{textDecoration:"none", color:"black" }} href={`/guide/${guide._id}?isreturned=${isReturned}`} >
+        <CardInfo style={{backgroundColor: status.text==="You have not returned the guide yet"?"#F1F1F1":"#B5E2A8", filter: modifiedColor}} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <Number>Guide {nr+1}</Number>
           <Title>{isHovered?status.text:guide.title}</Title>
         </CardInfo>

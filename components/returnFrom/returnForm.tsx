@@ -8,7 +8,7 @@ import { InputLabel } from "../inputs/lables/lable";
 import { ReturnType } from "@/models/return";
 import { Types } from "mongoose";
 import useUser from "@/utils/useUser";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +19,8 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [projectName, setProjectName] = useState("");
   const [comment, setComment] = useState("");
   const router = useRouter();
-
+  const searchParams = useSearchParams();
+  console.log("this is searchParams: ",searchParams.get("isreturned"))
   useEffect(() => { //needed because if redirect is called in returnForm it will not work because it is an event handler
     if(shouldRedirect){
       router.push("/guides");
@@ -49,6 +50,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   
   console.log("user is: ",user);
   if (!user?._id) return <>You are not logged in, if you  want to return this guide you need to log in via authpage</>;
+  if(searchParams.get("isreturned") === "true") return <>This guide has already been returned</>;
   
 
   const createReturn = () => {

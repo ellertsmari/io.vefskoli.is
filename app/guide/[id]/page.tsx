@@ -33,6 +33,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
   if (!g) {
     return <><h1>Guide not found</h1> <h2>{params.id}</h2></>
   }
+
   return (
     <>
       <AnimatedBackground />
