@@ -47,6 +47,7 @@ interface Success {
 export const GET = async ( req: NextRequest) => {
     const { searchParams } = new URL(req.url);
     const uid = searchParams.get('uid');
+    await connectToDatabase();  
   const guide = await Guide.findOne({ id: uid });
   if (guide === null) {
     return res.json({ message: "Guide not found" },{status:404});
@@ -58,6 +59,7 @@ export const PUT = async ( req: NextRequest) => {
   // TODO: Add logic to update the guide
   const { searchParams } = new URL(req.url);
   const uid = searchParams.get('uid');
+  await connectToDatabase();
   const guide = await Guide.findOneAndUpdate({id:uid}, req.json());
   res.json({ message: "Guide updated successfully" }, { status: 200 });
 }
@@ -65,6 +67,7 @@ export const DELETE = async ( req: NextRequest) => {
   // TODO: Add logic to "delete"(disable or add to trash? to prevent accidental deletion?) the guide
   const { searchParams } = new URL(req.url);
   const uid = searchParams.get('uid');
+  await connectToDatabase();
   await Guide.deleteOne({ id: uid });
   res.json({ message: "Guide deleted successfully" }, { status: 200 });
   return;

@@ -42,6 +42,7 @@ export default async function UserByIdHandler(
 
   const handler = {
     GET: async () => {
+      await connectToDatabase();
       const user = await User.findOne({ _id: req.query.uid });
       if (user === null) {
         res.status(404).json({ message: "User not found" });

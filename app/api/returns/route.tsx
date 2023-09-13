@@ -37,6 +37,7 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async (req: NextRequest,
 ) => {
+  await connectToDatabase();
   const returns = await Return.find({});
   if (returns === null) {
     res.json({ message: "Return not found" }, {status: 404});

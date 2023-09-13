@@ -35,7 +35,7 @@ interface Success {
 **/
 
 export const POST = async (req: NextRequest) => {
-  connectToDatabase();
+  await connectToDatabase();
   const r = await req.json();
   console.log("r is: ",r);
   const result = await Review.create(r);
@@ -45,6 +45,7 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async (req: NextRequest,
 ) => {
+  await connectToDatabase();
   const reviews = await Review.find({});
   if (reviews === null) {
     return NextResponse.json({ message: "Review not found" }, {status: 404});

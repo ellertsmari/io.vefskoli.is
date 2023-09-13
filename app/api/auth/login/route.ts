@@ -8,7 +8,7 @@ export const POST = async (req: Request) => {
   const { email, password } = await req.json();
   const res = NextResponse.next();
   try {
-    connectToDatabase();
+    await connectToDatabase();
     const users = await User.find();
     const user = users.find((u: UserType) => u.email === email);
     if (!user) {

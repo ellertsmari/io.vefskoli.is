@@ -39,7 +39,8 @@ const getReturn = async (id: string) => {
     _id: string;
   };
   const r: ReturnWithGuide | null = await Return.findOne({ _id: objectId }).populate('guide') as ReturnWithGuide | null;
-  Return.updateOne({ _id: objectId }, { $set: { reviewedAt: new Date() } });
+  await Return.findByIdAndUpdate(objectId, { reviewedAt: new Date() } );
+
   return r; 
 }
 

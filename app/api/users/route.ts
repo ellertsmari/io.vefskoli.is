@@ -44,6 +44,7 @@ export const POST = async (req:Request) => {
 }
 
 export const GET = async () => {
+  await connectToDatabase();
   const users = await User.find();
   if (users === null) {
     return res.json({ message: "User not found" }, { status: 404 });

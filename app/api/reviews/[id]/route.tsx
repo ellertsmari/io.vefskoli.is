@@ -8,7 +8,7 @@ export const GET = async (req: NextRequest) => {
 }
 
 export const PATCH = async (req: NextRequest, {params}:{params: {id:string}}) => {
-  connectToDatabase();
+  await connectToDatabase();
   const grade = await req.json();
   const id = params.id;
   const review = await Review.findByIdAndUpdate(id, grade);

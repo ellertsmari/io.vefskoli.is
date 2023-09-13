@@ -30,6 +30,7 @@ export const POST = async (
   req: NextRequest
 ) => {
   // TODO: Add logic to create a guide
+  await connectToDatabase();
   const body = await req.json();
   Guide.create(body);
   res.json({ message: "Guide created successfully" }, { status: 200 });
@@ -38,6 +39,7 @@ export const POST = async (
 export const GET = async (
   req: NextRequest,
 ) => {
+  await connectToDatabase();
   const guides = await Guide.find({});
   if (guides === null) {
     return res.json({ message: "Guide not found" }, { status: 404 });
