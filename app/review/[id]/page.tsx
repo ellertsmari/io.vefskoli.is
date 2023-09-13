@@ -22,23 +22,7 @@ import ReviewComment from "@/components/ReviewComment/ReviewComment";
 import useServerUser from "@/utils/useServerUser";
 import { OmitPassword } from "@/utils/types/types";
 
-
-// type Props = {
-//   //Return Details
-//   module: string;
-//   guide: string;
-//   date: string;
-//   url: string;
-//   liveVersion: string;
-//   comment: string;
-//   photo: string;
-
-//   //Review
-// };
-
-
-
-const getGuide = async (id: string) => {
+const getReturn = async (id: string) => {
   
 
   if (!Types.ObjectId.isValid(id)) {
@@ -55,6 +39,7 @@ const getGuide = async (id: string) => {
     _id: string;
   };
   const r: ReturnWithGuide | null = await Return.findOne({ _id: objectId }).populate('guide') as ReturnWithGuide | null;
+  Return.updateOne({ _id: objectId }, { $set: { reviewedAt: new Date() } });
   return r; 
 }
 
@@ -69,7 +54,7 @@ const review = async ({params} : {params: { id: string}}) => {
   // make a styled div with contenteditable that looks nice:
  
 
-  const r = await getGuide(params.id);
+  const r = await getReturn(params.id);
   if (!r) {
     return <><h1>Guide not found</h1> <h2>{params.id}</h2></>
   }
