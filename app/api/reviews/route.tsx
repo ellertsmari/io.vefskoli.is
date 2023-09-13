@@ -53,6 +53,7 @@ export const GET = async (req: NextRequest,
   
 }
 
+/*
 export const GET_ID = async (req: NextRequest,
 ) => {
   const id = await req.json();
@@ -64,4 +65,4 @@ export const GET_ID = async (req: NextRequest,
   NextResponse.json(review, {status: 200});
   return;
 }
-
+*/
