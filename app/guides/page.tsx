@@ -51,15 +51,31 @@ const getGuides = async () => {
               }
             },
             {
+              $lookup: {
+                from: 'reviews',
+                localField: '_id',  // return ID
+                foreignField: 'return', // connecting return field in review schema
+                as: 'associatedReviews'
+              }
+            },
+            {
+              $match: {
+                'associatedReviews.owner': {
+                  $ne: userId  // Assuming userId is defined elsewhere in your script
+                }
+              }
+            },
+            {
               $sort: {
                 reviewedAt: 1, // Ascending order by reviewedAt
-                createdAt: 1  // Ascending order by createdAt
+                createdAt: 1   // Ascending order by createdAt
               }
             }
           ],
           as: 'returnsToReview' // to be able to check if user has returns to review
         }
-      },
+      }
+      ,
       {
         $lookup: {
           from: 'reviews',
@@ -76,7 +92,7 @@ const getGuides = async () => {
               }
             }
           ],
-          as: 'userReviews' // to be able to check if user has reviewed the guide
+          as: 'userReviews' // to be able to check how often a user has reviewed the guide
         }
       },
       {
