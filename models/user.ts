@@ -2,7 +2,7 @@ import { Document, Schema, model, models, InferSchemaType, Types} from "mongoose
 
 const userSchema = new Schema({
   name: { type: Schema.Types.String, required: true },
-  email: { type: Schema.Types.String, required: true },
+  email: { type: Schema.Types.String, required: true, unique: true },
   password: { type: Schema.Types.String, required: true },
   background: { type: Schema.Types.String, required: false },
   careerGoals: { type: Schema.Types.String, required: false },

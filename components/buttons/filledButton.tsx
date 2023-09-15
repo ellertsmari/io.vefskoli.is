@@ -2,7 +2,7 @@
 
 import styled from "styled-components"
 
-export const FilledButton = styled.a`
+export const FilledButton = styled.button`
     text-decoration: none;
     text-align: center;
     width: 12rem;

@@ -15,9 +15,10 @@ import {
   Grades,
 } from "./gradingForm.style";
 import { FilledButton } from "../buttons";
-import { useState } from "react";
+import { use, useState } from "react";
 import { ReviewType } from "@/models/review";
 import { AggregatedGuide } from "@/utils/types/types";
+import { useRouter } from "next/navigation";
 
 
 type ReviewWithId = ReviewType & { _id: string };
@@ -31,14 +32,14 @@ interface Props {
 
 const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
   const [currentValue, setCurrentValue] = useState(5)
-
+  const router = useRouter();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     setCurrentValue(value);
   }
   console.log(currentValue)
 
-  const updateReview = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const updateReview = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsOpen(!isOpen)
     console.log("update review");
     e.preventDefault();
@@ -49,6 +50,7 @@ const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
       }),
     });//TODO: add error handling
     console.log(updatedReview)
+    router.refresh();
   }
   return (
     <>

@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const TextButton = styled.button`
+export const TextButton = styled.a`
 height: 4rem;
 background-color: rgba(255,255,255,0);
 border-style: none;

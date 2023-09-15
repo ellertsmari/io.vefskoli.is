@@ -39,7 +39,12 @@ export const POST = async (req:Request) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(body.password, salt);
   body.password = hashedPassword;
-  User.create(body);
+  try {
+  const x = await User.create(body);
+  } catch (error) {
+    console.log("there was an error", error);
+    return res.json({ message: (error as Error).message }, { status: 500 });
+  }
   return res.json({ message: "User created successfully" }, { status: 200 });
 }
 

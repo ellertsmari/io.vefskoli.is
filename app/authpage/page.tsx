@@ -17,6 +17,7 @@ import { InputLabel } from "@/components/inputs/lables/lable";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { Error } from "@/styles/pageStyles/guides.styles";
 
 
 
@@ -36,6 +37,7 @@ type CredentailsData = {
 
 const authPage = () => {
   const [authSwitch, setAuthSwitch] = useState(true);
+  const [error, setError] = useState<string>("");
   const [credentials, setCredentials] = useLocalStorage<CredentailsData>(
     "credentails",
     { email: "", password: "" }
@@ -43,8 +45,8 @@ const authPage = () => {
 
   const router = useRouter();
 
-  const handleAuthSwitch: MouseEventHandler<HTMLButtonElement> = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  const handleAuthSwitch: MouseEventHandler<HTMLAnchorElement> = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     e.preventDefault();
     setAuthSwitch(!authSwitch);
@@ -64,8 +66,20 @@ const authPage = () => {
     });
     const x = await user.json();
     console.log("login success", x);
-    router.push("/guides")
-    router.refresh();
+    if(x.message === "logged in") {
+      router.push("/guides")
+      router.refresh();
+      return;
+    }
+    if(x.message) {
+      console.log(x.message);
+      setError(x.message);
+      return;
+    }
+   
+    else {
+      setError("Something went wrong");
+    }
   };
   async function createUser({email, password, name, background, careerGoals, interests, favoriteArtists}: CredentailsData){
     const  user: UserType = {
@@ -89,10 +103,23 @@ const authPage = () => {
     })
     const x = await res.json();
     console.log("this is x",x);
-    login({email, password});
+    if(x.message === "User created successfully") {
+      login({email, password});
+    }
+    if(x.message) {
+      console.log(x.message);
+      setError(x.message);
+    }
+    else {
+      setError("Something went wrong");
+    }
   }
   
-  const submit: MouseEventHandler<HTMLAnchorElement> = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const submit: MouseEventHandler<HTMLButtonElement> = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if(!credentials.email || !credentials.password){
+      setError("Please fill out all fields");
+      return;
+    } 
     if(!authSwitch && (credentials.password !== credentials.repeatPassword) ) return;
     e.preventDefault();
     authSwitch?login(credentials):createUser(credentials);
@@ -110,6 +137,7 @@ const authPage = () => {
             exit={{ opacity: 0 }}
           >
             <InputForm>
+              <Error>{error}</Error>
               <VefskolinnLogo>{"{ Vefskolinn }"}</VefskolinnLogo>
               {authSwitch ? ( //login
                 <InputWrapper>
@@ -122,6 +150,8 @@ const authPage = () => {
                   />
                   <InputLabel>Password</InputLabel>
                   <ShortInput
+                    
+                    
                     type="password"
                     name="password"
                     value={credentials.password}

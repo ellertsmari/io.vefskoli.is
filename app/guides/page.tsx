@@ -84,18 +84,33 @@ const getGuides = async () => {
           from: 'reviews',
           let: { guideId: '$_id' },
           pipeline: [
+            // First, perform a lookup on the Return collection
+            {
+              $lookup: {
+                from: 'returns',
+                localField: 'return',
+                foreignField: '_id',
+                as: 'returnData'
+              }
+            },
+            // Unwind the array, so we can easily access the owner field
+            {
+              $unwind: '$returnData'
+            },
+            // Filter by guide and owner
             {
               $match: {
-                $expr: { 
+                $expr: {
                   $and: [
                     { $eq: ['$guide', '$$guideId'] },
-                    { $ne: ['$owner', userId] }
+                    { $ne: ['$owner', userId] },
+                    { $eq: ['$returnData.owner', userId] }
                   ]
                 }
               }
             }
           ],
-          as: 'otherReviews' // to be able to check if user has reviews to grade
+          as: 'otherReviews'
         }
       },
       {

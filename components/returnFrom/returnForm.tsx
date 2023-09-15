@@ -1,7 +1,7 @@
 "use client";
 
 import { FilledButton, TextButton } from "../buttons";
-import { useState, KeyboardEventHandler, ChangeEvent, useEffect } from "react";
+import { useState, KeyboardEventHandler, ChangeEvent, useEffect, FormEvent } from "react";
 import { BackgroundOverlay, FormContainer, Modal } from "./returnFrom.style";
 import { BigInput, MidInput } from "../inputs";
 import { InputLabel } from "../inputs/lables/lable";
@@ -23,6 +23,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   console.log("this is searchParams: ",searchParams.get("isreturned"))
   useEffect(() => { //needed because if redirect is called in returnForm it will not work because it is an event handler
     if(shouldRedirect){
+      console.log("redirecting to guides")
       router.push("/guides");
       router.refresh();
     }
@@ -53,7 +54,8 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   if(searchParams.get("isreturned") === "true") return <>This guide has already been returned</>;
   
 
-  const createReturn = () => {
+  const createReturn = (e:FormEvent) => {
+    e.preventDefault();
     console.log("creating return")
     const r: ReturnType = {
       projectUrl,
@@ -75,7 +77,6 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
     }).then(res => res.json()).then(data => {
       console.log(data)
       setShouldRedirect(true);
-       //guide shows as not returned but will get fixed when confetti is added
     });
   }
 
@@ -101,7 +102,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
         <InputLabel>Comment</InputLabel>
         <BigInput onKeyDown={handleTextArea} name="comment"></BigInput>
         <div style={{display:"flex", width:"100%", justifyContent:"center", marginTop:"3rem"}}>
-        <FilledButton onClick={() => {createReturn()}}>RETURN</FilledButton>
+        <FilledButton onClick={createReturn}>RETURN</FilledButton>
         </div>
         </FormContainer>
         <TextButton onClick={() => setIsOpen(!isOpen)}>CLOSE</TextButton>
