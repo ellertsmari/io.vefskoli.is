@@ -29,11 +29,13 @@ interface Success {
 export const POST = async (
   req: NextRequest
 ) => {
+  console.log("POST /api/guides")
   // TODO: Add logic to create a guide
   await connectToDatabase();
   const body = await req.json();
+  console.log(body)
   Guide.create(body);
-  res.json({ message: "Guide created successfully" }, { status: 200 });
+  return res.json({ message: "Guide created successfully" }, { status: 200 });
 }
 
 export const GET = async (

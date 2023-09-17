@@ -1,5 +1,5 @@
+'use client'; //this is a very dinamic component
 import AnimatedBackground from "@/components/animatedBackground";
-import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide as G, GuideType } from "@/models/guide";
 import { FilledButton } from "@/components/buttons/filledButton";
 import {
@@ -18,59 +18,101 @@ import {
   SkillsWrapper,
   KnowledgeAndSkillsWrapper,
 } from "@/styles/pageStyles/guide0.styles";
-import { MouseEventHandler } from "react";
-import ReturnForm from "@/components/returnFrom/returnForm";
-const postGuide = async (guide:any) => {
-  await connectToDatabase();
-  const g = new G(guide);
-  guide.references.forEach((ref: any) => {
-    g.references.push(ref);
-  });
-  guide.classes.forEach((cl: any) => {
-    g.classes.push(cl);
-  });
-  guide.resources.forEach((res: any) => {
-    g.resources.push(res);
-  });
-  guide.knowledge.forEach((know: any) => {
-    g.knowledge.push(know);
-  });
-  guide.skills.forEach((skill: any) => {
-    g.skills.push(skill);
-  });
+import { MouseEventHandler, use } from "react";
+import { useState, useEffect } from "react";
+import { set } from "mongoose";
 
-  await g.save();
-  return g;
-}
-
-const CreateGuide = async ({ params }: { params: { id: string } }) => {
+const CreateGuide = ({ params }: { params: { id: string } }) => {
  
-  const materials = [{title:"edit materials", link:"edit link"}];
-  const knowledge = [{knowledge:"edit knowledge"}];
-  const skills = [{skill:"edit skill"}];
+  const [materials, setMaterials] = useState([{title:"edit materials", link:"edit link"}]);
+  const [knowledge, setKnowledge] = useState([{knowledge:"edit knowledge"}]);
+  const [skills, setSkills] = useState([{skill:"edit skill"}]);
 
-  const createGuide: MouseEventHandler<HTMLButtonElement> = async (e:React.MouseEvent<HTMLButtonElement>) => {
-    const guide = {
-      title: "edit title",
-      description: "edit description",
-      category: "edit category",
-      references: [{name:"edit reference", link:"edit link", type:"edit type"}],
-      themeIdea: {
-        title: "edit theme idea title",
-        description: "edit theme idea description",
-      },
-      resources: [{title:"edit resource", link:"edit link"}],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      topicsList: ["edit topic"],
-      module: "edit module",
-      classes: materials,
-      knowledge: knowledge,
-      skills: skills,
-    };
-    const g = await postGuide(guide);
-    console.log(g);
+  //need to ignore ts errors because of the Mongoose specific types could maybe create a custom type for this
+  const [guide, setGuide] = useState<Partial<GuideType>>({
+    title: "edit title",
+    description: "edit description",
+    category: "edit category",
+    // @ts-ignore
+    references: [{name:"edit reference", link:"edit link", type:"edit type"}],
+    themeIdea: {
+      title: "edit theme idea title",
+      description: "edit theme idea description",
+    },
+    // @ts-ignore
+    resources: [{description:"this is not used", link:"edit link"}],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    topicsList: "edit topicList",
+    module: {title:"edit module"},
+    // @ts-ignore
+    classes: materials,
+    // @ts-ignore
+    knowledge: knowledge,
+    // @ts-ignore
+    skills: skills,
+  });
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  useEffect(() => {
+    if (isSubmitting) {
+      const createGuide =  () => {
+        console.log("creating guide")
+        for (const key in guide) {
+          //if the value starts with "edit"
+          // @ts-ignore
+          if (guide[key] && guide[key].toString().startsWith("edit")) {
+            alert(`please fill in the ${key} field`);
+            setIsSubmitting(false);
+            return;
+          }
+        }
+        console.log(guide)
+        const g = fetch("/api/guides", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            },
+          body: JSON.stringify(guide),
+        }).then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
+      };
+      createGuide();
+    }
+  },[isSubmitting]);
+  
+  const handleInput = (e:React.SyntheticEvent) => {
+    const {dataset, textContent} = e.target as HTMLElement;
+    const {name, object, arrayIndex} = dataset;
+    //the ts ignoring should be fixed when we make the client specific types
+    if(arrayIndex){
+      // @ts-ignore
+      const arr = guide[object] 
+      // @ts-ignore
+      const index = parseInt(arrayIndex);
+      // @ts-ignore
+      arr[index] = {...arr[index], [name]:textContent};
+      // @ts-ignore
+      setGuide({...guide, [object]:arr});
+      return;
+    }
+    if(object){
+      // @ts-ignore
+      setGuide({...guide, [object]:{...guide[object], [name]:textContent}});
+      return;
+    }
+
+    // @ts-ignore
+    setGuide({...guide, [name]:textContent});
+  }
+
+
+  const submit: MouseEventHandler<HTMLButtonElement> = (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
   };
+  console.log(guide.knowledge);
   return (
     <>
       <AnimatedBackground />
@@ -78,35 +120,38 @@ const CreateGuide = async ({ params }: { params: { id: string } }) => {
         <Guide>
           <UpperWrapper>
           <MainInfoWrapper>
-            <GuideTitle contentEditable={true}>Edit Title</GuideTitle>
+            <GuideTitle data-name="title" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.title}</GuideTitle>
             <GuideSubtitle>Description</GuideSubtitle>
-            <GuideParagraph  contentEditable={true}>
-              Edit Description
+            <GuideParagraph data-name="description" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>
+              {guide.description}
+            </GuideParagraph>
+            <GuideParagraph data-name="category" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>
+              {guide.category}
             </GuideParagraph>
             <GuideSubtitle>Example</GuideSubtitle>
-            <GuideSubtitle  contentEditable={true}>Edit Theme Idea Title</GuideSubtitle>
-            <GuideParagraph  contentEditable={true}>edit Theme Idea Description</GuideParagraph>
+            <GuideSubtitle data-object="themeIdea" data-name="title" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.themeIdea?.title}</GuideSubtitle>
+            <GuideParagraph data-object="themeIdea" data-name="description" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.themeIdea?.description}</GuideParagraph>
           </MainInfoWrapper>
 
           <SideOnfoWrapper>
             <SideFrame>
               <GuideSubtitle>Materials</GuideSubtitle>
-              {materials.map((material) => {
+              {materials?.map((material, i) => {
                 return (
-                  <>
-                    <MaterialLinks contentEditable={true} key={material.title} href="#">
+                  <div key={material.title}>
+                    <MaterialLinks data-object="classes" data-array-index={i} data-name="title" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true} href="#">
                       {material.title}
-                    </MaterialLinks><div contentEditable={true}>{material.link}</div>
-                    <button onClick={()=>materials.push({title:"edit material", link:"edit link"})}>add material</button>
+                    </MaterialLinks><div data-object="classes" data-array-index={i} data-name="link" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{material.link}</div>
+                    <button onClick={()=>setMaterials([...materials,{title:"edit material", link:"edit link"}])}>add material</button>
 
-                  </>
+                  </div>
                 );
               })}
             </SideFrame>
             <SideFrame>
               <GuideSubtitle>Topics</GuideSubtitle>
               <ul>
-                  return <li><GuideParagraph contentEditable={true}>Edit Topic List</GuideParagraph></li>;
+                  return <li><GuideParagraph data-name="topicsList" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.topicsList}</GuideParagraph></li>;
               </ul>
             </SideFrame>
             <SideFrame>
@@ -126,24 +171,54 @@ const CreateGuide = async ({ params }: { params: { id: string } }) => {
           <KnowledgeWrapper>
           <GuideParagraph>Knoweldge</GuideParagraph>
           <ul>
-            {knowledge.map((knowledge) => {
-              return <li key={knowledge.knowledge}><GuideParagraph>{knowledge.knowledge}</GuideParagraph></li>;
+            {knowledge?.map((k, i) => {
+              return ( 
+                <li key={i}>
+                  <GuideParagraph 
+                    data-object="knowledge" 
+                    data-array-index={i} 
+                    data-name="knowledge" 
+                    onBlur={handleInput} 
+                    suppressContentEditableWarning={true}
+                    contentEditable={true}
+                  >
+                    {k.knowledge}
+                  </GuideParagraph>
+                </li>
+              );
             })}
-          </ul><button onClick={()=>knowledge.push({knowledge:"edit knowledge"})}>add knowledge</button>
+          </ul>
+          <button onClick={
+            // @ts-ignore
+            ()=>setKnowledge([...knowledge,{knowledge:"edit knowledge"}])
+          }>add knowledge</button>
           </KnowledgeWrapper>
           <SkillsWrapper>
           <GuideParagraph>Skills</GuideParagraph>
           <ul>
-            {skills.map((skill) => {
-              return <li><GuideParagraph>{skill.skill}</GuideParagraph></li>;
+            {skills.map((skill, i) => {
+              return (
+                <li key={i}>
+                  <GuideParagraph 
+                    data-object="skills" 
+                    data-array-index={i} 
+                    data-name="skill" 
+                    onBlur={handleInput} 
+                    suppressContentEditableWarning={true}
+                    contentEditable={true}
+                  >
+                    {skill.skill}
+                  </GuideParagraph>
+                </li>
+              );
             })}
-          </ul><button onClick={()=>skills.push({skill:"edit skill"})}>add skill</button>
+          </ul><button onClick={()=>setSkills([...skills,{skill:"edit skill"}])}>add skill</button>
           </SkillsWrapper>
           </KnowledgeAndSkillsWrapper>
           </RequirementsWrapper>
 
           <div style={{display:"flex", width:"100%", justifyContent:"center", marginTop:"3rem"}}>
-            <FilledButton onClick={createGuide}>RETURN</FilledButton>
+            <FilledButton onClick={submit}>RETURN</FilledButton>
           </div>
         </Guide>
         

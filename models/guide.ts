@@ -5,7 +5,7 @@ const guideReferenceSchema = new Schema({
   name: { type: Schema.Types.String, required: true },
   link: { type: Schema.Types.String, required: true },
 });
-//todo: combine guideClassSchema and guideReferenceSchema into one schema
+//todo: combine guideClassSchema and guideResourcesSchema into  guideReferencesSchema
 const guideClassSchema = new Schema({
   title: { type: Schema.Types.String, required: true },
   link: { type: Schema.Types.String, required: true },
