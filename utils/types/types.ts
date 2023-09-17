@@ -22,5 +22,12 @@ export type AggregatedGuide = {
   guide: GuideType;
   returnDate: Date;
 }
+/* this is some crazy stuff from Chat GPT what works well but I don't need to use it after all
+type DeepOmit<T, K extends string | number | symbol> = T extends object
+  ? {
+      [Key in keyof T]: Key extends K ? never : DeepOmit<T[Key], K>;
+    }
+  : T;
+*/
 
 export type OmitPassword = Omit<UserWithIdType, 'password'> & {password?:string};

@@ -7,11 +7,11 @@ import { OmitPassword } from "@/utils/types/types";
 import { ObjectId } from "mongodb";
 import type { AggregatedGuide } from "@/utils/types/types";
 import Guides from "@/components/Guides";
+import { redirect } from "next/navigation";
 
 //This is a serverside component that mostly handles data fetching and passing it to the Guides component
-const getGuides = async () => {
+const getGuides = async (user: OmitPassword | string ) => {
   await connectToDatabase();
-  const user: OmitPassword | string = await useServerUser();
   if (!user) return null;
   const userId =new ObjectId((user as OmitPassword)._id);
   try{
@@ -155,12 +155,18 @@ const getGuides = async () => {
 };
 
 const guides = async () => {
-  const guides: AggregatedGuide[] | undefined | null = await getGuides();
+  const user: OmitPassword | string = await useServerUser();
+  const guides: AggregatedGuide[] | undefined | null = await getGuides(user);
   if (!guides) return <>No guides found</>;
+  let isTeacher = false;
+  if (typeof user !== "string") {
+    isTeacher = user.role === "teacher";
+  }
   return (
     <>
       <AnimatedBackground />
       <Layout>
+        {isTeacher && <button onClick={() => redirect("/createGuide")}>Create Guide</button>}
         <Guides guides={JSON.parse(JSON.stringify(guides))}></Guides>
       </Layout>
     </>

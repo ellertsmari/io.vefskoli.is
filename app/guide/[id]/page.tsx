@@ -25,7 +25,7 @@ const getGuide = async (id: string) => {
   }
   const objectId = new Types.ObjectId(id);
   await connectToDatabase();
-  const guide: GuideType | null = await G.findOne({ _id: objectId });
+  const guide: GuideType & {_id:string} | null = await G.findOne({ _id: objectId });
   return guide; 
 }
 const guide = async ({ params }: { params: { id: string } }) => {
@@ -33,7 +33,12 @@ const guide = async ({ params }: { params: { id: string } }) => {
   if (!g) {
     return <><h1>Guide not found</h1> <h2>{params.id}</h2></>
   }
-
+  const rMaterials = g.resources.map((material) => {
+    return { title: material.description, link: material.link };
+  });
+  const cMaterials = JSON.parse(JSON.stringify(g.classes));
+  const allMaterials = rMaterials.concat(cMaterials);
+  
   return (
     <>
       <AnimatedBackground />
@@ -54,7 +59,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
           <SideOnfoWrapper>
             <SideFrame>
               <GuideSubtitle>Materials</GuideSubtitle>
-              {g.classes.map((material) => {
+              {allMaterials.map((material) => {
                 return (
                   <MaterialLinks key={material.title} href={material.link}>
                     {material.title}

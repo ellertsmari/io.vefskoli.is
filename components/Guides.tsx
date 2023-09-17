@@ -28,7 +28,9 @@ const Guides = ({guides}:Props) => {
             options={options}
             selected={selected}
             setSelected={setSelected}
-          /><div>{module}</div>
+          />
+          <div>{module}</div>
+          
           <GuidesContainer>
             {guides.filter((guide:AggregatedGuide)=>guide.module.title[0]===selected[selected.length-1])
             .map((guide: AggregatedGuide, nr: number) => {
