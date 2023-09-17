@@ -33,9 +33,9 @@ const getReturn = async (id: string) => {
   const objectId = new Types.ObjectId(id);
   await connectToDatabase();
   type OmitGuideFromReturn = Omit<ReturnType, 'guide'>; //because we want the guide populated but not the id
-
+  type GuideWithId = Omit<GuideType, '_id'> & { _id: string };
   type ReturnWithGuide = OmitGuideFromReturn & {
-    guide: GuideType;
+    guide: GuideWithId;
     _id: string;
   };
   const r: ReturnWithGuide | null = await Return.findOne({ _id: objectId }).populate('guide') as ReturnWithGuide | null;
