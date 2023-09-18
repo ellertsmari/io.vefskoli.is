@@ -8,6 +8,7 @@ import { ObjectId } from "mongodb";
 import type { AggregatedGuide } from "@/utils/types/types";
 import Guides from "@/components/Guides";
 import { redirect } from "next/navigation";
+import CsrButton from "@/components/buttons/csrButton";
 
 //This is a serverside component that mostly handles data fetching and passing it to the Guides component
 const getGuides = async (user: OmitPassword | string ) => {
@@ -166,7 +167,7 @@ const guides = async () => {
     <>
       <AnimatedBackground />
       <Layout>
-        {isTeacher && <button onClick={() => redirect("/createGuide")}>Create Guide</button>}
+        {isTeacher && <CsrButton></CsrButton>}
         <Guides guides={JSON.parse(JSON.stringify(guides))}></Guides>
       </Layout>
     </>
