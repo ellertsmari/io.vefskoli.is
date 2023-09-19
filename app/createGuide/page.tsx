@@ -17,7 +17,7 @@ import {
   KnowledgeWrapper,
   SkillsWrapper,
   KnowledgeAndSkillsWrapper,
-} from "@/styles/pageStyles/guide0.styles";
+} from "@/styles/pageStyles/guide.styles";
 import { MouseEventHandler, use } from "react";
 import { useState, useEffect } from "react";
 import { set } from "mongoose";

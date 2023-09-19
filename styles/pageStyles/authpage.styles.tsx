@@ -1,27 +1,17 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-// $smallFontSize: 1.4rem;
-// $mediumFontSize: 1.6rem;
-// $largeFontSize: 2rem;
-// $headerFontSize: 2.4rem;
-// $mainHeaderFontSize: 3.2rem;
-
 //Layout of the whole login page
-export const Layout = styled.div`
+export const LoginLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position-y: 25%;
-  left: 0;
 `;
 
 //div that wraps around login form
-export const Wrapper = styled(motion.div)`
+export const LoginWrapper = styled(motion.div)`
   display: flex;
   width: 75rem;
   min-height: 65rem;
@@ -30,7 +20,7 @@ export const Wrapper = styled(motion.div)`
   border-radius: 4.2rem;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction:column;
 
   @media screen and (max-width: 1540px) {
     width: 65rem;
@@ -49,34 +39,51 @@ export const Wrapper = styled(motion.div)`
 
   @media screen and (max-width: 400px) {
     width: 30rem;
-    min-height: 35rem;
+    min-height: 30rem;
   }
 `;
 
-//Vefskolinn Logo
-export const VefskolinnLogo = styled.h1`
-  font-weight: 500;
-  font-size: 5rem;
-  margin-bottom: 8rem;
+export const RegisterLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  transform: translate(0%, 15%);
+  padding-bottom: 10rem;
+`;
+
+export const RegisterWrapper = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75rem;
+  padding-top: 10rem;
+  padding-bottom: 5rem;
+  height: auto;
+  background: #ffffff;
+  box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
+  border-radius: 4.2rem;
 
   @media screen and (max-width: 1540px) {
-    font-size: 3.5rem;
-    margin-bottom: 5rem;
+    width: 65rem;
+    padding-top: 5rem;
+    padding-bottom: 0rem;
   }
 
   @media screen and (max-width: 1000px) {
-    font-size: 3.3rem;
-    margin-bottom: 5rem;
+    width: 55rem;
   }
 
   @media screen and (max-width: 600px) {
-    font-size: 2.5rem;
-    margin-bottom: 4rem;
+    width: 35rem;
   }
 
   @media screen and (max-width: 400px) {
-    font-size: 2.3rem;
-    margin-bottom: 3rem;
+    width: 30rem;
+    padding-top: 3rem;
+    padding-bottom: 0rem;
   }
 `;
 
@@ -84,13 +91,7 @@ export const VefskolinnLogo = styled.h1`
 export const InputForm = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
-`;
-
-//Wrapps around the input for better control
-export const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  align-items: left;
 
   @media screen and (max-width: 1540px) {
     display: flex;
@@ -123,16 +124,5 @@ export const InputWrapper = styled.div`
     align-items: end;
     margin-top: 5rem;
     width: 100%;
-
-  @media screen and (max-width: 1540px) {
-      margin-top: 2rem;
-  }
-
-  @media screen and (max-width: 1000px) {
-      margin-top: 0rem;
-  }
-
-  @media screen and (max-width: 600px) {
-      margin-top: 0rem;
-  }
+    gap: 0.5rem;
 `

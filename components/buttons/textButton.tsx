@@ -15,19 +15,19 @@ transition: 0.2s ease-in-out;
 }
 
 @media screen and (max-width: 1540px) {
-  width: 17rem;
+  width: 10rem;
   height: 3.5rem;
   font-size: 1.4rem;
 }
 
 @media screen and (max-width: 1000px) {
-  width: 17rem;
+  width: 10rem;
   height: 3.5rem;
   font-size: 1.4rem;
 }
 
 @media screen and (max-width: 600px) {
-  width: 14rem;
-  height: 3rem;
+  width: 8rem;
+  height: 2rem;
   font-size: 1.1rem;
 }`

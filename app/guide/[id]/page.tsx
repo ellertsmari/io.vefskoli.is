@@ -17,7 +17,7 @@ import {
   KnowledgeWrapper,
   SkillsWrapper,
   KnowledgeAndSkillsWrapper,
-} from "@/styles/pageStyles/guide0.styles";
+} from "@/styles/pageStyles/guide.styles";
 import ReturnForm from "@/components/returnFrom/returnForm";
 const getGuide = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
