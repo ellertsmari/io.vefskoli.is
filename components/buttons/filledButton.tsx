@@ -14,7 +14,6 @@ export const FilledButton = styled.button`
     color: white;
     font-weight: 500;
     font-size: 1.6rem;
-    line-height: 4rem;
     cursor: pointer;
     transition: 0.2s ease-in-out;
 
