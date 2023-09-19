@@ -7,7 +7,6 @@ import { OmitPassword } from "@/utils/types/types";
 import { ObjectId } from "mongodb";
 import type { AggregatedGuide } from "@/utils/types/types";
 import Guides from "@/components/Guides";
-import { redirect } from "next/navigation";
 import CsrButton from "@/components/buttons/csrButton";
 
 //This is a serverside component that mostly handles data fetching and passing it to the Guides component

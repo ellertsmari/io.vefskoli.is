@@ -61,7 +61,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
               <GuideSubtitle>Materials</GuideSubtitle>
               {allMaterials.map((material) => {
                 return (
-                  <MaterialLinks key={material.title} href={material.link}>
+                  <MaterialLinks key={material.title} href={material.link} target="_blank">
                     {material.title}
                   </MaterialLinks>
                 );
