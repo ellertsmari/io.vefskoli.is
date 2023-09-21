@@ -9,6 +9,7 @@ import { ReturnType } from "@/models/return";
 import { Types } from "mongoose";
 import useUser from "@/utils/useUser";
 import { useRouter, useSearchParams } from "next/navigation";
+import Spinner from "../spinner";
 
 const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +19,15 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [pictureUrl, setPictureUrl] = useState("");
   const [projectName, setProjectName] = useState("");
   const [comment, setComment] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   console.log("this is searchParams: ",searchParams.get("isreturned"))
   useEffect(() => { //needed because if redirect is called in returnForm it will not work because it is an event handler
     if(shouldRedirect){
-      console.log("redirecting to guides")
+      console.log("redirecting to guides");
       router.push("/guides");
+      setIsLoading(false);
       router.refresh();
     }
   },[shouldRedirect])
@@ -68,6 +71,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
       guide: guideId,
     }
     console.log("return is: ",r);
+    setIsLoading(true);
     fetch("/api/returns",{
       method: "POST",
       headers: {
@@ -102,7 +106,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
         <InputLabel>Comment</InputLabel>
         <BigInput onKeyDown={handleTextArea} name="comment"></BigInput>
         <div style={{display:"flex", width:"100%", justifyContent:"center", marginTop:"3rem"}}>
-        <FilledButton onClick={createReturn}>RETURN</FilledButton>
+        {isLoading?<Spinner></Spinner>:<FilledButton onClick={createReturn}>RETURN</FilledButton>}
         </div>
         </FormContainer>
         <TextButton onClick={() => setIsOpen(!isOpen)}>CLOSE</TextButton>

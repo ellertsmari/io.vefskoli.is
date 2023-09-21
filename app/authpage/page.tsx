@@ -18,6 +18,7 @@ import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Error } from "@/styles/pageStyles/guides.styles";
+import Spinner from "@/components/spinner";
 
 type CredentailsData = {
   email: string;
@@ -33,6 +34,7 @@ type CredentailsData = {
 const authPage = () => {
   const [authSwitch, setAuthSwitch] = useState(true);
   const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const [credentials, setCredentials] = useLocalStorage<CredentailsData>(
     "credentails",
     { email: "", password: "" }
@@ -72,6 +74,7 @@ const authPage = () => {
       return;
     } else {
       setError("Something went wrong");
+      setIsLoading(false);
     }
   };
   async function createUser({
@@ -125,6 +128,7 @@ const authPage = () => {
     if (!authSwitch && credentials.password !== credentials.repeatPassword)
       return;
     e.preventDefault();
+    setIsLoading(true);
     authSwitch ? login(credentials) : createUser(credentials);
   };
 
@@ -255,10 +259,10 @@ const authPage = () => {
                       ? "Create Account"
                       : "I already have an account"}
                   </TextButton>
-                  <FilledButton onClick={submit}>
+                  {isLoading?<Spinner></Spinner>:<FilledButton onClick={submit}>
                     {" "}
                     {authSwitch ? "LOGIN" : "REGISTER"}{" "}
-                  </FilledButton>
+                  </FilledButton>}
                 </ButtonWrapper>
               </InputForm>
             </RegisterWrapper>
