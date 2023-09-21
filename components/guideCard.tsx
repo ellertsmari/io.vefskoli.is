@@ -9,6 +9,8 @@ const GuideCardContainer = styled.div`
   display: flex;
   gap: 1.5rem;
   flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const CardInfo = styled.div`
@@ -36,7 +38,7 @@ const Title = styled.h2`
   font-size: 1.5rem;
   font-family: "Poppins";
   text-align: center;
-  padding: 2rem;  console.log("guides reviews: ", nr, isReviewed);
+  padding: 2rem;
 
 `;
 

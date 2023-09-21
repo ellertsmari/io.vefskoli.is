@@ -1,10 +1,10 @@
-import './sidebar.scss';
 import { Guide } from '@/models/guide';
 import Calendar from 'react-calendar';
-import ProfilePic from './profilepic';
+import Profile from './profile/profile';
 import Link from 'next/link';
 import { UserWithIdType } from '@/models/user';
 import { connectToDatabase } from '@/utils/mongoose-connector';
+import { CalendarContainer, NextUpContainer, ProfileContainer, Container } from './sidebar.style';
 
 type Props = {
   student: UserWithIdType
@@ -23,17 +23,18 @@ async function Sidebar({student}:Props) {
   if (!student) return <>you need to log in</>;
   return (
     <>
-      <section className="sidebar-container" >
-        <div className="user-pic/name">
-          <ProfilePic user={student} />
+      <Container>
+        <ProfileContainer>
+          <Profile user={student} />
           <h2>{student?.name}</h2>
-        </div>
-        <div className='calendar'>
+          </ProfileContainer>
+        <CalendarContainer>
           {/* <Calendar onChange={setDate} value={date}/> */}
           <Calendar value={date}/>
-        </div>
+          </CalendarContainer>
+
+        <NextUpContainer>
         <h2>Next up</h2>
-        <div className="nextup-container">
         {guides.slice(0, 3).map((guide, index) => {
           return (
             <Link key={guide._id} href={`/guide/${guide._id}`} className='next'>
@@ -42,8 +43,8 @@ async function Sidebar({student}:Props) {
             </Link>
           )
         })}
-        </div>
-      </section>
+        </NextUpContainer>
+        </Container>
       
     </>
   )

@@ -1,7 +1,7 @@
 'use client';
 import { AggregatedGuide } from '@/utils/types/types';
 import GuideCard from '@/components/guideCard';
-import { GuidesContainer, MainContainer } from '@/styles/pageStyles/guides.styles';
+import { GuidesContainer, Container } from '@/styles/pageStyles/guides.styles';
 import Dropdown from '@/components/dropDown';
 import { useState } from 'react';
 
@@ -23,7 +23,7 @@ const Guides = ({guides}:Props) => {
   const [module, setModule] = useState<string>("");
   
   return (
-    <MainContainer>
+    <Container>
           <Dropdown
             options={options}
             selected={selected}
@@ -43,7 +43,7 @@ const Guides = ({guides}:Props) => {
                 />
             )})}
           </GuidesContainer>
-        </MainContainer>
+        </Container>
   )
 }
 

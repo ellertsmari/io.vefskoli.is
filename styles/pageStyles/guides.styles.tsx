@@ -6,17 +6,16 @@ export const Title = styled.h1`
     font-style: Poppins;
 `
 
-export const MainContainer = styled.div`
+export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    margin: 0 5%;
-    height: 80rem;
     background: #ffffff;
     box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
     border-radius: 4.2rem;
     padding: 5rem;
-    overflow: scroll;
-
+    overflow-y: scroll;
+    max-height: 75vh;
+    width: calc(100% - 25rem);
     /* hiding scrollbar */
     ::-webkit-scrollbar {
         display: none;
@@ -33,22 +32,14 @@ export const Layout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position-y: 25%;
-  left: 0;
   `
 
   export const GuidesContainer = styled(motion.div) `
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
     gap: 5rem;
     flex-wrap: wrap;
-    border-radius: 4.2rem;
-    padding: 5rem;
-
+    width: 100%;
+    justify-content: center;
   ` 
 
   export const Error = styled.p`

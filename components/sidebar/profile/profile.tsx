@@ -1,7 +1,8 @@
 'use client'
-import './sidebar.scss'
 import { useState, useRef } from 'react'
 import Link from 'next/link'
+import { ProfileModal, ProfileImage } from './profile.style'
+
 import { UserWithIdType } from '@/models/user'
 import { ChangeEvent } from 'react'
 
@@ -9,10 +10,10 @@ type Props = {
   user: UserWithIdType
 }
 
-const ProfilePic = ( { user }:Props ) => {
+const Profile = ( { user }:Props ) => {
   const student = user;
   const menuRef = useRef<HTMLDivElement>(null);
-  const [profilePopup, setProfilePopup] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const handleUpload = async (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const data = new FormData();
@@ -35,8 +36,9 @@ const ProfilePic = ( { user }:Props ) => {
   const x = { logout: () => {} }
   return(
     <div>
-      <img onClick={() => setProfilePopup(!profilePopup)} className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
-      <div style={{display:profilePopup?'block':'none'}} className='profile-modal' ref={menuRef}>
+      <ProfileImage onClick={() => setIsOpen(!isOpen)} src="/default-profile-picture.svg"/>
+      {isOpen && (
+      <ProfileModal>
           <div className="user-pic/name">
           <Link className="logout" onClick={x.logout} href="/authpage">Logout</Link>
           <div>
@@ -62,8 +64,9 @@ const ProfilePic = ( { user }:Props ) => {
             <textarea className="profileinput" name="favoriteArtist"></textarea>
             <button className='savebtn'>SAVE</button>
         </form>
-      </div>
+      </ProfileModal>
+      )}
     </div>
   )
 }
-export default ProfilePic;
+export default Profile;

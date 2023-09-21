@@ -1,363 +1,40 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
-/* Here are all css variables to use through out the project*/
-
-
-
-$mainFont: "Poppins", sans-serif;
-
-
-// font size
-$smallFontSize: 1.4rem;
-$mediumFontSize: 1.6rem;
-$largeFontSize: 2rem;
-$headerFontSize: 2.4rem;
-$mainHeaderFontSize: 3.2rem;
-
-$letterSpacing:0.2rem;
-
-// font weight
-$lighterFW: 200;
-$lightFW: 300;
-$regularFW: 400;
-$boldFW: 500;
-$bolderFW: 600;
-$boldestFW: 700;
-
-
-// colors
-$fontColor: #000000;
-$backgroundLightPurple: #F0EFFD;
-$backgroundWhite: #FFFFFF;
-
-$whiteFontColor: #FFFFFF;
-$grayFontColor: #5A5A5A;
-$softGreen:  #B5E2A8;
-$lightlightGreen: #F3FAF0;
-$bgLightPurple: #F0EFFD;
-$btnpurple: #6563EB;
-$inputfieldcolor: #F1F1F1;
+// /* Here are all css variables to use through out the project*/
 
 
 
-// base margin
-
-$marginLeftRight: 1.5rem;
+// // $mainFont: "Poppins", sans-serif;
 
 
-.default-profile-picture{
-  object-fit: cover;
-}
+// // font size
+// $smallFontSize: 1.4rem;
+// $mediumFontSize: 1.6rem;
+// $largeFontSize: 2rem;
+// $headerFontSize: 2.4rem;
+// $mainHeaderFontSize: 3.2rem;
 
-a {
-  color:black;
-}
+// $letterSpacing:0.2rem;
 
-
-.sidebar-container {
-  width: 30rem;
-  margin-top: 10rem;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-
-  h2{
-    font-size: $largeFontSize;
-    font-weight: $regularFW;
-  }
-  .nextup-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    overflow-y: scroll;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    .next {
-      display: flex;
-      flex-direction: column;  
-      align-items: flex-start;
-      justify-content: center;
-      box-sizing: border-box;
-      width: clamp(15rem, 85%, 35rem);
-      height:7rem;
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-      color: black;
-      background: #FFFFFF;
-      border: 0.5px solid #FFFFFF;
-      box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.25);
-      border-radius: 15px;
-      text-decoration: none;
-      h3 {
-        font-size: $smallFontSize;
-        font-weight: $boldFW;
-        margin: 0;
-      }
-      h4 {
-        font-size: $smallFontSize;
-        font-weight: $lightFW;
-        margin: 0;
-      }
-    }
-   
-  }
-
-}
-
-/* The code lines below are used to style the calendar */
-.calendar {
-  display: flex;
-  justify-content: center;
-}
-.react-calendar {
-  width: clamp(15rem, 85%, 35rem);
-  max-width: 100%;
-  background-color: #FFFFFF;
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 0rem;
-  border-radius: 15px;
-}
-
-.react-calendar--doubleView {
-  width: 700px;
-}
-
-.react-calendar--doubleView .react-calendar__viewContainer {
-  display: flex;
-  margin: -0.5em;
-}
-
-.react-calendar--doubleView .react-calendar__viewContainer > * {
-  width: 50%;
-  margin: 0.5em;
-
-}
-
-.react-calendar,
-.react-calendar *,
-.react-calendar *:before,
-.react-calendar *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.react-calendar button {
-  margin: 0;
-  border: 0;
-  outline: none;
-  border-radius: 20px;
-}
-
-.react-calendar button:enabled:hover {
-  cursor: pointer;
-}
-  
-.react-calendar__navigation {
-  display: flex;
-  height: 44px;
-  margin-bottom: 1em;
-
-}
-
-.react-calendar__navigation button {
-  min-width: 44px;
-  background: none;
-}
-
-.react-calendar__navigation button:disabled {
-  background-color: #f0f0f0;
-}
-
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-  background-color: #e6e6e6;
-}
-
-.react-calendar__month-view__weekdays {
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 0.75em;
-}
-
-.react-calendar__month-view__weekdays__weekday {
-  padding: 0.5em;
-  
-}
-
-.react-calendar__month-view__weekNumbers .react-calendar__tile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75em;
-  font-weight: bold;
-}
-
-.react-calendar__month-view__days__day--weekend {
-  color: #d10000;
-}
-.react-calendar__month-view__days__day--neighboringMonth {
-  color: #757575;
-}
-
-.react-calendar__year-view .react-calendar__tile,
-.react-calendar__decade-view .react-calendar__tile,
-.react-calendar__century-view .react-calendar__tile {
-  padding: 2em 0.5em;
-}
-
-.react-calendar__tile {
-  max-width: 100%;
-  padding: 10px 6.6667px;
-  background: none;
-  text-align: center;
-  line-height: 16px;
-}
-
-.react-calendar__tile:disabled {
-  background-color: #f0f0f0;
-}
-  
-.react-calendar__tile:enabled:hover,
-.react-calendar__tile:enabled:focus {
-  background-color: #e6e6e6;
-}
-  
-.react-calendar__tile--now {
-  background: #8482EF;
-}
-
-.react-calendar__tile--hasActive {
-  background: #76baff;
-}
-
-.react-calendar__tile--hasActive:enabled:hover,
-.react-calendar__tile--hasActive:enabled:focus {
-  background: #a9d4ff;
-}
-
-.react-calendar__tile--active {
-  background: #6563EB;
-  color: white;
-}
-
-.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile--active:enabled:focus {
-  background: #D1D0F9;
-}
-  
-.react-calendar--selectRange .react-calendar__tile--hover {
-  background-color: #e6e6e6;
-}
+// // font weight
+// $lighterFW: 200;
+// $lightFW: 300;
+// $regularFW: 400;
+// $boldFW: 500;
+// $bolderFW: 600;
+// $boldestFW: 700;
 
 
-//The profile popup
+// // colors
+// $fontColor: #000000;
+// $backgroundLightPurple: #F0EFFD;
+// $backgroundWhite: #FFFFFF;
 
-
-
-.profile-modal {
-  background-color: white;
-  justify-content: center;
-  height:auto;
-  border-radius: 5rem;
-  width: 45rem;
-  position: absolute;
-  left: 40%;
-  top: 15%;
-  z-index: 3;
-  padding: 2rem 2rem 2rem 2rem;
-  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.25);
-    .edit {
-      margin-right: 10px;
-      z-index:3;
-    }
-  }
-.URLpicinput{
-  height:3.5rem;
-  border-style: none;
-  background-color: #f0efef;
-  display: flex;
-  justify-content: center;
-  width: 60%;
-  border-radius: 10px;
-}
-.profileinput{
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-.profiletxt{
-  margin-left: 1.5rem;
-
-}
-.pictureurl{
-  display: flex;
-  margin-bottom: 2rem;
-  gap: 1rem;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  font-size: $smallFontSize;
-}
-
-
-.logout{
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 4rem;
-  margin-top: 2rem;
-}
-
-
-
-.form-container {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  label {
-    font-size: 1.4rem;
-  }
-  textarea {
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    border: none;
-    background-color: #F1F1F1;
-    resize: none;
-    margin-bottom: 1rem;
-  }
-  button {
-    align-self: center;
-    width: 7rem;
-    color: #FFFFFF;
-    background: #6563EB;
-    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.25);
-    border-radius: 100px; 
-    font-size: 1.6rem;
-    border-style: none;
-    margin-top: 2rem;
-  }
-  
-}
-
-@media (max-width: 990px) {
-  .sidebar-container {
-    width: 80vw;
-    text-align: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-
-@media (min-width: 1600px){
-  .sidebar-container {
-    width: 35rem;
-  }
-}
+// $whiteFontColor: #FFFFFF;
+// $grayFontColor: #5A5A5A;
+// $softGreen:  #B5E2A8;
+// $lightlightGreen: #F3FAF0;
+// $bgLightPurple: #F0EFFD;
+// $btnpurple: #6563EB;
+// $inputfieldcolor: #F1F1F1;

@@ -6,7 +6,7 @@ import useServerUser from "@/utils/useServerUser";
 import { OmitPassword } from "@/utils/types/types";
 import { ObjectId } from "mongodb";
 import type { AggregatedGuide } from "@/utils/types/types";
-import Guides from "@/components/Guides";
+import Guides from "@/components/guides";
 import CsrButton from "@/components/buttons/csrButton";
 
 //This is a serverside component that mostly handles data fetching and passing it to the Guides component
@@ -164,7 +164,6 @@ const guides = async () => {
   }
   return (
     <>
-      <AnimatedBackground />
       <Layout>
         {isTeacher && <CsrButton></CsrButton>}
         <Guides guides={JSON.parse(JSON.stringify(guides))}></Guides>

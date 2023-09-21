@@ -7,10 +7,8 @@ export const Layout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position-y: 25%;
   left: 0;
+  align-self: left;
   `
 
 export const GuideTitle = styled.h1`
