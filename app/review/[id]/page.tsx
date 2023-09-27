@@ -76,15 +76,15 @@ const review = async ({params} : {params: { id: string}}) => {
             {r.guide.title === "TypeScript In The Browser - Web APIs (24 - 28h.)" && 
             
               <>
-              <SubTitle>
-                This guide was returned by <span style={{color:"#6563EB"}}>{r.owner.name}</span> please contact them either through slack
-                or in the classroom to make the review.
-              </SubTitle>
-              <MainText style={{marginBottom:"1000px"}}>
-                <a href="https://drive.google.com/file/d/1L2U6Tk57qiWukHLEy10zQnH7Wz-DOguw/view?usp=sharing">Here </a> 
-                 is a very nice document where you can see how you could
-                prepare for your meeting and what you could talk about
-              </MainText>
+                <SubTitle>
+                  This guide was returned by <span style={{color:"#6563EB"}}>{r.owner.name}</span> please contact them either through slack
+                  or in the classroom to make the review.
+                </SubTitle>
+                <MainText style={{marginBottom:"1000px"}}>
+                  <a href="https://drive.google.com/file/d/1L2U6Tk57qiWukHLEy10zQnH7Wz-DOguw/view?usp=sharing">Here </a> 
+                  is a very nice document where you can see how you could
+                  prepare for your meeting and what you could talk about
+                </MainText>
               </>
             }
             <Frame>

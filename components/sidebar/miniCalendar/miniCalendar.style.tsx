@@ -1,4 +1,6 @@
-/*.calendar {
+/*
+This should be a styled component that looks nice:
+.calendar {
     display: flex;
     justify-content: center;
   }
