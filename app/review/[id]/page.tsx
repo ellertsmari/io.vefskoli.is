@@ -2,6 +2,7 @@ import AnimatedBackground from "@/components/animatedBackground";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Return, ReturnType } from "@/models/return";
 import { GuideType } from "@/models/guide";
+import { UserType } from "@/models/user";
 import "@/models/guide"; //this is needed so that the guide model is registered
 import { Types } from "mongoose";
 import {
@@ -32,19 +33,24 @@ const getReturn = async (id: string) => {
   
   const objectId = new Types.ObjectId(id);
   await connectToDatabase();
-  type OmitGuideFromReturn = Omit<ReturnType, 'guide'>; //because we want the guide populated but not the id
+  type OmitGuideFromReturn = Omit<ReturnType, 'guide'| 'owner'>; //because we want the guide populated but not the id
   type GuideWithId = Omit<GuideType, '_id'> & { _id: string };
+  type OwnerWithId = Omit<UserType, '_id'> & { _id: string };
+ 
   type ReturnWithGuide = OmitGuideFromReturn & {
     guide: GuideWithId;
+    owner: OwnerWithId;
     _id: string;
   };
-  const r: ReturnWithGuide | null = await Return.findOne({ _id: objectId }).populate('guide') as ReturnWithGuide | null;
+  const r: ReturnWithGuide | null = await Return.findOne({ _id: objectId }).populate(['guide','owner']) as ReturnWithGuide | null;
   await Return.findByIdAndUpdate(objectId, { reviewedAt: new Date() } );
 
   return r; 
 }
 
 const review = async ({params} : {params: { id: string}}) => {
+  // TODO: mark return as reviewed when the page is loaded and put a timer on it
+  // to mark it as not reviewed after maybe an hour or two if the rewiew has not been submitted by then
   const user : OmitPassword | string = await useServerUser();
   if (!user) {
     return <>You need to be logged in to view this page</>;
@@ -67,6 +73,20 @@ const review = async ({params} : {params: { id: string}}) => {
         <MainContainer>
           <ReturnDetailsSection>
             <SectionTitle>Return Details</SectionTitle>
+            {r.guide.title === "TypeScript In The Browser - Web APIs (24 - 28h.)" && 
+            
+              <>
+              <SubTitle>
+                This guide was returned by <span style={{color:"#6563EB"}}>{r.owner.name}</span> please contact them either through slack
+                or in the classroom to make the review.
+              </SubTitle>
+              <MainText style={{marginBottom:"1000px"}}>
+                <a href="https://drive.google.com/file/d/1L2U6Tk57qiWukHLEy10zQnH7Wz-DOguw/view?usp=sharing">Here </a> 
+                 is a very nice document where you can see how you could
+                prepare for your meeting and what you could talk about
+              </MainText>
+              </>
+            }
             <Frame>
               <SubTitle>{r.guide.module.title}</SubTitle>
               <MainText>{r.guide.title}</MainText>
