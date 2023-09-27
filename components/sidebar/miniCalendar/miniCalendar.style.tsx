@@ -1,4 +1,4 @@
-.calendar {
+/*.calendar {
     display: flex;
     justify-content: center;
   }
@@ -143,4 +143,4 @@
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
   }
-  
+  */
