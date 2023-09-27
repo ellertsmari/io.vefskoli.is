@@ -3,7 +3,8 @@ import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Return, ReturnType } from "@/models/return";
 import { GuideType } from "@/models/guide";
 import { UserType } from "@/models/user";
-import '@/models/user';//this is needed so that the user model is registered
+//populating the guide and owner fields:
+import '@/models/user'; //this is needed so that the user model is registered
 import "@/models/guide"; //this is needed so that the guide model is registered
 import { Types } from "mongoose";
 import {
