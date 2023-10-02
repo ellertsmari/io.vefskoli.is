@@ -83,7 +83,7 @@ const review = async ({params} : {params: { id: string}}) => {
                   or in the classroom to make the review.
                 </SubTitle>
                 <MainText style={{marginBottom:"1000px"}}>
-                  <a href="https://drive.google.com/file/d/1L2U6Tk57qiWukHLEy10zQnH7Wz-DOguw/view?usp=sharing">Here </a> 
+                  <a target="_blank" href="https://drive.google.com/file/d/1L2U6Tk57qiWukHLEy10zQnH7Wz-DOguw/view?usp=sharing">Here </a> 
                   is a very nice document where you can see how you could
                   prepare for your meeting and what you could talk about
                 </MainText>
@@ -99,11 +99,11 @@ const review = async ({params} : {params: { id: string}}) => {
             </Frame>
             <Frame>
               <SubTitle>URL</SubTitle>
-              <LinkText>{r.projectUrl}</LinkText>
+              <LinkText target="_blank" href={r.projectUrl}>{r.projectUrl}</LinkText>
             </Frame>
             <Frame>
               <SubTitle>Live Version</SubTitle>
-              <LinkText href={r.liveVersion}>Click here</LinkText>
+              <LinkText target="_blank" href={r.liveVersion}>Click here</LinkText>
             </Frame>
             <Frame>
               <SubTitle>Comment</SubTitle>

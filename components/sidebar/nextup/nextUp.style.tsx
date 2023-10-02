@@ -25,5 +25,4 @@
       border-radius: 15px;
       text-decoration: none;
     }
-   
   }*/
