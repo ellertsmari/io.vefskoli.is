@@ -3,11 +3,15 @@ import { AggregatedGuide } from '@/utils/types/types';
 import GuideCard from '@/components/guideCard';
 import { GuidesContainer, Container } from '@/styles/pageStyles/guides.styles';
 import Dropdown from '@/components/dropDown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useLocalStorage from '@/utils/useLocalStorage';
 
 type Props = {
   guides: AggregatedGuide[];
-}
+}  
+
+
+
 const Guides = ({guides}:Props) => {
   const options = [
     "MODULE 0",
@@ -19,16 +23,21 @@ const Guides = ({guides}:Props) => {
     "MODULE 6",
     "MODULE 7",
   ];
-  const [selected, setSelected] = useState<string>(options[3]);
+
   const [module, setModule] = useState<string>("");
-  
+//This works but there in an error "Error: Text content does not match server-rendered HTML." "Warning: Text content did not match. Server: "MODULE 3" Client: "MODULE 1""
+const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {selected:""})
+
+  const {selected} = moduleSelected
+
   return (
     <Container>
           <Dropdown
             options={options}
             selected={selected}
-            setSelected={setSelected}
+            setSelected={(s) => setModuleSelected({selected:s})}
           />
+   
           <div>{module}</div>
           
           <GuidesContainer>

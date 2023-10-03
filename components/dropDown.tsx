@@ -72,7 +72,7 @@ export const ArrowImage = styled(motion.div)`
 type Props = {
   options: string[];
   selected: string;
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
+  setSelected: (s: string) => void;
 };
 
 const Dropdown = ({ options, selected, setSelected }: Props) => {
@@ -92,7 +92,6 @@ const Dropdown = ({ options, selected, setSelected }: Props) => {
 
   const onSelect = (option: string) => {
     setSelected(option);
-    console.log(`Selected ${option}`);
   };
 
   return (

@@ -17,6 +17,7 @@ import { cookies } from "next/headers";
 import { UserType } from "@/models/user";
 import useServerUser from "@/utils/useServerUser";
 import NavBar from "@/components/nav/nav";
+import MarkdownEditor from "@/components/markdownEditor/markdownEditor";
 
 export default async function RootLayout({
   // Layouts must accept a children prop.

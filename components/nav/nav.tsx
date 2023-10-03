@@ -1,18 +1,31 @@
-import { NavContainer } from "./nav.style";
+"use client"
+
+import { NavContainer, Button } from "./nav.style";
+import Link from "next/link";
+
+// type Props = {
+//     navOprions: string;
+// }
 
 const NavBar = () => {
     const navOptions = [
-        "Home",
-        "Guides",
-        "Resources",
-        "Gallery",
-        "People",
-        "Calendar"
+        ["home", "/"],
+        ["guides", "guides"],
+        ["resources", "resources"],
+        ["gallery", "gallery"],
+        ["people", "people"],
+        ["calendar", "calendar"]
     ]
 
     return ( 
         <NavContainer>
-            Hello
+            {navOptions.map((option) => {
+                return(
+            <Link href={option[1]}>
+                <Button>{option[0]}</Button>
+            </Link>
+                )
+            })}
         </NavContainer>
     );
 }

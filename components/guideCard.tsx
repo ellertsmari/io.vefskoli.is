@@ -15,7 +15,7 @@ const GuideCardContainer = styled.div`
 
 const CardInfo = styled.div`
   background-color: #f1f1f1;
-  box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
+  box-shadow: 2px 4px 3px rgba(139, 139, 139, 0.25);
   width: 24rem;
   height: 20rem;
   border-top-left-radius: 2rem;
@@ -44,7 +44,7 @@ const Title = styled.h2`
 
 const Status = styled.div`
   background-color: #f1f1f1;
-  box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
+  box-shadow: 2px 4px 3px rgba(139, 139, 139, 0.25);
   width: 24rem;
   height: 6.5rem;
   border-bottom-left-radius: 2rem;

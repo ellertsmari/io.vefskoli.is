@@ -41,7 +41,6 @@ const guide = async ({ params }: { params: { id: string } }) => {
   
   return (
     <>
-      <AnimatedBackground />
       <Layout>
         <Guide>
           <UpperWrapper>

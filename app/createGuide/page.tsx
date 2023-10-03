@@ -1,10 +1,8 @@
 'use client'; //this is a very dinamic component
-import AnimatedBackground from "@/components/animatedBackground";
 import { Guide as G, GuideType } from "@/models/guide";
 import { FilledButton } from "@/components/buttons/filledButton";
 import {
   Guide,
-  GuideTitle,
   GuideParagraph,
   Layout,
   GuideSubtitle,
@@ -21,6 +19,9 @@ import {
 import { MouseEventHandler, use } from "react";
 import { useState, useEffect } from "react";
 import { set } from "mongoose";
+import { MidInput, ShortInput } from "@/components/inputs";
+import MarkdownEditor from "@/components/markdownEditor/markdownEditor";
+import Dropdown from "@/components/dropDown";
 
 const CreateGuide = ({ params }: { params: { id: string } }) => {
  
@@ -30,13 +31,13 @@ const CreateGuide = ({ params }: { params: { id: string } }) => {
 
   //need to ignore ts errors because of the Mongoose specific types could maybe create a custom type for this
   const [guide, setGuide] = useState<Partial<GuideType>>({
-    title: "edit title",
+    title: "Guide Title",
     description: "edit description",
     category: "edit category",
     // @ts-ignore
     references: [{name:"edit reference", link:"edit link", type:"edit type"}],
     themeIdea: {
-      title: "edit theme idea title",
+      title: "Example Title",
       description: "edit theme idea description",
     },
     // @ts-ignore
@@ -115,22 +116,19 @@ const CreateGuide = ({ params }: { params: { id: string } }) => {
   console.log(guide.knowledge);
   return (
     <>
-      <AnimatedBackground />
       <Layout>
         <Guide>
           <UpperWrapper>
           <MainInfoWrapper>
-            <GuideTitle data-name="title" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.title}</GuideTitle>
+            <ShortInput data-name="title" onBlur={handleInput} placeholder={guide.title} />
             <GuideSubtitle>Description</GuideSubtitle>
-            <GuideParagraph data-name="description" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>
-              {guide.description}
-            </GuideParagraph>
+            <MarkdownEditor data-name="description"/>
             <GuideParagraph data-name="category" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>
               {guide.category}
             </GuideParagraph>
             <GuideSubtitle>Example</GuideSubtitle>
-            <GuideSubtitle data-object="themeIdea" data-name="title" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.themeIdea?.title}</GuideSubtitle>
-            <GuideParagraph data-object="themeIdea" data-name="description" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.themeIdea?.description}</GuideParagraph>
+            <ShortInput data-object="themeIdea" data-name="title" onBlur={handleInput} placeholder={guide.themeIdea?.title}/>
+            <MarkdownEditor data-object="themeIdea" data-name="description">{guide.themeIdea?.description}</MarkdownEditor>
           </MainInfoWrapper>
 
           <SideOnfoWrapper>
@@ -218,7 +216,7 @@ const CreateGuide = ({ params }: { params: { id: string } }) => {
           </RequirementsWrapper>
 
           <div style={{display:"flex", width:"100%", justifyContent:"center", marginTop:"3rem"}}>
-            <FilledButton onClick={submit}>RETURN</FilledButton>
+            <FilledButton onClick={submit}>CREATE</FilledButton>
           </div>
         </Guide>
         
