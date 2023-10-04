@@ -3,12 +3,13 @@ import MDEditor from "@uiw/react-md-editor";
 import { useState } from "react";
 import { Container } from "./markdownEditor.style";
 
-// type Props = {
-//     handleInput: (text:string) => void;
-// }
+type Props = {
+    value : string;
+    //handleInput: (text:string) => void;
+}
 
-const MarkdownEditor = () => {
-    const [text, setText] = useState("")
+const MarkdownEditor = ({value}:Props) => {
+    const [text, setText] = useState(value)
 
     const handleOnChange = (t:string | undefined) => {
         if(t !== undefined){

@@ -18,18 +18,17 @@ import {
 } from "@/styles/pageStyles/guide.styles";
 import { MouseEventHandler, use } from "react";
 import { useState, useEffect } from "react";
-import { set } from "mongoose";
 import { MidInput, ShortInput } from "@/components/inputs";
 import MarkdownEditor from "@/components/markdownEditor/markdownEditor";
-import Dropdown from "@/components/dropDown";
 
-const CreateGuide = ({ params }: { params: { id: string } }) => {
+const CreateGuide = ({ params }: { params: { id: string } } ) => {
  
   const [materials, setMaterials] = useState([{title:"edit materials", link:"edit link"}]);
   const [knowledge, setKnowledge] = useState([{knowledge:"edit knowledge"}]);
   const [skills, setSkills] = useState([{skill:"edit skill"}]);
-
-  //need to ignore ts errors because of the Mongoose specific types could maybe create a custom type for this
+  //const data = JSON.parse(searchParams.data.toString());
+  //console.log(data);
+  //need to ignore ts errors because of the Mongoose specific types. We could maybe create a custom type for this
   const [guide, setGuide] = useState<Partial<GuideType>>({
     title: "Guide Title",
     description: "edit description",
@@ -53,6 +52,7 @@ const CreateGuide = ({ params }: { params: { id: string } }) => {
     // @ts-ignore
     skills: skills,
   });
+  console.log(params.id)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   useEffect(() => {
     if (isSubmitting) {
@@ -67,7 +67,7 @@ const CreateGuide = ({ params }: { params: { id: string } }) => {
             return;
           }
         }
-        console.log(guide)
+        
         const g = fetch("/api/guides", {
           method: "POST",
           headers: {
@@ -82,6 +82,18 @@ const CreateGuide = ({ params }: { params: { id: string } }) => {
     }
   },[isSubmitting]);
   
+  useEffect(() => {
+    const getGuide = async () => {
+      const res = await fetch(`/api/guides/${params.id}`);
+      const data = await res.json();
+      console.log("params.id",params.id)
+      console.log("data is",data)
+      setGuide(data);
+    };
+    if(params.id !== "new") getGuide();
+
+  }, [params.id]);
+
   const handleInput = (e:React.SyntheticEvent) => {
     const {dataset, textContent} = e.target as HTMLElement;
     const {name, object, arrayIndex} = dataset;
@@ -113,7 +125,7 @@ const CreateGuide = ({ params }: { params: { id: string } }) => {
     setIsSubmitting(true);
     
   };
-  console.log(guide.knowledge);
+  console.log(guide.description);
   return (
     <>
       <Layout>
@@ -122,13 +134,13 @@ const CreateGuide = ({ params }: { params: { id: string } }) => {
           <MainInfoWrapper>
             <ShortInput data-name="title" onBlur={handleInput} placeholder={guide.title} />
             <GuideSubtitle>Description</GuideSubtitle>
-            <MarkdownEditor data-name="description"/>
+            <MarkdownEditor  value={guide.description!} data-name="description"/>
             <GuideParagraph data-name="category" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>
               {guide.category}
             </GuideParagraph>
             <GuideSubtitle>Example</GuideSubtitle>
             <ShortInput data-object="themeIdea" data-name="title" onBlur={handleInput} placeholder={guide.themeIdea?.title}/>
-            <MarkdownEditor data-object="themeIdea" data-name="description">{guide.themeIdea?.description}</MarkdownEditor>
+            <MarkdownEditor value={guide.themeIdea?.description!} data-object="themeIdea" data-name="description"></MarkdownEditor>
           </MainInfoWrapper>
 
           <SideOnfoWrapper>

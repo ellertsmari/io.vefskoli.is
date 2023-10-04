@@ -10,11 +10,11 @@ import Link from "next/link";
 const NavBar = () => {
     const navOptions = [
         ["home", "/"],
-        ["guides", "guides"],
-        ["resources", "resources"],
-        ["gallery", "gallery"],
-        ["people", "people"],
-        ["calendar", "calendar"]
+        ["guides", "/guides"],
+        ["resources", "/resources"],
+        ["gallery", "/gallery"],
+        ["people", "/people"],
+        ["calendar", "/calendar"]
     ]
 
     return ( 

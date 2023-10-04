@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse as res} from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide, GuideType } from "@/models/guide";
+import { ObjectId } from "mongodb";
 
 interface Success {
   message: string;
@@ -44,11 +45,11 @@ interface Success {
  */
 
 
-export const GET = async ( req: NextRequest) => {
-    const { searchParams } = new URL(req.url);
-    const uid = searchParams.get('uid');
+export const GET = async ( req: NextRequest, { params }: { params: { uid: string } }) => {
+    const uid = new ObjectId(params.uid);
     await connectToDatabase();  
-  const guide = await Guide.findOne({ id: uid });
+    console.log("this is uid",uid);
+  const guide = await Guide.findOne({ _id: uid });
   if (guide === null) {
     return res.json({ message: "Guide not found" },{status:404});
     

@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "./gradingForm/gradingForm";
+import useUser from "@/utils/useUser";
 
 const GuideCardContainer = styled.div`
   display: flex;
@@ -73,6 +74,8 @@ type GuideCardProps = {
 const GuideCard = ({guide, nr}:GuideCardProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const { user } = useUser();
+  const t = user?.role === "teacher";
   const { isReturned, isReviewed, userReviews, oldestReturnId, otherReviews } = guide;
   const nrOfReviews = userReviews.length;
   const ungradedReviews = otherReviews.filter(review => !review.grade);
@@ -159,13 +162,21 @@ const GuideCard = ({guide, nr}:GuideCardProps) => {
   return (
     <GuideCardContainer>
       <Link style={{textDecoration:"none", color:"black" }} href={`/guide/${guide._id}?isreturned=${isReturned}`} >
-        <CardInfo style={{backgroundColor: status.text==="You have not returned the guide yet"?"#F1F1F1":"#B5E2A8", filter: modifiedColor}} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <CardInfo 
+          style={{backgroundColor: status.text==="You have not returned the guide yet"?"#F1F1F1":"#B5E2A8", filter: modifiedColor}} 
+          onMouseEnter={handleMouseEnter} 
+          onMouseLeave={handleMouseLeave}
+        >
           <Number>Guide {nr+1}</Number>
           <Title>{isHovered?status.text:guide.title}</Title>
+          {t && <div> delete, <Link href={`saveGuide/${guide._id}`}>edit</Link></div> }
         </CardInfo>
       </Link>
-      <Link onClick={()=>setIsOpen(!isOpen)} href={status.href}><Status style={{background: status.color, filter: modifiedColor}} >{status.action}</Status></Link>
-      {status.text==="You have got a review, please grade it" && <GradingForm guide={guide} review={ungradedReviews[0]} isOpen={isOpen} setIsOpen={setIsOpen}/> }
+      <Link onClick={()=>setIsOpen(!isOpen)} href={status.href}>
+        <Status style={{background: status.color, filter: modifiedColor}} >{status.action}</Status>
+      </Link>
+      {status.text==="You have got a review, please grade it" &&
+      <GradingForm guide={guide} review={ungradedReviews[0]} isOpen={isOpen} setIsOpen={setIsOpen}/> }
     </GuideCardContainer>
   );
 };

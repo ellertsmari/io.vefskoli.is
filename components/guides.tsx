@@ -29,13 +29,17 @@ const Guides = ({guides}:Props) => {
 const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {selected:""})
 
   const {selected} = moduleSelected
+  const test = (selected:string) => {
+    console.log(selected)
+    setModuleSelected({selected})
+  }
 
   return (
     <Container>
           <Dropdown
             options={options}
             selected={selected}
-            setSelected={(s) => setModuleSelected({selected:s})}
+            setSelected={test}
           />
    
           <div>{module}</div>

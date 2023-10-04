@@ -6,7 +6,7 @@ export default function() {
   const router = useRouter()
   return (
     <div>
-      <FilledButton onClick={() => router.push("/createGuide")}>Create Guide</FilledButton>
+      <FilledButton onClick={() => router.push("/saveGuide/new")}>Create Guide</FilledButton>
     </div>
   )
 }
