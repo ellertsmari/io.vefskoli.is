@@ -1,4 +1,3 @@
-import AnimatedBackground from "@/components/animatedBackground";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide as G, GuideType } from "@/models/guide";
 import { Types } from "mongoose";
@@ -60,7 +59,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
               <GuideSubtitle>Materials</GuideSubtitle>
               {allMaterials.map((material) => {
                 return (
-                  <MaterialLinks key={material.title} href={material.link} target="_blank">
+                  <MaterialLinks key={material.link} href={material.link} target="_blank">
                     {material.title}
                   </MaterialLinks>
                 );

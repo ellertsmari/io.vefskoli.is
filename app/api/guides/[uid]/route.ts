@@ -56,20 +56,21 @@ export const GET = async ( req: NextRequest, { params }: { params: { uid: string
   }
   return res.json(guide, { status: 200 });
 }
-export const PUT = async ( req: NextRequest) => {
+export const PUT = async ( req: NextRequest, { params }: { params: { uid: string } }) => {
   // TODO: Add logic to update the guide
-  const { searchParams } = new URL(req.url);
-  const uid = searchParams.get('uid');
+  
+  const uid = new ObjectId(params.uid);
   await connectToDatabase();
-  const guide = await Guide.findOneAndUpdate({id:uid}, req.json());
-  res.json({ message: "Guide updated successfully" }, { status: 200 });
+  const newGuide = await req.json();
+  console.log("this is newGuide",newGuide.title);
+  const guide = await Guide.findOneAndUpdate({_id:uid}, newGuide);
+  return res.json(guide, { status: 200 });
+  //return res.json({ message: "Guide updated successfully" }, { status: 200 });
 }
-export const DELETE = async ( req: NextRequest) => {
-  // TODO: Add logic to "delete"(disable or add to trash? to prevent accidental deletion?) the guide
-  const { searchParams } = new URL(req.url);
-  const uid = searchParams.get('uid');
+export const DELETE = async ( req: NextRequest, { params }: { params: { uid: string } }) => {
+  const uid = new ObjectId(params.uid);
   await connectToDatabase();
-  await Guide.deleteOne({ id: uid });
-  res.json({ message: "Guide deleted successfully" }, { status: 200 });
-  return;
+  await Guide.deleteOne({ _id: uid });
+  return res.json({ message: "Guide deleted successfully" }, { status: 200 });
+ 
 }

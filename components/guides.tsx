@@ -5,6 +5,8 @@ import { GuidesContainer, Container } from '@/styles/pageStyles/guides.styles';
 import Dropdown from '@/components/dropDown';
 import { useEffect, useState } from 'react';
 import useLocalStorage from '@/utils/useLocalStorage';
+import CsrButton from '@/components/buttons/csrButton';
+import useUser from '@/utils/useUser';
 
 type Props = {
   guides: AggregatedGuide[];
@@ -23,7 +25,7 @@ const Guides = ({guides}:Props) => {
     "MODULE 6",
     "MODULE 7",
   ];
-
+  const { user } = useUser()
   const [module, setModule] = useState<string>("");
 //This works but there in an error "Error: Text content does not match server-rendered HTML." "Warning: Text content did not match. Server: "MODULE 3" Client: "MODULE 1""
 const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {selected:""})
@@ -33,7 +35,8 @@ const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {
     console.log(selected)
     setModuleSelected({selected})
   }
-
+  let isTeacher = false;
+  if  (user) isTeacher = user.role === "teacher"
   return (
     <Container>
           <Dropdown
@@ -55,6 +58,14 @@ const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {
                   nr={nr}
                 />
             )})}
+            {isTeacher //TODO move the button inside the guide and style it somehow differently
+              && <>
+              <GuideCard
+                guide={{title:"Create Guide", description:"Create a new guide", userReviews:[{}], otherReviews:[{}]} as AggregatedGuide}
+                nr={-1}
+              />
+              <CsrButton module={module}></CsrButton> 
+            </>}
           </GuidesContainer>
         </Container>
   )
