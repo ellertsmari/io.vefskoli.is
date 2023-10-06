@@ -60,7 +60,6 @@ const Status = styled.div`
 type GuideCardProps = {
   guide: AggregatedGuide;
   nr: number;
-  key: string;
 };
 
 const GuideCard = ({ guide, nr }: GuideCardProps) => {

@@ -1,4 +1,3 @@
-import AnimatedBackground from "@/components/animatedBackground";
 import { Layout } from "../../styles/pageStyles/guides.styles";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide } from "@/models/guide";
@@ -159,14 +158,9 @@ const guides = async () => {
   const user: OmitPassword | string = await useServerUser();
   const guides: AggregatedGuide[] | undefined | null = await getGuides(user);
   if (!guides) return <>No guides found</>;
-  let isTeacher = false;
-  if (typeof user !== "string") {
-    isTeacher = user.role === "teacher";
-  }
   return (
     <>
       <Layout>
-        {isTeacher && <CsrButton></CsrButton>}
         <Guides guides={JSON.parse(JSON.stringify(guides))}></Guides>
       </Layout>
     </>

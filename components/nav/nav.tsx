@@ -21,7 +21,7 @@ const NavBar = () => {
         <NavContainer>
             {navOptions.map((option) => {
                 return(
-            <Link href={option[1]}>
+            <Link key={option[0]} href={option[1]}>
                 <Button>{option[0]}</Button>
             </Link>
                 )

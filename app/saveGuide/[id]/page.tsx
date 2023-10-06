@@ -16,18 +16,31 @@ import {
   SkillsWrapper,
   KnowledgeAndSkillsWrapper,
 } from "@/styles/pageStyles/guide.styles";
-import { MouseEventHandler, use } from "react";
+import { MouseEventHandler } from "react";
 import { useState, useEffect } from "react";
-import { MidInput, ShortInput } from "@/components/inputs";
+import { ShortInput } from "@/components/inputs";
 import MarkdownEditor from "@/components/markdownEditor/markdownEditor";
 
-const CreateGuide = ({ params }: { params: { id: string } } ) => {
+type ModuleType = {
+  [key: string]: string;
+}
+const moduleMap: ModuleType = {
+  "MODULE 0": "0 - Preparation",
+  "MODULE 1": "1 - Introductory Course",
+  "MODULE 2": "2 - Community & Networking",
+  "MODULE 3": "3 - The fundamentals",
+  "MODULE 4": "4 - Connecting to the World",
+  "MODULE 5": "5 - Back-end & Infrastructure",
+  "MODULE 6": "6 - Growing complexity",
+  "MODULE 7": "7 - Exploration",
+  "MODULE 8": "8 - Internship",
+}
+
+const SaveGuide = ({ params }: { params: { id: string } } ) => {
  
   const [materials, setMaterials] = useState([{title:"edit materials", link:"edit link"}]);
   const [knowledge, setKnowledge] = useState([{knowledge:"edit knowledge"}]);
   const [skills, setSkills] = useState([{skill:"edit skill"}]);
-  //const data = JSON.parse(searchParams.data.toString());
-  //console.log(data);
   //need to ignore ts errors because of the Mongoose specific types. We could maybe create a custom type for this
   const [guide, setGuide] = useState<Partial<GuideType>>({
     title: "Guide Title",
@@ -44,7 +57,7 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
     createdAt: new Date(),
     updatedAt: new Date(),
     topicsList: "edit topicList",
-    module: {title:"edit module"},
+    module: {title:moduleMap[params.id]},
     // @ts-ignore
     classes: materials,
     // @ts-ignore
@@ -55,7 +68,20 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
   console.log(params.id)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   useEffect(() => {
-    if (isSubmitting) {
+    const saveGuide = async (url:string, method:string) => {
+      const res = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+          },
+        body: JSON.stringify(guide),
+      });
+      const data = await res.json();
+      console.log("data is",data)
+      setIsSubmitting(false);  
+    }
+
+    if (isSubmitting && params.id in moduleMap) {
       const createGuide =  () => {
         console.log("creating guide")
         for (const key in guide) {
@@ -63,22 +89,14 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
           // @ts-ignore
           if (guide[key] && guide[key].toString().startsWith("edit")) {
             alert(`please fill in the ${key} field`);
-            setIsSubmitting(false);
             return;
-          }
-        }
-        
-        const g = fetch("/api/guides", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            },
-          body: JSON.stringify(guide),
-        }).then((res) => res.json())
-        .then((data) => console.log(data))
-        .catch((err) => console.log(err));
+        }}
+        saveGuide("/api/guides", "POST");
       };
       createGuide();
+    }
+    if(isSubmitting && !(params.id in moduleMap)){
+      saveGuide(`/api/guides/${params.id}`, "PUT");
     }
   },[isSubmitting]);
   
@@ -89,13 +107,17 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
       console.log("params.id",params.id)
       console.log("data is",data)
       setGuide(data);
+      setMaterials(data.classes.concat(data.resources));
+      setKnowledge(data.knowledge);
+      setSkills(data.skills);
     };
-    if(params.id !== "new") getGuide();
+    if(!(params.id in moduleMap)) getGuide();
 
   }, [params.id]);
 
   const handleInput = (e:React.SyntheticEvent) => {
-    const {dataset, textContent} = e.target as HTMLElement;
+    const {dataset, value, innerText} = e.target as HTMLInputElement | HTMLTextAreaElement;
+    const text:string = value || innerText;
     const {name, object, arrayIndex} = dataset;
     //the ts ignoring should be fixed when we make the client specific types
     if(arrayIndex){
@@ -104,19 +126,19 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
       // @ts-ignore
       const index = parseInt(arrayIndex);
       // @ts-ignore
-      arr[index] = {...arr[index], [name]:textContent};
+      arr[index] = {...arr[index], [name]:text};
       // @ts-ignore
       setGuide({...guide, [object]:arr});
       return;
     }
     if(object){
       // @ts-ignore
-      setGuide({...guide, [object]:{...guide[object], [name]:textContent}});
+      setGuide({...guide, [object]:{...guide[object], [name]:text}});
       return;
     }
 
     // @ts-ignore
-    setGuide({...guide, [name]:textContent});
+    setGuide({...guide, [name]:text});
   }
 
 
@@ -125,7 +147,6 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
     setIsSubmitting(true);
     
   };
-  console.log(guide.description);
   return (
     <>
       <Layout>
@@ -134,13 +155,13 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
           <MainInfoWrapper>
             <ShortInput data-name="title" onBlur={handleInput} placeholder={guide.title} />
             <GuideSubtitle>Description</GuideSubtitle>
-            <MarkdownEditor  value={guide.description!} data-name="description"/>
+            <MarkdownEditor  value={guide.description!} onChange={(desc:string)=>setGuide({...guide, description:desc})} data-name="description"/>
             <GuideParagraph data-name="category" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>
               {guide.category}
             </GuideParagraph>
             <GuideSubtitle>Example</GuideSubtitle>
             <ShortInput data-object="themeIdea" data-name="title" onBlur={handleInput} placeholder={guide.themeIdea?.title}/>
-            <MarkdownEditor value={guide.themeIdea?.description!} data-object="themeIdea" data-name="description"></MarkdownEditor>
+            <MarkdownEditor value={guide.themeIdea?.description!} data-object="themeIdea" onChange={(desc:string)=>setGuide({...guide, themeIdea:{title:guide.themeIdea!.title, description:desc}})} data-name="description"></MarkdownEditor>
           </MainInfoWrapper>
 
           <SideOnfoWrapper>
@@ -148,20 +169,22 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
               <GuideSubtitle>Materials</GuideSubtitle>
               {materials?.map((material, i) => {
                 return (
-                  <div key={material.title}>
+                  <div key={material.link}>
                     <MaterialLinks data-object="classes" data-array-index={i} data-name="title" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true} href="#">
                       {material.title}
-                    </MaterialLinks><div data-object="classes" data-array-index={i} data-name="link" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{material.link}</div>
-                    <button onClick={()=>setMaterials([...materials,{title:"edit material", link:"edit link"}])}>add material</button>
-
+                    </MaterialLinks>
+                    <div data-object="classes" data-array-index={i} data-name="link" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>
+                      {material.link}
+                    </div>
                   </div>
                 );
               })}
+              <FilledButton onClick={()=>setMaterials([...materials,{title:"edit material", link:"edit link"}])}>add material</FilledButton>
             </SideFrame>
             <SideFrame>
               <GuideSubtitle>Topics</GuideSubtitle>
               <ul>
-                  return <li><GuideParagraph data-name="topicsList" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.topicsList}</GuideParagraph></li>;
+                  <li><GuideParagraph data-name="topicsList" onBlur={handleInput} suppressContentEditableWarning={true} contentEditable={true}>{guide.topicsList}</GuideParagraph></li>;
               </ul>
             </SideFrame>
             <SideFrame>
@@ -228,7 +251,7 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
           </RequirementsWrapper>
 
           <div style={{display:"flex", width:"100%", justifyContent:"center", marginTop:"3rem"}}>
-            <FilledButton onClick={submit}>CREATE</FilledButton>
+            <FilledButton onClick={submit}>SAVE</FilledButton>
           </div>
         </Guide>
         
@@ -238,4 +261,4 @@ const CreateGuide = ({ params }: { params: { id: string } } ) => {
   );
 };
 
-export default CreateGuide;
+export default SaveGuide;
