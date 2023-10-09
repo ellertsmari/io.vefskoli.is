@@ -25,6 +25,8 @@
     "openai": "^4.3.0",
     "react": "18.2.0",
     "react-calendar": "^4.6.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "18.2.0",
     "request": "^2.88.2",
     "sass": "^1.66.1",
