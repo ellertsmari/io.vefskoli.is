@@ -134,6 +134,7 @@ const getGuides = async (user: OmitPassword | string ) => {
           description: 1,
           _id: 1,
           module: 1,
+          userReturns: 1,
           returnDate: { $arrayElemAt: ['$userReturns.createdAt', 0] },
           oldestReturnId: { $arrayElemAt: ['$returnsToReview._id', 0] },
           isReturned: { $gt: [{ $size: '$userReturns' }, 0] },

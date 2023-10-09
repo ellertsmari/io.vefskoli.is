@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import styled from "styled-components";
 import Link from "next/link";
 import type { AggregatedGuide } from "@/utils/types/types";
@@ -17,7 +17,6 @@ const GuideCardContainer = styled(motion.div)`
 `;
 
 const CardInfo = styled.div`
-  background-color: #f1f1f1;
   box-shadow: 2px 4px 3px rgba(139, 139, 139, 0.25);
   width: 24rem;
   height: 20rem;
@@ -28,6 +27,7 @@ const CardInfo = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-position: center;
   gap: 3rem;
   transition: 0.2s ease-in-out;
 `;
@@ -42,11 +42,9 @@ const Title = styled.h2`
   font-family: "Poppins";
   text-align: center;
   padding: 2rem;
-
 `;
 
 const Status = styled.div`
-  background-color: #f1f1f1;
   box-shadow: 2px 4px 3px rgba(139, 139, 139, 0.25);
   width: 24rem;
   height: 6.5rem;
@@ -59,107 +57,181 @@ const Status = styled.div`
   font-size: 1.5rem;
   font-family: "Poppins";
   z-index: 1;
-
-  transition: 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #6563eb;
-    color: white;
-  }
 `;
+
 type GuideCardProps = {
   guide: AggregatedGuide;
   nr: number;
 };
 
-const GuideCard = ({guide, nr}:GuideCardProps) => {
-  const [isHovered, setIsHovered] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
+const GuideCard = ({ guide, nr }: GuideCardProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { user } = useUser();
   const controls = useDragControls()
   const router = useRouter();
   const t = user?.role === "teacher";
-  const { isReturned, isReviewed, userReviews, oldestReturnId, otherReviews } = guide;
+  const { isReturned, isReviewed, userReviews, userReturns, oldestReturnId, otherReviews } =
+    guide;
   const nrOfReviews = userReviews.length;
-  const ungradedReviews = otherReviews.filter(review => !review.grade);
+  const ungradedReviews = otherReviews.filter((review) => !review.grade);
   otherReviews.length && console.log(otherReviews);
-  const needsGrading = ungradedReviews.length>0;
+ 
+  //Getting vote(pass, no pass, recommended to galery) from "otherReviews" object
+  const vote = otherReviews.length?otherReviews[0].vote:undefined;
+
+  let hasOldReview = false
+  if(userReturns.length){
+    const createdAt:number = (new Date(userReturns[0].createdAt)).getDate()
+    hasOldReview = ((Date.now() - createdAt) > 1000*1000*60*60*24*3)
+    console.log((Date.now() - createdAt))
+  }
+
+  
+  const needsGrading = ungradedReviews.length > 0;
   // calculate grade based on the two highest grades or one if only one review has been graded
   let grade = 0;
-  if(nrOfReviews===1) {
+  if (nrOfReviews === 1) {
     grade = userReviews[0].grade || 0;
-  }
-  else if(nrOfReviews>1) {
+  } else if (nrOfReviews > 1) {
     userReviews.sort((a, b) => (b.grade || 0) - (a.grade || 0));
     const highestGrade = userReviews[0].grade || 0;
     const secondHighestGrade = userReviews[1].grade || highestGrade;
-    grade = (highestGrade+secondHighestGrade)/2;
-  }//if the grade is 0, it means that the review has not been graded yet
+    grade = (highestGrade + secondHighestGrade) / 2;
+  } //if the grade is 0, it means that the review has not been graded yet
 
+  const reviewStatuses = [
+    {
+      text: "Return guide",
+      condition: !isReturned,
+      backgroundColor: "#F1F1F1",
+      href: `/guide/${guide._id}`,
+    },
+    {
+      text: "Grade review",
+      condition: needsGrading,
+      backgroundColor: "#72BBFF",
+      href: `#`,
+    },
+    {
+      text: "nobody to review yet",
+      condition: nrOfReviews === 0 && !oldestReturnId,
+      backgroundColor: `#FECA9D`,
+      href: `#`,
+    },
+    {
+      text:"please finish review",
+      condition: nrOfReviews === 0 && hasOldReview,
+      backgroundColor: "#F99F9D",
+      href:`/review/${oldestReturnId}`
+    },
+    {
+      text: "Make review",
+      condition: nrOfReviews === 0,
+      backgroundColor: "#FECA9D",
+      href: `/review/${oldestReturnId}`,
+    },
+    {
+      text: "nobody to review yet",
+      condition: nrOfReviews === 1 && !oldestReturnId,
+      backgroundColor: "linear-gradient(to right, #B5E2A8, #FECA9D)",
+      href: `#`,
+    },
+    {
+      text: "please finish review",
+      condition: nrOfReviews === 1 && hasOldReview,
+      backgroundColor: "linear-gradient(to right, #B5E2A8, #F99F9D)",
+      href: `/review/${oldestReturnId}`,
+    },
+    {
+      text: "Make another review",
+      condition: nrOfReviews === 1,
+      backgroundColor: "linear-gradient(to right, #B5E2A8, #FECA9D)",
+      href: `/review/${oldestReturnId}`,
+    },
+    //here after are the waiting statuses
+    {
+      text: "Waiting for grade",
+      condition: !grade,
+      backgroundColor: "#B5E2A8",
+      href: `#`,
+    },
+    {
+      text: "grade: "+grade,
+      condition: grade,
+      backgroundColor: "#B5E2A8",
+      href: `#`,
+    },
+  ];
 
   const returnStatuses = [
     {
       text: "You have not returned the guide yet",
       condition: !isReturned,
-      action: "Return guide",
-      color: "#F1F1F1",
-      href: `/guide/${guide._id}`
+      backgroundColor: "#F1F1F1",
+      backgroundImg: "none",
+      backgroundRepeat: "no-repeat",
+      href: `/guide/${guide._id}`,
     },
     {
       text: "You have got a review, please grade it",
       condition: needsGrading,
-      action: "Grade review",
-      color: "#72BBFF",
+      backgroundColor: "#72BBFF",
+      backgroundImg: `url("bell.svg")`,
+      backgroundRepeat: "no-repeat",
+      href: `#`,
+    },
+    {
+      text: "You have passed this guide, Well Done!",
+      condition: vote === "pass",
+      backgroundColor: "#B5E2A8",
+      backgroundImg: `url("check.svg")`,
+      backgroundRepeat: "no-repeat",
+      href: `#`,
+    },
+    {
+      text: "You did not pass this guide, Try again!",
+      condition: vote === "no pass",
+      backgroundColor: "#F99F9D",
+      backgroundImg: `url("x.svg")`,
+      backgroundRepeat: "no-repeat",
+      href: `#`,
+    },
+    {
+      text: "Your guide was recommended to gallery, Well Done!",
+      condidtion: vote === "recommend to gallery",
+      backgroundColor: "#A5A6F6",
+      backgroundImg: `url("star.svg")`,
+      backgroundRepeat: "no-repeat",
       href: `#`
     },
     {
-      text: "Nobody has returned this guide yet, please wait until someone does",
-      condition: !oldestReturnId,
-      action: "Wait for return",
-      color: "#B5E2A8",
-      href: `#`
+      text: "Waiting until someone reviews you project",
+      condition: !vote,
+      backgroundColor: "#B5E2A8",
+      backgroundImg: `url("hourglass.svg")`,
+      backgroundRepeat: "no-repeat",
+      href: `#`,
     },
-    {
-      text: "You have to make two reviews before you get your grade",
-      condition: nrOfReviews===0,
-      action: "Make review",
-      color: "#FECA9D",
-      href: `/review/${oldestReturnId}`
-    },
-    {
-      text: "You have to make one more review before you get your grade",
-      condition: nrOfReviews===1,
-      action: "Make review",
-      color: "linear-gradient(to right, #B5E2A8, #FECA9D)",
-      href: `/review/${oldestReturnId}`
-    },
-     //here after are the waiting statuses
-    {
-      text: "you have not been graded yet, Talk to the teacher if you have been waiting for a long time",
-      condition: !grade,
-      action: "Wait for grade",
-      color: "#B5E2A8",
-      href: `#`
-    },
-    {
-      text: "You have received a grade but keep in mind that it might change if some of your reviews have not been graded yet",
-      condition: grade,
-      action: "grade: "+grade,
-      color: "#B5E2A8",
-      href: `#`
-    }
-  ]
+  ];
+
   const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
+    setIsHovered(true);
+  };
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
+    setIsHovered(false);
+  };
+  const returnStatus = returnStatuses.find((status) => status.condition);
+  if (!returnStatus) {
+    console.log("no returnStatus found");
+    return <>returnStatus not found</>;
   }
-  const status = returnStatuses.find(status => status.condition);
-  if(!status) {
-    console.log("no status found");
-    return <>status not found</>
+
+  const reviewStatus = reviewStatuses.find((status) => status.condition);
+  if (!reviewStatus) {
+    console.log("no reviewStatus found");
+    return <>reviewStatus not found</>;
   }
   const modifiedColor = isHovered ? "brightness(80%)" : "brightness(100%)"
   const startDrag = (event: PointerEvent) => { 
@@ -172,7 +244,7 @@ const GuideCard = ({guide, nr}:GuideCardProps) => {
     event.preventDefault();
     console.log(event.target);
     if(event.target instanceof HTMLDivElement && event.target.id==="drag") return;
-    router.push(`/guide/${guide._id}`)
+    router.push(`/guide/${guide._id}?isreturned=${isReturned}`)
   }
   const pos = (event: MouseEvent | TouchEvent | PointerEvent, info: any) => {
     console.log(info.delta);
@@ -181,13 +253,22 @@ const GuideCard = ({guide, nr}:GuideCardProps) => {
   return (
     <GuideCardContainer drag={true} dragControls={controls} onDrag={pos}>
       <CardInfo 
-        style={{backgroundColor: status.text==="You have not returned the guide yet"?"#F1F1F1":"#B5E2A8", filter: modifiedColor}}
+        style={{
+          backgroundPosition:"center",
+          backgroundImage:
+            returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundImg,
+          backgroundRepeat:
+            returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundRepeat,
+          backgroundColor:
+            returnStatus.condition === !isReturned ? "#F1F1F1" : returnStatus.backgroundColor,
+          filter: modifiedColor,
+        }}
         onMouseEnter={handleMouseEnter} 
         onMouseLeave={handleMouseLeave}
         onClick={goToGuide}
       >
         <Number>Guide {nr+1}</Number>
-        <Title>{isHovered?status.text:guide.title}</Title>
+        <Title>{isHovered ? returnStatus.text : guide.title}</Title>
         {t && <div>
           delete, 
           <Link href={`saveGuide/${guide._id}`}>edit</Link> 
@@ -197,11 +278,23 @@ const GuideCard = ({guide, nr}:GuideCardProps) => {
             style={{position:"absolute", top:0, left:0, width:"6rem", height:"6rem", backgroundImage:'url(draggable.webp)', backgroundSize:"contain"}} /> 
         </div>}
       </CardInfo>
-      <Link onClick={()=>setIsOpen(!isOpen)} href={status.href}>
-        <Status style={{background: status.color, filter: modifiedColor}} >{status.action}</Status>
+      <Link onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
+        <Status
+          style={{ background: reviewStatus.backgroundColor, filter: modifiedColor }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {reviewStatus.text}
+        </Status>
       </Link>
-      {status.text==="You have got a review, please grade it" &&
-      <GradingForm guide={guide} review={ungradedReviews[0]} isOpen={isOpen} setIsOpen={setIsOpen}/> }
+      {returnStatus && reviewStatus.condition === needsGrading && (
+          <GradingForm
+            guide={guide}
+            review={ungradedReviews[0]}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
+        )}
     </GuideCardContainer>
   );
 };
