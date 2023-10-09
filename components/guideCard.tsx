@@ -79,14 +79,13 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
  
   //Getting vote(pass, no pass, recommended to galery) from "otherReviews" object
   const vote = otherReviews.length?otherReviews[0].vote:undefined;
-
-  let hasOldReview = false
+  
+  let hasOldReview = false;
   if(userReturns.length){
     const createdAt:number = (new Date(userReturns[0].createdAt)).getDate()
     hasOldReview = ((Date.now() - createdAt) > 1000*1000*60*60*24*3)
     console.log((Date.now() - createdAt))
   }
-
   
   const needsGrading = ungradedReviews.length > 0;
   // calculate grade based on the two highest grades or one if only one review has been graded

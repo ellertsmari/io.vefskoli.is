@@ -61,7 +61,7 @@ const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {
             {isTeacher //TODO move the button inside the guide and style it somehow differently
               && <>
               <GuideCard
-                guide={{title:"Create Guide", description:"Create a new guide", userReviews:[{}], otherReviews:[{}]} as AggregatedGuide}
+                guide={{title:"Create Guide", description:"Create a new guide", userReviews:[{}], otherReviews:[{}], userReturns:[{}]} as AggregatedGuide}
                 nr={-1}
               />
               <CsrButton module={module}></CsrButton> 
