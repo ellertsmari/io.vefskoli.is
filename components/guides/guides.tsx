@@ -1,8 +1,8 @@
 'use client';
 import { AggregatedGuide } from '@/utils/types/types';
-import GuideCard from '@/components/guideCard';
-import { GuidesContainer, Container } from '@/styles/pageStyles/guides.styles';
-import Dropdown from '@/components/dropDown';
+import GuideCard from '@/components/guideCard/guideCard';
+import { GuidesContainer, Container } from './guides.styles';
+import Dropdown from '@/components/dropDown/dropDown';
 import { useEffect, useState } from 'react';
 import useLocalStorage from '@/utils/useLocalStorage';
 import CsrButton from '@/components/buttons/csrButton';
