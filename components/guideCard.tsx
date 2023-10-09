@@ -76,6 +76,7 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   //Getting vote(pass, no pass, recommended to galery) from "otherReviews" object
   const vote = otherReviews.length?otherReviews[0].vote:undefined;
 
+  //Calculating whether a student still has to review guide or guides based on when he has returned
   let hasOldReview = false
   if(userReturns.length){
     const createdAt:number = (new Date(userReturns[0].createdAt)).getDate()
@@ -145,7 +146,6 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
       backgroundColor: "linear-gradient(to right, #B5E2A8, #FECA9D)",
       href: `/review/${oldestReturnId}`,
     },
-    //here after are the waiting statuses
     {
       text: "Waiting for grade",
       condition: !grade,
