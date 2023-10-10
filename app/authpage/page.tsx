@@ -17,8 +17,8 @@ import { Logo } from "@/components/logo/logo";
 import AnimatedBackground from "@/components/animatedBackground";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { Error } from "@/styles/pageStyles/guides.styles";
-import Spinner from "@/components/spinner";
+import { Error } from "@/components/guides/guides.styles";
+import Spinner from "@/components/spinner/spinner";
 
 type CredentailsData = {
   email: string;

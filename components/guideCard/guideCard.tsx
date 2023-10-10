@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
-import {GuideCardContainer, CardInfo, Number, Title, Status} from "./styles"
+import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
+import Link from "next/link";
 
 
 type GuideCardProps = {
@@ -13,7 +13,8 @@ type GuideCardProps = {
 };
 
 const GuideCard = ({ guide, nr }: GuideCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isReviewHovered, setIsReviewHovered] = useState(false);
+  const [isReturnHovered, setIsReturnHovered] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
 
   const { isReturned, isReviewed, userReviews, userReturns, oldestReturnId, otherReviews } =
@@ -160,14 +161,24 @@ if (nrOfReviews === 1) {
     href: `#`,
   },
 ];
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
+  //Return hover state
+  const RetunrHandleMouseEnter = () => {
+    setIsReturnHovered(true);
   };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
+  const ReturnHandleMouseLeave = () => {
+    setIsReturnHovered(false);
   };
+  const returnModifiedColor = isReturnHovered ? "brightness(80%)" : "brightness(100%)"
+
+  //Review hover state
+  const ReviewHandleMouseEnter = () => {
+    setIsReviewHovered(true);
+  };
+  const ReviewHandleMouseLeave = () => {
+    setIsReviewHovered(false);
+  };
+  const reviewModifiedColor = isReviewHovered ? "brightness(80%)" : "brightness(100%)"
+
   const returnStatus = returnStatuses.find((status) => status.condition);
   if (!returnStatus) {
     console.log("no returnStatus found");
@@ -179,7 +190,9 @@ if (nrOfReviews === 1) {
     console.log("no reviewStatus found");
     return <>reviewStatus not found</>;
   }
-  const modifiedColor = isHovered ? "brightness(80%)" : "brightness(100%)"
+
+
+  
 
   return (
     <GuideCardContainer>
@@ -193,24 +206,33 @@ if (nrOfReviews === 1) {
               returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundRepeat,
             backgroundColor:
               returnStatus.condition === !isReturned ? "#F1F1F1" : returnStatus.backgroundColor,
-            filter: modifiedColor,
+            filter: returnModifiedColor,
           }}
-          onMouseEnter={handleMouseEnter} 
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={RetunrHandleMouseEnter} 
+          onMouseLeave={ReturnHandleMouseLeave}
         >
+          <NumberWrapper>
           <Number>Guide {nr+1}</Number>
-          <Title>{isHovered ? returnStatus.text : guide.title}</Title>
+          </NumberWrapper>
+          <TitleWrapper>
+          <DefaultTitle isShown={!isReturnHovered && !isReviewHovered}>
+              {guide.title}
+            </DefaultTitle>
+          <HoveredTitle isShown={isReturnHovered || isReviewHovered}>
+              {returnStatus.text}
+            </HoveredTitle>
+            </TitleWrapper>
         </CardInfo>
       </Link>
-      <Link onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
+      <StyledLink onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
         <Status
-          style={{ background: reviewStatus.backgroundColor, filter: modifiedColor }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          style={{ background: reviewStatus.backgroundColor, filter: reviewModifiedColor }}
+          onMouseEnter={ReviewHandleMouseEnter}
+          onMouseLeave={ReviewHandleMouseLeave}
         >
           {reviewStatus.text}
         </Status>
-      </Link>
+      </StyledLink>
       {returnStatus && reviewStatus.condition === needsGrading && (
           <GradingForm
             guide={guide}
