@@ -3,10 +3,11 @@ import { AggregatedGuide } from '@/utils/types/types';
 import GuideCard from '@/components/guideCard/guideCard';
 import { GuidesContainer, Container } from './guides.styles';
 import Dropdown from '@/components/dropDown/dropDown';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useLocalStorage from '@/utils/useLocalStorage';
 import CsrButton from '@/components/buttons/csrButton';
 import useUser from '@/utils/useUser';
+import { useSearchParams } from 'next/navigation';
 
 type Props = {
   guides: AggregatedGuide[];
@@ -27,6 +28,8 @@ const Guides = ({guides}:Props) => {
   ];
   const { user } = useUser()
   const [module, setModule] = useState<string>("");
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
 //This works but there in an error "Error: Text content does not match server-rendered HTML." "Warning: Text content did not match. Server: "MODULE 3" Client: "MODULE 1""
 const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {selected:""})
 
@@ -39,35 +42,39 @@ const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {
   if  (user) isTeacher = user.role === "teacher"
   return (
     <Container>
-          <Dropdown
-            options={options}
-            selected={selected}
-            setSelected={test}
-          />
-   
-          <div>{module}</div>
+      <Dropdown
+        options={options}
+        selected={selected}
+        setSelected={test}
+      />
+
+      <div>{module}</div>
+      
+      <GuidesContainer>
+        {guides.filter((guide:AggregatedGuide)=>{
+          if(!category) return guide.module.title[0]===selected[selected.length-1]
+          return guide.module.title[0]===selected[selected.length-1] && guide.category===category
           
-          <GuidesContainer>
-            {guides.filter((guide:AggregatedGuide)=>guide.module.title[0]===selected[selected.length-1])
-            .map((guide: AggregatedGuide, nr: number) => {
-              if(guide.module.title!=module) setModule(guide.module.title)
-              return (
-                <GuideCard
-                  key={guide._id.toString()}
-                  guide={guide}
-                  nr={nr}
-                />
-            )})}
-            {isTeacher //TODO move the button inside the guide and style it somehow differently
-              && <>
-              <GuideCard
-                guide={{title:"Create Guide", description:"Create a new guide", userReviews:[{}], otherReviews:[{}], userReturns:[{}]} as AggregatedGuide}
-                nr={-1}
-              />
-              <CsrButton module={module}></CsrButton> 
-            </>}
-          </GuidesContainer>
-        </Container>
+        })
+        .map((guide: AggregatedGuide, nr: number) => {
+          if(guide.module.title!=module) setModule(guide.module.title)
+          return (
+            <GuideCard
+              key={guide._id.toString()}
+              guide={guide}
+              nr={nr}
+            />
+        )})}
+        {isTeacher //TODO move the button inside the guide and style it somehow differently
+          && <>
+          <GuideCard
+            guide={{title:"Create Guide", description:"Create a new guide", userReviews:[{}], otherReviews:[{}], userReturns:[{}]} as AggregatedGuide}
+            nr={-1}
+          />
+          <CsrButton module={module}></CsrButton> 
+        </>}
+      </GuidesContainer>
+    </Container>
   )
 }
 

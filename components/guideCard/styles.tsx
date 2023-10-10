@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const GuideCardContainer = styled(motion.div)`
+export const GuideCardContainer = styled.div`
   display: flex;
   gap: 1.5rem;
   flex-direction: column;

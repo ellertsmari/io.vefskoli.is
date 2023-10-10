@@ -5,9 +5,6 @@ import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
 import {GuideCardContainer, CardInfo, Number, Title, Status} from "./styles"
-import useUser from "@/utils/useUser";
-import { motion, useDragControls } from "framer-motion"
-import { useRouter } from "next/navigation";
 
 
 type GuideCardProps = {
@@ -18,10 +15,6 @@ type GuideCardProps = {
 const GuideCard = ({ guide, nr }: GuideCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useUser();
-  const controls = useDragControls()
-  const router = useRouter();
-  const t = user?.role === "teacher";
 
   const { isReturned, isReviewed, userReviews, userReturns, oldestReturnId, otherReviews } =
   guide;
@@ -187,50 +180,28 @@ if (nrOfReviews === 1) {
     return <>reviewStatus not found</>;
   }
   const modifiedColor = isHovered ? "brightness(80%)" : "brightness(100%)"
-  const startDrag = (event: PointerEvent) => { 
-    event.stopPropagation();
-    event.preventDefault();
-    controls.start(event, { snapToCursor: false });
-  }
-  const goToGuide = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    console.log(event.target);
-    if(event.target instanceof HTMLDivElement && event.target.id==="drag") return;
-    router.push(`/guide/${guide._id}?isreturned=${isReturned}`)
-  }
-  const pos = (event: MouseEvent | TouchEvent | PointerEvent, info: any) => {
-    console.log(info.delta);
-    console.log(info)
-  }
+
   return (
-    <GuideCardContainer drag={true} dragControls={controls} onDrag={pos}>
-      <CardInfo 
-        style={{
-          backgroundPosition:"center",
-          backgroundImage:
-            returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundImg,
-          backgroundRepeat:
-            returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundRepeat,
-          backgroundColor:
-            returnStatus.condition === !isReturned ? "#F1F1F1" : returnStatus.backgroundColor,
-          filter: modifiedColor,
-        }}
-        onMouseEnter={handleMouseEnter} 
-        onMouseLeave={handleMouseLeave}
-        onClick={goToGuide}
-      >
-        <Number>Guide {nr+1}</Number>
-        <Title>{isHovered ? returnStatus.text : guide.title}</Title>
-        {t && <div>
-          delete, 
-          <Link href={`saveGuide/${guide._id}`}>edit</Link> 
-          <motion.div 
-            id="drag"
-            onPointerDown={(e: React.PointerEvent<Element>) => startDrag(e.nativeEvent)}
-            style={{position:"absolute", top:0, left:0, width:"6rem", height:"6rem", backgroundImage:'url(draggable.webp)', backgroundSize:"contain"}} /> 
-        </div>}
-      </CardInfo>
+    <GuideCardContainer>
+      <Link href={`/guide/${guide._id}?isReturned=${isReturned}`}>
+        <CardInfo 
+          style={{
+            backgroundPosition:"center",
+            backgroundImage:
+              returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundImg,
+            backgroundRepeat:
+              returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundRepeat,
+            backgroundColor:
+              returnStatus.condition === !isReturned ? "#F1F1F1" : returnStatus.backgroundColor,
+            filter: modifiedColor,
+          }}
+          onMouseEnter={handleMouseEnter} 
+          onMouseLeave={handleMouseLeave}
+        >
+          <Number>Guide {nr+1}</Number>
+          <Title>{isHovered ? returnStatus.text : guide.title}</Title>
+        </CardInfo>
+      </Link>
       <Link onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
         <Status
           style={{ background: reviewStatus.backgroundColor, filter: modifiedColor }}
