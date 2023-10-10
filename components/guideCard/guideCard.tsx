@@ -4,7 +4,7 @@ import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
 import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
-import Link from "next/link";
+
 
 
 type GuideCardProps = {
@@ -196,7 +196,7 @@ if (nrOfReviews === 1) {
 
   return (
     <GuideCardContainer>
-      <Link href={`/guide/${guide._id}?isReturned=${isReturned}`}>
+      <StyledLink href={`/guide/${guide._id}?isReturned=${isReturned}`}>
         <CardInfo 
           style={{
             backgroundPosition:"center",
@@ -223,7 +223,7 @@ if (nrOfReviews === 1) {
             </HoveredTitle>
             </TitleWrapper>
         </CardInfo>
-      </Link>
+      </StyledLink>
       <StyledLink onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
         <Status
           style={{ background: reviewStatus.backgroundColor, filter: reviewModifiedColor }}
