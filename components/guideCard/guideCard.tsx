@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
-import {GuideCardContainer, CardInfo, Number, Title, Status} from "./styles"
+import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
 import useUser from "@/utils/useUser";
 import { motion, useDragControls } from "framer-motion"
 import { useRouter } from "next/navigation";
@@ -16,7 +15,8 @@ type GuideCardProps = {
 };
 
 const GuideCard = ({ guide, nr }: GuideCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isReviewHovered, setIsReviewHovered] = useState(false);
+  const [isReturnHovered, setIsReturnHovered] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useUser();
   const controls = useDragControls()
@@ -167,14 +167,24 @@ if (nrOfReviews === 1) {
     href: `#`,
   },
 ];
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
+  //Return hover state
+  const RetunrHandleMouseEnter = () => {
+    setIsReturnHovered(true);
   };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
+  const ReturnHandleMouseLeave = () => {
+    setIsReturnHovered(false);
   };
+  const returnModifiedColor = isReturnHovered ? "brightness(80%)" : "brightness(100%)"
+
+  //Review hover state
+  const ReviewHandleMouseEnter = () => {
+    setIsReviewHovered(true);
+  };
+  const ReviewHandleMouseLeave = () => {
+    setIsReviewHovered(false);
+  };
+  const reviewModifiedColor = isReviewHovered ? "brightness(80%)" : "brightness(100%)"
+
   const returnStatus = returnStatuses.find((status) => status.condition);
   if (!returnStatus) {
     console.log("no returnStatus found");
@@ -186,7 +196,10 @@ if (nrOfReviews === 1) {
     console.log("no reviewStatus found");
     return <>reviewStatus not found</>;
   }
-  const modifiedColor = isHovered ? "brightness(80%)" : "brightness(100%)"
+
+
+  
+
   const startDrag = (event: PointerEvent) => { 
     event.stopPropagation();
     event.preventDefault();
@@ -214,32 +227,45 @@ if (nrOfReviews === 1) {
             returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundRepeat,
           backgroundColor:
             returnStatus.condition === !isReturned ? "#F1F1F1" : returnStatus.backgroundColor,
-          filter: modifiedColor,
+          filter: returnModifiedColor,
         }}
-        onMouseEnter={handleMouseEnter} 
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={RetunrHandleMouseEnter} 
+        onMouseLeave={ReturnHandleMouseLeave}
         onClick={goToGuide}
       >
+        <NumberWrapper>
         <Number>Guide {nr+1}</Number>
-        <Title>{isHovered ? returnStatus.text : guide.title}</Title>
+        </NumberWrapper>
+        <TitleWrapper>
+        <DefaultTitle isShown={!isReturnHovered && !isReviewHovered}>
+            {guide.title}
+          </DefaultTitle>
+        <HoveredTitle isShown={isReturnHovered || isReviewHovered}>
+            {returnStatus.text}
+          </HoveredTitle>
+          </TitleWrapper>
+
+
+        {/* <Title>{isReviewHovered || isReturnHovered ? returnStatus.text : guide.title}</Title> */}
         {t && <div>
           delete, 
-          <Link href={`saveGuide/${guide._id}`}>edit</Link> 
+          <StyledLink href={`saveGuide/${guide._id}`}>edit</StyledLink> 
           <motion.div 
             id="drag"
             onPointerDown={(e: React.PointerEvent<Element>) => startDrag(e.nativeEvent)}
             style={{position:"absolute", top:0, left:0, width:"6rem", height:"6rem", backgroundImage:'url(draggable.webp)', backgroundSize:"contain"}} /> 
         </div>}
       </CardInfo>
-      <Link onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
+
+      <StyledLink onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
         <Status
-          style={{ background: reviewStatus.backgroundColor, filter: modifiedColor }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          style={{ background: reviewStatus.backgroundColor, filter: reviewModifiedColor }}
+          onMouseEnter={ReviewHandleMouseEnter}
+          onMouseLeave={ReviewHandleMouseLeave}
         >
           {reviewStatus.text}
         </Status>
-      </Link>
+      </StyledLink>
       {returnStatus && reviewStatus.condition === needsGrading && (
           <GradingForm
             guide={guide}

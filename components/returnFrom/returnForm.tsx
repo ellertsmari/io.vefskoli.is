@@ -9,7 +9,7 @@ import { ReturnType } from "@/models/return";
 import { Types } from "mongoose";
 import useUser from "@/utils/useUser";
 import { useRouter, useSearchParams } from "next/navigation";
-import Spinner from "../spinner";
+import Spinner from "../spinner/spinner";
 
 const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [isOpen, setIsOpen] = useState(false);
