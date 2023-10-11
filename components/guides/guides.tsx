@@ -3,7 +3,7 @@ import { AggregatedGuide } from '@/utils/types/types';
 import GuideCard from '@/components/guideCard/guideCard';
 import { GuidesContainer, Container } from './guides.styles';
 import Dropdown from '@/components/dropDown/dropDown';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useLocalStorage from '@/utils/useLocalStorage';
 import CsrButton from '@/components/buttons/csrButton';
 import useUser from '@/utils/useUser';
@@ -26,12 +26,26 @@ const Guides = ({guides}:Props) => {
     "MODULE 6",
     "MODULE 7",
   ];
+  const moduleNames = [
+    "Preparation",
+    "Introductory Course",
+    "Community & Networking",
+    "The fundamentals",
+    "Connecting to the World",
+    "Back-end & Infrastructure",
+    "Growing complexity",
+    "Exploration",
+  ];
   const { user } = useUser()
-  const [module, setModule] = useState<string>("");
+  
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
-//This works but there in an error "Error: Text content does not match server-rendered HTML." "Warning: Text content did not match. Server: "MODULE 3" Client: "MODULE 1""
-const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {selected:""})
+  const moduleParam = searchParams.get("module");
+  console.log("this is module from url;",moduleParam)
+  const [module, setModule] = useState<string>(moduleParam || "");
+  const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {selected: moduleParam || "MODULE 1"})
+
+
 
   const {selected} = moduleSelected
   const test = (selected:string) => {
@@ -40,6 +54,10 @@ const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {
   }
   let isTeacher = false;
   if  (user) isTeacher = user.role === "teacher"
+
+  useEffect(() => { //if the module in the url canges and is different from the localStorage, change the selected module.
+    moduleParam && setModuleSelected({selected: moduleParam})
+  }, [moduleParam])
   return (
     <Container>
       <Dropdown
@@ -52,8 +70,9 @@ const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {
       
       <GuidesContainer>
         {guides.filter((guide:AggregatedGuide)=>{
-          if(!category) return guide.module.title[0]===selected[selected.length-1]
-          return guide.module.title[0]===selected[selected.length-1] && guide.category===category
+          const isInModule = guide.module.title[0]===selected[selected.length-1]
+          if(!category) return isInModule
+          return isInModule && guide.category===category
           
         })
         .map((guide: AggregatedGuide, nr: number) => {
