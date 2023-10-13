@@ -7,10 +7,10 @@ export const metadata: Metadata = {
 import Sidebar from "@/components/sidebar/sidebar";
 import {
   MainContent,
-  MainContainer,
+
   MainLayout,
   SidebarContainer,
-  NavContainer,
+
 } from "@/components/mainLayout";
 import AnimatedBackground from "../components/animatedBackground"
 import { cookies } from "next/headers";
@@ -43,14 +43,11 @@ export default async function RootLayout({
           {/* @ts-expect-error Server Component */}
           <Sidebar student={user}></Sidebar>
           </SidebarContainer>
-          <MainContainer>
-            <NavContainer>
-              <NavBar />
-            </NavContainer>
+
             <MainContent>
+              <NavBar />
             {children}
             </MainContent>
-          </MainContainer>
         </MainLayout>
       </body>
     </html>

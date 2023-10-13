@@ -2,22 +2,22 @@
 import styled from 'styled-components';
 
 export const MainLayout = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  "sidebar main main main main main main";
+  gap: 5rem;
+  padding: 5rem;
 `;
 
-export const NavContainer = styled.div`
-width: 100%;
-`
-export const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`
+
 export const MainContent = styled.div`
-  height: 100%;
-  width: 100%;
+  max-width: 100%;
+  grid-area: main;
 `
 
 export const SidebarContainer = styled.div`
-height: 100%;
+  max-height: 100vh;
+  grid-area: sidebar;
 `

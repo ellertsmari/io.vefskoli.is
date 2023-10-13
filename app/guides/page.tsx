@@ -1,4 +1,3 @@
-import { Layout } from "../../components/guides/guides.styles";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide } from "@/models/guide";
 import useServerUser from "@/utils/useServerUser";
@@ -7,6 +6,7 @@ import { ObjectId } from "mongodb";
 import type { AggregatedGuide } from "@/utils/types/types";
 import Guides from "@/components/guides/guides";
 import CsrButton from "@/components/buttons/csrButton";
+import { MainContent } from "@/components/mainLayout";
 
 //This is a serverside component that mostly handles data fetching and passing it to the Guides component
 const getGuides = async (user: OmitPassword | string ) => {
@@ -160,9 +160,9 @@ const guides = async () => {
   if (!guides) return <>No guides found</>;
   return (
     <>
-      <Layout>
+      <MainContent>
         <Guides guides={JSON.parse(JSON.stringify(guides))}></Guides>
-      </Layout>
+      </MainContent>
     </>
   );
 };

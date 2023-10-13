@@ -19,8 +19,8 @@ export const ProfileModal = styled.div`
       }
 `
 export const ProfileImage = styled.img`
-  width: 20rem;
-  height: 20rem;
+  width: 15rem;
+  height: 15rem;
 `
 
   // .URLpicinput{

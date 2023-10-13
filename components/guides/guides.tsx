@@ -1,7 +1,7 @@
 'use client';
 import { AggregatedGuide } from '@/utils/types/types';
 import GuideCard from '@/components/guideCard/guideCard';
-import { GuidesContainer, Container } from './guides.styles';
+import { GuidesContainer, Container, ModuleTitle, DropdownContainer } from './guides.styles';
 import Dropdown from '@/components/dropDown/dropDown';
 import { useEffect, useState } from 'react';
 import useLocalStorage from '@/utils/useLocalStorage';
@@ -39,13 +39,15 @@ const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module", {
   if  (user) isTeacher = user.role === "teacher"
   return (
     <Container>
+      <DropdownContainer>
           <Dropdown
             options={options}
             selected={selected}
             setSelected={test}
           />
    
-          <div>{module}</div>
+          <ModuleTitle>{module}</ModuleTitle>
+        </DropdownContainer>
           
           <GuidesContainer>
             {guides.filter((guide:AggregatedGuide)=>guide.module.title[0]===selected[selected.length-1])
