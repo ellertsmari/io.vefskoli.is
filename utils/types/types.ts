@@ -22,6 +22,7 @@ export type AggregatedGuide = {
   otherReviews: ReviewWithId[];
   guide: GuideType;
   returnDate: Date;
+  order: number;
 }
 /* this is some crazy stuff from Chat GPT what works well but I don't need to use it after all
 type DeepOmit<T, K extends string | number | symbol> = T extends object

@@ -1,50 +1,56 @@
-import { Guide } from '@/models/guide';
-import Calendar from 'react-calendar';
-import Profile from './profile/profile';
-import { UserWithIdType } from '@/models/user';
-import { connectToDatabase } from '@/utils/mongoose-connector';
-import { CalendarContainer, NextUpContainer, ProfileContainer, Container, StyledLink } from './sidebar.style';
+import { Guide } from "@/models/guide";
+import { AggregatedGuide } from "@/utils/types/types";
+import Profile from "./profile/profile";
+import { UserWithIdType } from "@/models/user";
+import { connectToDatabase } from "@/utils/mongoose-connector";
+import {
+  NextUpContainer,
+  ProfileContainer,
+  Container,
+  StyledLink,
+  Title,
+  NextUpCard,
+} from "./sidebar.style";
+import MiniCalendar from "./miniCalendar/miniCalendar";
 
 type Props = {
-  student: UserWithIdType
-}
+  student: UserWithIdType;
+  guidesForNextUp: AggregatedGuide[]
+};
+
 const getGuides = async () => {
   await connectToDatabase();
   const guides = await Guide.find({});
   return guides;
-}
+};
 
-
-
-async function Sidebar({student}:Props) {
-  const date =  new Date();
+async function Sidebar({ student }: Props) {
   const guides = await getGuides();
   if (!student) return <>you need to log in</>;
   return (
-      <Container>
-        <ProfileContainer>
-          <Profile user={student} />
-          <h2>{student?.name}</h2>
-          </ProfileContainer>
-        <CalendarContainer>
-          {/* <Calendar onChange={setDate} value={date}/> */}
-          <Calendar value={date}/>
-          </CalendarContainer>
+    <Container>
+      <ProfileContainer>
+        <Profile user={student} />
+        <Title>{student?.name}</Title>
+      </ProfileContainer>
+      
+      <MiniCalendar />
 
-        <NextUpContainer>
-        <h2>Next up</h2>
+      <NextUpContainer>
+        <Title>Next up</Title>
         {guides.slice(0, 3).map((guide, index) => {
           return (
-            <StyledLink key={guide._id} href={`/guide/${guide._id}`} className='next'>
-              <h3>Module {guide.module.title.slice(0,1)}</h3>
-              <h4>{guide.title}</h4>   
-            </StyledLink>
-          )
+            <NextUpCard title={guide.title} key={guide._id}>
+              <StyledLink href={`/guide/${guide._id}`} className="next">
+                <h3>Module {guide.module.title.slice(0, 1)}</h3>
+                <h4>{guide.title}</h4>
+              </StyledLink>
+            </NextUpCard>
+          );
         })}
-        </NextUpContainer>
-        </Container>
-  )
+      </NextUpContainer>
+    </Container>
+  );
 }
-
 
 export default Sidebar;

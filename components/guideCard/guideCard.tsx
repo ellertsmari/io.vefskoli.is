@@ -146,7 +146,7 @@ if (nrOfReviews === 1) {
   },
   {
     text: "Your guide was recommended to gallery, Well Done!",
-    condidtion: vote === "recommend to gallery",
+    condition: vote === "recommend to gallery",
     backgroundColor: "#A5A6F6",
     backgroundImg: `url("star.svg")`,
     backgroundRepeat: "no-repeat",

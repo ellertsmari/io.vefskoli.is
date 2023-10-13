@@ -143,6 +143,7 @@ const getGuides = async (user: OmitPassword | string ) => {
           otherReviews: 1,
           userReviews: 1,
           category: 1,
+          order: 1,
         }
       }
     ]).exec();

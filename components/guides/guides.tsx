@@ -60,6 +60,7 @@ const Guides = ({guides}:Props) => {
   }, [moduleParam])
   return (
     <Container>
+      <DropdownContainer>
       <Dropdown
         options={options}
         selected={selected}
@@ -67,13 +68,14 @@ const Guides = ({guides}:Props) => {
       />
 
       <ModuleTitle>{module}</ModuleTitle>
-      
+      </DropdownContainer>
+
       <GuidesContainer>
         {guides.filter((guide:AggregatedGuide)=>{
           const isInModule = guide.module.title[0]===selected[selected.length-1]
           if(!category) return isInModule
           return isInModule && guide.category===category
-          
+
         })
         .map((guide: AggregatedGuide, nr: number) => {
           if(guide.module.title!=module) setModule(guide.module.title)

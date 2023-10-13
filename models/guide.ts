@@ -47,6 +47,7 @@ const guideSchema = new Schema({
   topicsList: { type: Schema.Types.String, required: true },
   module: { type: guideModuleSchema, required: true },
   classes: { type: [guideClassSchema], required: true },
+  order: { type: Schema.Types.Number, required: true},
 });
 
 export type GuideType = InferSchemaType<typeof guideSchema>;
