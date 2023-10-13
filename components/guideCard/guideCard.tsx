@@ -4,9 +4,7 @@ import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
 import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
-import useUser from "@/utils/useUser";
-import { motion, useDragControls } from "framer-motion"
-import { useRouter } from "next/navigation";
+
 
 
 type GuideCardProps = {
@@ -18,10 +16,6 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   const [isReviewHovered, setIsReviewHovered] = useState(false);
   const [isReturnHovered, setIsReturnHovered] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useUser();
-  const controls = useDragControls()
-  const router = useRouter();
-  const t = user?.role === "teacher";
 
   const { isReturned, isReviewed, userReviews, userReturns, oldestReturnId, otherReviews } =
   guide;
@@ -200,63 +194,36 @@ if (nrOfReviews === 1) {
 
   
 
-  const startDrag = (event: PointerEvent) => { 
-    event.stopPropagation();
-    event.preventDefault();
-    controls.start(event, { snapToCursor: false });
-  }
-  const goToGuide = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    console.log(event.target);
-    if(event.target instanceof HTMLDivElement && event.target.id==="drag") return;
-    router.push(`/guide/${guide._id}?isreturned=${isReturned}`)
-  }
-  const pos = (event: MouseEvent | TouchEvent | PointerEvent, info: any) => {
-    console.log(info.delta);
-    console.log(info)
-  }
   return (
-    <GuideCardContainer drag={true} dragControls={controls} onDrag={pos}>
-      <CardInfo 
-        style={{
-          backgroundPosition:"center",
-          backgroundImage:
-            returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundImg,
-          backgroundRepeat:
-            returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundRepeat,
-          backgroundColor:
-            returnStatus.condition === !isReturned ? "#F1F1F1" : returnStatus.backgroundColor,
-          filter: returnModifiedColor,
-        }}
-        onMouseEnter={RetunrHandleMouseEnter} 
-        onMouseLeave={ReturnHandleMouseLeave}
-        onClick={goToGuide}
-      >
-        <NumberWrapper>
-        <Number>Guide {nr+1}</Number>
-        </NumberWrapper>
-        <TitleWrapper>
-        <DefaultTitle isShown={!isReturnHovered && !isReviewHovered}>
-            {guide.title}
-          </DefaultTitle>
-        <HoveredTitle isShown={isReturnHovered || isReviewHovered}>
-            {returnStatus.text}
-          </HoveredTitle>
-          </TitleWrapper>
-
-
-        {/* <Title>{isReviewHovered || isReturnHovered ? returnStatus.text : guide.title}</Title> */}
-        {t && <div>
-          delete, 
-          <StyledLink href={`saveGuide/${guide._id}`}>edit</StyledLink> 
-          <motion.div 
-            id="drag"
-            onPointerDown={(e: React.PointerEvent<Element>) => startDrag(e.nativeEvent)}
-            style={{position:"absolute", top:0, left:0, width:"6rem", height:"6rem", backgroundImage:'url(draggable.webp)', backgroundSize:"contain"}} /> 
-        </div>}
-      </CardInfo>
-
+    <GuideCardContainer>
+      <StyledLink href={`/guide/${guide._id}?isReturned=${isReturned}`}>
+        <CardInfo 
+          style={{
+            backgroundPosition:"center",
+            backgroundImage:
+              returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundImg,
+            backgroundRepeat:
+              returnStatus.condition === !isReturned ? "none" : returnStatus.backgroundRepeat,
+            backgroundColor:
+              returnStatus.condition === !isReturned ? "#F1F1F1" : returnStatus.backgroundColor,
+            filter: returnModifiedColor,
+          }}
+          onMouseEnter={RetunrHandleMouseEnter} 
+          onMouseLeave={ReturnHandleMouseLeave}
+        >
+          <NumberWrapper>
+          <Number>Guide {nr+1}</Number>
+          </NumberWrapper>
+          <TitleWrapper>
+          <DefaultTitle isShown={!isReturnHovered && !isReviewHovered}>
+              {guide.title}
+            </DefaultTitle>
+          <HoveredTitle isShown={isReturnHovered || isReviewHovered}>
+              {returnStatus.text}
+            </HoveredTitle>
+            </TitleWrapper>
+        </CardInfo>
+      </StyledLink>
       <StyledLink onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
         <Status
           style={{ background: reviewStatus.backgroundColor, filter: reviewModifiedColor }}

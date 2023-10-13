@@ -15,6 +15,7 @@ export type AggregatedGuide = {
     description: string;
   };
   oldestReturnId: string;
+  category: string;
   isReturned: boolean;
   isReviewed: boolean;
   userReviews: ReviewType[];

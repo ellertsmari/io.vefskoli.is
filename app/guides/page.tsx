@@ -142,6 +142,7 @@ const getGuides = async (user: OmitPassword | string ) => {
           isReviewedx2: { $gt: [{ $size: '$userReviews' }, 1] },
           otherReviews: 1,
           userReviews: 1,
+          category: 1,
         }
       }
     ]).exec();

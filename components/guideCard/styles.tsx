@@ -2,11 +2,12 @@ import styled from "styled-components";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+
 type TitleProps = {
   isShown: boolean;
 }
 
-export const GuideCardContainer = styled(motion.div)`
+export const GuideCardContainer = styled.div`
   display: flex;
   gap: 1.5rem;
   flex-direction: column;
