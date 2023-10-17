@@ -37,7 +37,7 @@ const Admin = ({guides}:Props) => {
     const [guidesArr, setGuidesArr] = useState(guides.filter(g=>g.module.title === moduleNames[options.indexOf(selected)]))
     const [arrHasChanged, setArrHasChanged] = useState(false);
     useEffect(() => {
-        setGuidesArr(guides.filter(g=>g.module.title === moduleNames[options.indexOf(selected)]))
+        setGuidesArr(guides.filter(g=>g.module.title === moduleNames[options.indexOf(selected)]).sort((a:GuideWithId,b:GuideWithId) => a.order - b.order))
     }, [selected])
     const reorder = (newArray:GuideWithId[]) => {
         

@@ -145,6 +145,11 @@ const getGuides = async (user: OmitPassword | string ) => {
           category: 1,
           order: 1,
         }
+      },
+      {
+        $sort: {
+          order: 1, // Ascending order by order
+        }
       }
     ]).exec();
     return guides;
