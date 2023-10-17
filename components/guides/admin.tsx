@@ -4,6 +4,8 @@ import Dropdown from '../dropDown/dropDown';
 import useLocalStorage from '@/utils/useLocalStorage';
 import { Reorder } from "framer-motion"
 import { useState, useEffect } from 'react';
+import { FilledButton } from '../buttons';
+import Link from 'next/link';
 
 type GuideWithId = GuideType & { _id: string }
 type Props = {
@@ -33,6 +35,7 @@ const moduleNames = [
 const Admin = ({guides}:Props) => {
     const [selected, setSelected] = useLocalStorage<string>("adminModule", "MODULE 1")
     const [guidesArr, setGuidesArr] = useState(guides.filter(g=>g.module.title === moduleNames[options.indexOf(selected)]))
+    const [arrHasChanged, setArrHasChanged] = useState(false);
     useEffect(() => {
         setGuidesArr(guides.filter(g=>g.module.title === moduleNames[options.indexOf(selected)]))
     }, [selected])
@@ -40,8 +43,10 @@ const Admin = ({guides}:Props) => {
         
         console.log("setting guides array");
         setGuidesArr(newArray);
+        setArrHasChanged(true);
     }
     const reArrangeDB = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if(!arrHasChanged) return;
         guidesArr.forEach((guide, index) => {
             guide.order = index;
             fetch(`/api/guides/${guide._id}`, {
@@ -52,6 +57,7 @@ const Admin = ({guides}:Props) => {
                 body: JSON.stringify(guide)
             })
         })
+        setArrHasChanged(false);
     }
 
     return (
@@ -78,10 +84,12 @@ const Admin = ({guides}:Props) => {
                             }}>{guide.title}</h1>
                             <p>{guide.category}</p>
                             <p>{guide.module.title}</p>
+                            <Link href={`/saveGuide/${guide._id}`}><FilledButton>edit guide</FilledButton></Link>
                         </div>
                     </Reorder.Item>   
             )})}
             </Reorder.Group>
+            <Link href={`/saveGude/newGuide`}><FilledButton>add guide</FilledButton></Link>
         </div>
     )
 }

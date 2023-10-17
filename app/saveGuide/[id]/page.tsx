@@ -20,6 +20,7 @@ import { MouseEventHandler } from "react";
 import { useState, useEffect } from "react";
 import { ShortInput } from "@/components/inputs";
 import MarkdownEditor from "@/components/markdownEditor/markdownEditor";
+import Spinner from "@/components/spinner/spinner";
 
 type ModuleType = {
   [key: string]: string;
@@ -251,7 +252,7 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
           </RequirementsWrapper>
 
           <div style={{display:"flex", width:"100%", justifyContent:"center", marginTop:"3rem"}}>
-            <FilledButton onClick={submit}>SAVE</FilledButton>
+            {isSubmitting?<Spinner></Spinner>:<FilledButton onClick={submit}>SAVE</FilledButton>}
           </div>
         </Guide>
         

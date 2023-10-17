@@ -6,6 +6,7 @@ import { ObjectId } from "mongodb";
 import { Error } from '../guides/guides.styles';
 import { useRouter } from 'next/navigation';
 import Spinner from '../spinner/spinner';
+import { SP } from 'next/dist/shared/lib/utils';
 
 
 type Props = {
@@ -78,7 +79,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
       <SubTitle>Comment</SubTitle>
       <Comment ref={commentRef} contentEditable></Comment>
       <div style={{display:"flex", justifyContent:"space-between"}}>
-        {!isLoading && <FilledButton onClick={(createReview)}>Submit</FilledButton>}
+        {isLoading?<Spinner></Spinner> : <FilledButton onClick={(createReview)}>Submit</FilledButton>}
         <FilledButton style={{width:"20rem"}} onClick={improveFeedback}>Improve this feedback</FilledButton>
       </div>
       {improvement==="Loading..." && <Loader>Loading...</Loader>} {improvement? <Tip>{improvement}</Tip> : null}
