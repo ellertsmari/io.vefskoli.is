@@ -1,22 +1,19 @@
-import React from 'react'
 import { Guide } from '@/models/guide';
 import { connectToDatabase } from '@/utils/mongoose-connector';
+import Admin from '@/components/guides/admin';
 
-const getGuides = () => {
+const getGuides = async () => {
   connectToDatabase();
-  return Guide.find({});
+  return await Guide.find({});
 }
-export default async () => {
-  const guides = await getGuides();
+const Page = async () => {
+  const guideArr = await getGuides();
   return (
     <div>
-      {guides.map((guide) => {
-        return <p>{guide.title}</p>
-      })}
-      <h1>Ugly Admin</h1>
-      <p>Ugly Admin</p>
-      <p>Ugly Admin</p>
-      <p>Ugly Admin</p>
+      <Admin guides={JSON.parse(JSON.stringify(guideArr))}/>
+    
     </div>
   )
 }
+
+export default Page

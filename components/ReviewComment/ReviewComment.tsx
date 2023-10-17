@@ -5,6 +5,7 @@ import { Comment, SubTitle, ReviewFrame, Loader, Tip } from '@/styles/pageStyles
 import { ObjectId } from "mongodb";
 import { Error } from '../guides/guides.styles';
 import { useRouter } from 'next/navigation';
+import Spinner from '../spinner/spinner';
 
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
 
 const ReviewComment = ({returnId, userId, guideId}:Props) => {
   const [improvement, setImprovement] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false); //this is needed so that students won't spam the submit button
   const [vote, setVote] = useState<string>("");
   const [error, setError] = useState<string>("");
   const router = useRouter();
@@ -26,6 +28,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
     setImprovement(json.message.content);
   }
   const commentRef = useRef<HTMLDivElement>(null);
+
   const createReview = async (e:MouseEvent) => {
     if (vote==="") {
       setError("Please vote");
@@ -35,6 +38,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
       setError("Please comment");
       return;
     }
+    setIsLoading(true);
     const review = await fetch("/api/reviews", {
       method: "POST",
       body: JSON.stringify({
@@ -49,6 +53,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
     const json = await review.json();
     console.log("review", json);
     router.push(`/guides`);
+    setIsLoading(false);
     router.refresh();
   }
   const createVote = (e:FormEvent<HTMLInputElement>)=>
@@ -73,7 +78,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
       <SubTitle>Comment</SubTitle>
       <Comment ref={commentRef} contentEditable></Comment>
       <div style={{display:"flex", justifyContent:"space-between"}}>
-        <FilledButton onClick={(createReview)}>Submit</FilledButton>
+        {!isLoading && <FilledButton onClick={(createReview)}>Submit</FilledButton>}
         <FilledButton style={{width:"20rem"}} onClick={improveFeedback}>Improve this feedback</FilledButton>
       </div>
       {improvement==="Loading..." && <Loader>Loading...</Loader>} {improvement? <Tip>{improvement}</Tip> : null}

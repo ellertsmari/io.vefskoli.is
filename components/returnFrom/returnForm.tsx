@@ -22,7 +22,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log("this is searchParams: ",searchParams.get("isreturned"))
+  console.log("this is searchParams: ",searchParams.get("isReturned"))
   useEffect(() => { //needed because if redirect is called in returnForm it will not work because it is an event handler
     if(shouldRedirect){
       console.log("redirecting to guides");
@@ -54,7 +54,7 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
   
   console.log("user is: ",user);
   if (!user?._id) return <>You are not logged in, if you  want to return this guide you need to log in via authpage</>;
-  if(searchParams.get("isreturned") === "true") return <>This guide has already been returned</>;
+  if(searchParams.get("isReturned") === "true") return <>This guide has already been returned</>;
   
 
   const createReturn = (e:FormEvent) => {

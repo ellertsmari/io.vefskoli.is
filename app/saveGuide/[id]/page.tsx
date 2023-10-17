@@ -1,5 +1,5 @@
 'use client'; //this is a very dinamic component
-import { Guide as G, GuideType } from "@/models/guide";
+import { GuideType } from "@/models/guide";
 import { FilledButton } from "@/components/buttons/filledButton";
 import {
   Guide,

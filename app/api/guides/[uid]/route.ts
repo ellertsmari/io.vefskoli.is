@@ -62,8 +62,9 @@ export const PUT = async ( req: NextRequest, { params }: { params: { uid: string
   const uid = new ObjectId(params.uid);
   await connectToDatabase();
   const newGuide = await req.json();
-  console.log("this is newGuide",newGuide.title);
+  console.log("this is newGuide",newGuide.order, newGuide.title);
   const guide = await Guide.findOneAndUpdate({_id:uid}, newGuide);
+  console.log("this is guide",guide.order, guide.title);
   return res.json(guide, { status: 200 });
   //return res.json({ message: "Guide updated successfully" }, { status: 200 });
 }

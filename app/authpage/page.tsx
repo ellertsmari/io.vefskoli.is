@@ -37,8 +37,9 @@ const authPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [credentials, setCredentials] = useLocalStorage<CredentailsData>(
     "credentails",
-    { email: "", password: "" }
+    { email: "", password: "HAH! did you really think you could just see the password in LocalStorage?" }
   );
+  const [password, setPassword] = useState("");
 
   const router = useRouter();
 
@@ -51,15 +52,16 @@ const authPage = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setCredentials({ ...credentials, [name]: value });
+    if(name === "repeatPassword" || name === "password") setPassword(value);
+    else setCredentials({ ...credentials, [name]: value });
   };
-  const login = async ({ email, password }: CredentailsData) => {
+  const login = async () => {
     const user = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify({...credentials, password}),
     });
     const x = await user.json();
     console.log("login success", x);
@@ -108,7 +110,7 @@ const authPage = () => {
     const x = await res.json();
     console.log("this is x", x);
     if (x.message === "User created successfully") {
-      login({ email, password });
+      login();
     }
     if (x.message) {
       console.log(x.message);
@@ -129,7 +131,7 @@ const authPage = () => {
       return;
     e.preventDefault();
     setIsLoading(true);
-    authSwitch ? login(credentials) : createUser(credentials);
+    authSwitch ? login() : createUser(credentials);
   };
 
   return (

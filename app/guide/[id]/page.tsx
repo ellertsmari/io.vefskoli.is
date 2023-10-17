@@ -18,6 +18,7 @@ import {
   KnowledgeAndSkillsWrapper,
 } from "@/styles/pageStyles/guide.styles";
 import ReturnForm from "@/components/returnFrom/returnForm";
+
 const getGuide = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
     return null;
@@ -27,6 +28,7 @@ const getGuide = async (id: string) => {
   const guide: GuideType & {_id:string} | null = await G.findOne({ _id: objectId });
   return guide; 
 }
+
 const guide = async ({ params }: { params: { id: string } }) => {
   const g = await getGuide(params.id);
   if (!g) {
