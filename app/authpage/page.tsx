@@ -40,7 +40,7 @@ const authPage = () => {
     { email: "", password: "HAH! did you really think you could just see the password in LocalStorage?" }
   );
   const [password, setPassword] = useState("");
-
+  const [repeatPassword, setRepeatPassword] = useState("");
   const router = useRouter();
 
   const handleAuthSwitch: MouseEventHandler<HTMLAnchorElement> = (
@@ -52,7 +52,8 @@ const authPage = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if(name === "repeatPassword" || name === "password") setPassword(value);
+    if(name === "repeatPassword") setRepeatPassword(value);
+    else if(name === "password") setPassword(value);
     else setCredentials({ ...credentials, [name]: value });
   };
   const login = async () => {
@@ -100,6 +101,7 @@ const authPage = () => {
       role: "student",
       avatarUrl: "",
     };
+    console.log(user);
     const res = await fetch("api/users", {
       method: "POST",
       headers: {
@@ -123,15 +125,15 @@ const authPage = () => {
   const submit: MouseEventHandler<HTMLButtonElement> = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    if (!credentials.email || !credentials.password) {
+    if (!credentials.email || !password) {
       setError("Please fill out all fields");
       return;
     }
-    if (!authSwitch && credentials.password !== credentials.repeatPassword)
+    if (!authSwitch && password !== repeatPassword)
       return;
     e.preventDefault();
     setIsLoading(true);
-    authSwitch ? login() : createUser(credentials);
+    authSwitch ? login() : createUser({...credentials, password});
   };
 
   return (
@@ -161,6 +163,7 @@ const authPage = () => {
                 <ShortInput
                   type="password"
                   name="password"
+                  value={password}
                   onChange={handleInputChange}
                 />
                 <ButtonWrapper>
@@ -211,6 +214,7 @@ const authPage = () => {
                   required
                   type="password"
                   name="password"
+                  value={password}
                   onChange={handleInputChange}
                 />
                 <InputLabel>Repeat Password</InputLabel>
@@ -218,6 +222,7 @@ const authPage = () => {
                   required
                   type="password"
                   name="repeatPassword"
+                  value={repeatPassword}
                   onChange={handleInputChange}
                 />
 
