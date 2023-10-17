@@ -161,7 +161,6 @@ const authPage = () => {
                 <ShortInput
                   type="password"
                   name="password"
-                  value={credentials.password}
                   onChange={handleInputChange}
                 />
                 <ButtonWrapper>
@@ -212,7 +211,6 @@ const authPage = () => {
                   required
                   type="password"
                   name="password"
-                  value={credentials.password}
                   onChange={handleInputChange}
                 />
                 <InputLabel>Repeat Password</InputLabel>
@@ -220,7 +218,6 @@ const authPage = () => {
                   required
                   type="password"
                   name="repeatPassword"
-                  value={credentials.repeatPassword}
                   onChange={handleInputChange}
                 />
 
