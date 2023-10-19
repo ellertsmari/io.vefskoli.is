@@ -81,6 +81,10 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
       });
       const data = await res.json();
       console.log("data is",data)
+      localStorage.removeItem("newGuide");
+      localStorage.removeItem("newGuideMaterials");
+      localStorage.removeItem("newGuideKnowledge");
+      localStorage.removeItem("newGuideSkills");
       setIsSubmitting(false);  
     }
 
