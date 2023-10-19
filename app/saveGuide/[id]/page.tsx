@@ -66,6 +66,7 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
     knowledge: knowledge,
     // @ts-ignore
     skills: skills,
+    order:100,
   });
   console.log(params.id)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
