@@ -21,29 +21,30 @@ import { useState, useEffect } from "react";
 import { ShortInput } from "@/components/inputs";
 import MarkdownEditor from "@/components/markdownEditor/markdownEditor";
 import Spinner from "@/components/spinner/spinner";
+import useLocalStorage from "@/utils/useLocalStorage";
 
-type ModuleType = {
-  [key: string]: string;
-}
-const moduleMap: ModuleType = {
-  "MODULE 0": "0 - Preparation",
-  "MODULE 1": "1 - Introductory Course",
-  "MODULE 2": "2 - Community & Networking",
-  "MODULE 3": "3 - The fundamentals",
-  "MODULE 4": "4 - Connecting to the World",
-  "MODULE 5": "5 - Back-end & Infrastructure",
-  "MODULE 6": "6 - Growing complexity",
-  "MODULE 7": "7 - Exploration",
-  "MODULE 8": "8 - Internship",
-}
+
+
+
+const moduleNames = [
+  "0 - Preparation",
+  "1 - Introductory Course",
+  "2 - Community & Networking",
+  "3 - The fundamentals",
+  "4 - Connecting to the World",
+  "5 - Back-end & Infrastructure",
+  "6 - Growing complexity",
+  "7 - Exploration",
+  "8 - Internship",
+]
 
 const SaveGuide = ({ params }: { params: { id: string } } ) => {
  
-  const [materials, setMaterials] = useState([{title:"edit materials", link:"edit link"}]);
-  const [knowledge, setKnowledge] = useState([{knowledge:"edit knowledge"}]);
-  const [skills, setSkills] = useState([{skill:"edit skill"}]);
+  const [materials, setMaterials] = useLocalStorage("newGuideMaterials",[{title:"edit materials", link:"edit link"}]);
+  const [knowledge, setKnowledge] = useLocalStorage("newGuideKnowledge",[{knowledge:"edit knowledge"}]);
+  const [skills, setSkills] = useLocalStorage("newGuideSkills",[{skill:"edit skill"}]);
   //need to ignore ts errors because of the Mongoose specific types. We could maybe create a custom type for this
-  const [guide, setGuide] = useState<Partial<GuideType>>({
+  const [guide, setGuide] = useLocalStorage<Partial<GuideType>>("newGuide",{
     title: "Guide Title",
     description: "edit description",
     category: "edit category",
@@ -58,7 +59,7 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
     createdAt: new Date(),
     updatedAt: new Date(),
     topicsList: "edit topicList",
-    module: {title:moduleMap[params.id]},
+    module: {title:moduleNames[parseInt(params.id)]},
     // @ts-ignore
     classes: materials,
     // @ts-ignore
@@ -82,7 +83,7 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
       setIsSubmitting(false);  
     }
 
-    if (isSubmitting && params.id in moduleMap) {
+    if (isSubmitting && (params.id.length < 4)) {
       const createGuide =  () => {
         console.log("creating guide")
         for (const key in guide) {
@@ -96,7 +97,7 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
       };
       createGuide();
     }
-    if(isSubmitting && !(params.id in moduleMap)){
+    if(isSubmitting && (params.id.length > 4)){
       saveGuide(`/api/guides/${params.id}`, "PUT");
     }
   },[isSubmitting]);
@@ -112,7 +113,7 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
       setKnowledge(data.knowledge);
       setSkills(data.skills);
     };
-    if(!(params.id in moduleMap)) getGuide();
+    if(!(params.id.length < 4)) getGuide();
 
   }, [params.id]);
 

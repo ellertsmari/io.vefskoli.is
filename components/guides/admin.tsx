@@ -89,7 +89,7 @@ const Admin = ({guides}:Props) => {
                     </Reorder.Item>   
             )})}
             </Reorder.Group>
-            <Link href={`/saveGude/newGuide`}><FilledButton>add guide</FilledButton></Link>
+            <Link href={`/saveGuide/${options.indexOf(selected)}`}><FilledButton>add guide</FilledButton></Link>
         </div>
     )
 }

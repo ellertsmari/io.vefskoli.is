@@ -99,7 +99,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
           <GuideParagraph>Skills</GuideParagraph>
           <ul>
             {g.skills.map((skill) => {
-              return <li><GuideParagraph>{skill.skill}</GuideParagraph></li>;
+              return <li key={skill.skill}><GuideParagraph>{skill.skill}</GuideParagraph></li>;
             })}
           </ul>
           </SkillsWrapper>
