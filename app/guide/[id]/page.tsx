@@ -18,6 +18,7 @@ import {
   KnowledgeAndSkillsWrapper,
 } from "@/styles/pageStyles/guide.styles";
 import ReturnForm from "@/components/returnFrom/returnForm";
+import Markdown from "react-markdown";
 
 const getGuide = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
@@ -39,7 +40,6 @@ const guide = async ({ params }: { params: { id: string } }) => {
   });
   const cMaterials = JSON.parse(JSON.stringify(g.classes));
   const allMaterials = rMaterials.concat(cMaterials);
-  
   return (
     <>
       <Layout>
@@ -48,12 +48,10 @@ const guide = async ({ params }: { params: { id: string } }) => {
           <MainInfoWrapper>
             <GuideTitle>{g.title}</GuideTitle>
             <GuideSubtitle>Description</GuideSubtitle>
-            <GuideParagraph dangerouslySetInnerHTML={{ __html: g.description }}>
-             
-            </GuideParagraph>
+            {g.createdAt?<GuideParagraph><Markdown>{g.description}</Markdown></GuideParagraph>:<GuideParagraph dangerouslySetInnerHTML={{ __html: g.description }}></GuideParagraph>}
             <GuideSubtitle>Example</GuideSubtitle>
             <GuideSubtitle>{g.themeIdea.title}</GuideSubtitle>
-            <GuideParagraph dangerouslySetInnerHTML={{__html: g.themeIdea.description}}></GuideParagraph>
+            {g.createdAt?<GuideParagraph><Markdown>{g.themeIdea.description}</Markdown></GuideParagraph>:<GuideParagraph dangerouslySetInnerHTML={{ __html: g.themeIdea.description }}></GuideParagraph>}
           </MainInfoWrapper>
 
           <SideOnfoWrapper>
