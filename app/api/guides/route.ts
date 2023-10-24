@@ -37,6 +37,7 @@ export const POST = async (
   body.createdAt = new Date();
   body.updatedAt = new Date();
   const g = await Guide.create(body);
+  console.log("this is g",g);
   return res.json({ message: "Guide created successfully", response:g }, { status: 200 });
 }
 
