@@ -33,11 +33,11 @@ export const POST = async (
   // TODO: Add logic to create a guide
   await connectToDatabase();
   const body = await req.json();
-  console.log(body)
+  console.log("this is body",body)
   body.createdAt = new Date();
   body.updatedAt = new Date();
-  Guide.create(body);
-  return res.json({ message: "Guide created successfully" }, { status: 200 });
+  const g = Guide.create(body);
+  return res.json({ message: "Guide created successfully", response:g }, { status: 200 });
 }
 
 export const GET = async (
