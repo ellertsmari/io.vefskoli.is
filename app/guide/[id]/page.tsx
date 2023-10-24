@@ -18,7 +18,7 @@ import {
   KnowledgeAndSkillsWrapper,
 } from "@/styles/pageStyles/guide.styles";
 import ReturnForm from "@/components/returnFrom/returnForm";
-import Markdown from "react-markdown";
+import Markdown from "@/components/markdownEditor/markdownReader";
 
 const getGuide = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
@@ -40,6 +40,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
   });
   const cMaterials = JSON.parse(JSON.stringify(g.classes));
   const allMaterials = rMaterials.concat(cMaterials);
+  //console.log(g.description);
   return (
     <>
       <Layout>

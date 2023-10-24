@@ -34,6 +34,8 @@ export const POST = async (
   await connectToDatabase();
   const body = await req.json();
   console.log(body)
+  body.createdAt = new Date();
+  body.updatedAt = new Date();
   Guide.create(body);
   return res.json({ message: "Guide created successfully" }, { status: 200 });
 }
