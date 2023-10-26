@@ -1,8 +1,10 @@
 'use client'
-import Markdown from 'react-markdown'
+import MDEditor from "@uiw/react-md-editor";
 
 const MarkdownReader = ({children}:{children:string}) => {
-  return (<Markdown>{children}</Markdown>)
+  return (<div data-color-mode="light">
+    <MDEditor.Markdown source={children}></MDEditor.Markdown>
+  </div>)
 }
 
 export default MarkdownReader;
