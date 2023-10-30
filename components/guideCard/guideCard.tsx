@@ -153,7 +153,7 @@ if (nrOfReviews === 1) {
     href: `#`
   },
   {
-    text: "Waiting until someone reviews you project",
+    text: "Waiting until someone reviews your project",
     condition: !vote,
     backgroundColor: "#B5E2A8",
     backgroundImg: `url("hourglass.svg")`,
