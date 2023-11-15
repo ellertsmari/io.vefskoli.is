@@ -17,6 +17,7 @@ import {
 } from "@/styles/pageStyles/guide.styles";
 import ReturnForm from "@/components/returnFrom/returnForm";
 import { MainContent } from "@/components/mainLayout";
+import Markdown from "@/components/markdownEditor/markdownReader";
 
 const getGuide = async (id: string) => {
   if (!Types.ObjectId.isValid(id)) {
@@ -38,7 +39,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
   });
   const cMaterials = JSON.parse(JSON.stringify(g.classes));
   const allMaterials = rMaterials.concat(cMaterials);
-  
+  //console.log(g.description);
   return (
     <>
         <MainContent>
@@ -46,12 +47,10 @@ const guide = async ({ params }: { params: { id: string } }) => {
           <MainInfoWrapper>
             <GuideTitle>{g.title}</GuideTitle>
             <GuideSubtitle>Description</GuideSubtitle>
-            <GuideParagraph dangerouslySetInnerHTML={{ __html: g.description }}>
-             
-            </GuideParagraph>
+            {g.createdAt?<GuideParagraph><Markdown>{g.description}</Markdown></GuideParagraph>:<GuideParagraph dangerouslySetInnerHTML={{ __html: g.description }}></GuideParagraph>}
             <GuideSubtitle>Example</GuideSubtitle>
             <GuideSubtitle>{g.themeIdea.title}</GuideSubtitle>
-            <GuideParagraph dangerouslySetInnerHTML={{__html: g.themeIdea.description}}></GuideParagraph>
+            {g.createdAt?<GuideParagraph><Markdown>{g.themeIdea.description}</Markdown></GuideParagraph>:<GuideParagraph dangerouslySetInnerHTML={{ __html: g.themeIdea.description }}></GuideParagraph>}
           </MainInfoWrapper>
 
           <SideOnfoWrapper>
@@ -97,7 +96,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
           <GuideParagraph>Skills</GuideParagraph>
           <ul>
             {g.skills.map((skill) => {
-              return <li><GuideParagraph>{skill.skill}</GuideParagraph></li>;
+              return <li key={skill.skill}><GuideParagraph>{skill.skill}</GuideParagraph></li>;
             })}
           </ul>
           </SkillsWrapper>
