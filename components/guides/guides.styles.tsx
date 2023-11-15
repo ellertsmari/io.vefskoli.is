@@ -15,27 +15,6 @@ export const DropdownContainer = styled.div`
   display: flex;
 `
 
-export const Container = styled.div`
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    box-shadow: 0px 7px 8px rgba(139, 139, 139, 0.25);
-    gap: 5rem;
-    border-radius: 4.2rem;
-    padding: 5rem;
-    height:69vh;
-    /* hiding scrollbar */
-    ::-webkit-scrollbar {
-        display: none;
-    }
-    /*hiding scrollbar for Firefox */
-    scrollbar-width: none;
-    
-    /*hiding scrollbar for IE 10+ */
-    -ms-overflow-style: none;
-`
-
   export const GuidesContainer = styled(motion.div) `
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;

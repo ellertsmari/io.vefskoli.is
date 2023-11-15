@@ -1,21 +1,13 @@
-import { Guide } from "@/models/guide";
-import { AggregatedGuide } from "@/utils/types/types";
 import Profile from "./profile/profile";
 import { UserWithIdType } from "@/models/user";
-import { connectToDatabase } from "@/utils/mongoose-connector";
-import {
-  NextUpContainer,
-  ProfileContainer,
-  Container,
-  StyledLink,
-  Title,
-  NextUpCard,
-} from "./sidebar.style";
+import { ProfileContainer, Container, Title } from "./sidebar.style";
 import MiniCalendar from "./miniCalendar/miniCalendar";
+import NextUp from "./nextup/nextUp";
+import { connectToDatabase } from "@/utils/mongoose-connector";
+import { Guide } from "@/models/guide";
 
 type Props = {
   student: UserWithIdType;
-  guidesForNextUp: AggregatedGuide[]
 };
 
 const getGuides = async () => {
@@ -33,22 +25,8 @@ async function Sidebar({ student }: Props) {
         <Profile user={student} />
         <Title>{student?.name}</Title>
       </ProfileContainer>
-      
       <MiniCalendar />
-
-      <NextUpContainer>
-        <Title>Next up</Title>
-        {guides.slice(0, 3).map((guide, index) => {
-          return (
-            <NextUpCard title={guide.title} key={guide._id}>
-              <StyledLink href={`/guide/${guide._id}`} className="next">
-                <h3>Module {guide.module.title.slice(0, 1)}</h3>
-                <h4>{guide.title}</h4>
-              </StyledLink>
-            </NextUpCard>
-          );
-        })}
-      </NextUpContainer>
+      <NextUp guides={JSON.parse(JSON.stringify(guides))} />
     </Container>
   );
 }

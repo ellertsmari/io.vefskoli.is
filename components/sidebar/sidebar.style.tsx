@@ -35,18 +35,3 @@ export const ProfileContainer = styled.div`
     flex-direction: column;
     text-align: center;
 `
-
-export const NextUpContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    gap: 2rem;
-`
-export const NextUpCard = styled.div`
-  background-color: #ffffff;
-  box-shadow: 2px 4px 3px rgba(139, 139, 139, 0.25);
-  display:flex;
-  flex-direction: column;
-  padding:1.5rem;
-  border-radius: 1.5rem;
-`

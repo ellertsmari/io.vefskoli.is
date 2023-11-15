@@ -4,20 +4,17 @@ export const metadata: Metadata = {
   title: "Home",
   description: "Welcome to Next.js",
 };
+
 import Sidebar from "@/components/sidebar/sidebar";
 import {
-  MainContent,
-
-  MainLayout,
+  MainAndNavContainer,
+  OverallLayout,
   SidebarContainer,
-
 } from "@/components/mainLayout";
-import AnimatedBackground from "../components/animatedBackground"
+import AnimatedBackground from "../components/animatedBackground";
 import { cookies } from "next/headers";
-import { UserType } from "@/models/user";
 import useServerUser from "@/utils/useServerUser";
 import NavBar from "@/components/nav/nav";
-import MarkdownEditor from "@/components/markdownEditor/markdownEditor";
 
 export default async function RootLayout({
   // Layouts must accept a children prop.
@@ -37,18 +34,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-      <AnimatedBackground />
-        <MainLayout>
+        <AnimatedBackground />
+        <OverallLayout>
           <SidebarContainer>
-          {/* @ts-expect-error Server Component */}
-          <Sidebar student={user}></Sidebar>
+            {/* @ts-expect-error Server Component */}
+            <Sidebar student={user}></Sidebar>
           </SidebarContainer>
-
-            <MainContent>
-              <NavBar />
+          <MainAndNavContainer>
+            <NavBar />
             {children}
-            </MainContent>
-        </MainLayout>
+          </MainAndNavContainer>
+        </OverallLayout>
       </body>
     </html>
   );

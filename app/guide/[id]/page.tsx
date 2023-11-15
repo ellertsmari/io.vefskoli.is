@@ -2,10 +2,8 @@ import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide as G, GuideType } from "@/models/guide";
 import { Types } from "mongoose";
 import {
-  Guide,
   GuideTitle,
   GuideParagraph,
-  Layout,
   GuideSubtitle,
   MainInfoWrapper,
   SideOnfoWrapper,
@@ -18,6 +16,7 @@ import {
   KnowledgeAndSkillsWrapper,
 } from "@/styles/pageStyles/guide.styles";
 import ReturnForm from "@/components/returnFrom/returnForm";
+import { MainContent } from "@/components/mainLayout";
 import Markdown from "@/components/markdownEditor/markdownReader";
 
 const getGuide = async (id: string) => {
@@ -43,8 +42,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
   //console.log(g.description);
   return (
     <>
-      <Layout>
-        <Guide>
+        <MainContent>
           <UpperWrapper>
           <MainInfoWrapper>
             <GuideTitle>{g.title}</GuideTitle>
@@ -106,10 +104,7 @@ const guide = async ({ params }: { params: { id: string } }) => {
           </RequirementsWrapper>
 
           <ReturnForm guideId={JSON.parse(JSON.stringify(g._id))} />
-        </Guide>
-        
-      </Layout>
-      
+          </MainContent>
     </>
   );
 };
