@@ -2,9 +2,7 @@
 import { GuideType } from "@/models/guide";
 import { FilledButton } from "@/components/buttons/filledButton";
 import {
-  Guide,
   GuideParagraph,
-  Layout,
   GuideSubtitle,
   MainInfoWrapper,
   SideOnfoWrapper,
@@ -21,6 +19,7 @@ import { useState, useEffect } from "react";
 import { ShortInput } from "@/components/inputs";
 import MarkdownEditor from "@/components/markdownEditor/markdownEditor";
 import Spinner from "@/components/spinner/spinner";
+import { MainContent } from "@/components/mainLayout";
 
 type ModuleType = {
   [key: string]: string;
@@ -150,8 +149,7 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
   };
   return (
     <>
-      <Layout>
-        <Guide>
+        <MainContent>
           <UpperWrapper>
           <MainInfoWrapper>
             <ShortInput data-name="title" onBlur={handleInput} placeholder={guide.title} />
@@ -254,10 +252,7 @@ const SaveGuide = ({ params }: { params: { id: string } } ) => {
           <div style={{display:"flex", width:"100%", justifyContent:"center", marginTop:"3rem"}}>
             {isSubmitting?<Spinner></Spinner>:<FilledButton onClick={submit}>SAVE</FilledButton>}
           </div>
-        </Guide>
-        
-      </Layout>
-      
+        </MainContent>
     </>
   );
 };
