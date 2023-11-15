@@ -1,13 +1,14 @@
 'use client';
 import { AggregatedGuide } from '@/utils/types/types';
 import GuideCard from '@/components/guideCard/guideCard';
-import { GuidesContainer, Container, ModuleTitle, DropdownContainer } from './guides.styles';
+import { GuidesContainer, ModuleTitle, DropdownContainer } from './guides.styles';
 import Dropdown from '@/components/dropDown/dropDown';
 import { useState, useEffect } from 'react';
 import useLocalStorage from '@/utils/useLocalStorage';
 import CsrButton from '@/components/buttons/csrButton';
 import useUser from '@/utils/useUser';
 import { useSearchParams } from 'next/navigation';
+import { MainContent } from '../mainLayout';
 
 type Props = {
   guides: AggregatedGuide[];
@@ -59,7 +60,7 @@ const Guides = ({guides}:Props) => {
     moduleParam && setModuleSelected({selected: moduleParam})
   }, [moduleParam])
   return (
-    <Container>
+    <>
       <DropdownContainer>
       <Dropdown
         options={options}
@@ -95,7 +96,7 @@ const Guides = ({guides}:Props) => {
           <CsrButton module={module}></CsrButton> 
         </>}
       </GuidesContainer>
-    </Container>
+    </>
   )
 }
 
