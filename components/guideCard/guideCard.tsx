@@ -24,7 +24,8 @@ const ungradedReviews = otherReviews.filter((review) => !review.grade);
 otherReviews.length && console.log(otherReviews);
 
 //Getting vote(pass, no pass, recommended to galery) from "otherReviews" object
-const vote = otherReviews.length?otherReviews[otherReviews.length-1].vote:undefined;
+const vote = ungradedReviews.length===0? otherReviews.length?otherReviews[otherReviews.length-1].vote:undefined : undefined;
+
 
 //Calculating whether a student still has to review guide or guides based on when he has returned
 let hasOldReview = false
