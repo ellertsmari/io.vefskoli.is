@@ -118,7 +118,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#F1F1F1",
     backgroundImg: "none",
     backgroundRepeat: "no-repeat",
-    href: `/guide/${guide._id}`,
+    href: `/guide/${guide._id}?isReturned=${isReturned}`,
   },
   {
     text: "You have got a review, please grade it",
@@ -196,7 +196,7 @@ if (nrOfReviews === 1) {
 
   return (
     <GuideCardContainer>
-      <StyledLink href={`/guide/${guide._id}?isReturned=${isReturned}`}>
+      <StyledLink href={returnStatus.href}>
         <CardInfo 
           style={{
             backgroundPosition:"center",
