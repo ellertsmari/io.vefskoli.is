@@ -142,7 +142,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#F99F9D",
     backgroundImg: `url("x.svg")`,
     backgroundRepeat: "no-repeat",
-    href: `#`,
+    href: `/guide/${guide._id}`,
   },
   {
     text: "Your guide was recommended to gallery, Well Done!",
