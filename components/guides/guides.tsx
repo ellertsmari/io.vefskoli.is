@@ -12,9 +12,7 @@ import { MainContent } from '../mainLayout';
 
 type Props = {
   guides: AggregatedGuide[];
-}  
-
-
+}
 
 const Guides = ({guides}:Props) => {
   const options = [

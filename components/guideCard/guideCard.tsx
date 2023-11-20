@@ -4,6 +4,7 @@ import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
 import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
+import review from "@/app/review/[id]/page";
 
 
 
@@ -21,10 +22,12 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   guide;
 const nrOfReviews = userReviews.length;
 const ungradedReviews = otherReviews.filter((review) => !review.grade);
-otherReviews.length && console.log(otherReviews);
+const reviewsForLatestReturn = otherReviews.filter((review  ) => review.return?.toString() === userReturns[userReturns.length-1]._id);
 
 //Getting vote(pass, no pass, recommended to galery) from "otherReviews" object
-const vote = ungradedReviews.length===0? otherReviews.length?otherReviews[otherReviews.length-1].vote:undefined : undefined;
+const vote = reviewsForLatestReturn.length?reviewsForLatestReturn[0].vote:undefined;
+console.log("this is the guide", guide)
+//
 
 
 //Calculating whether a student still has to review guide or guides based on when he has returned

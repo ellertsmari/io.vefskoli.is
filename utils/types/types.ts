@@ -4,12 +4,13 @@ import { UserWithIdType } from "@/models/user";
 import { ReviewType } from "@/models/review";
 
 type ReviewWithId = ReviewType & { _id: string };
+type ReturnWithId = ReturnType & { _id: string };
 
 export type AggregatedGuide = {
   _id: string;
   title: string;
   description: string;
-  userReturns: ReturnType[];
+  userReturns: ReturnWithId[];
   module: {
     title: string;
     description: string;
