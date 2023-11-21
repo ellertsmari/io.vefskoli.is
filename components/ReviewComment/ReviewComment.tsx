@@ -80,7 +80,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
       <Comment ref={commentRef} contentEditable></Comment>
       <div style={{display:"flex", justifyContent:"space-between"}}>
         {isLoading?<Spinner></Spinner> : <FilledButton onClick={(createReview)}>Submit</FilledButton>}
-        <FilledButton style={{width:"20rem"}} onClick={improveFeedback}>Improve this feedback</FilledButton>
+        <FilledButton style={{width:"20rem"}} onClick={improveFeedback}>Get improvement tips</FilledButton>
       </div>
       {improvement==="Loading..." && <Loader>Loading...</Loader>} {improvement? <Tip dangerouslySetInnerHTML={{__html:improvement}}></Tip> : null}
     </ReviewFrame>
