@@ -82,7 +82,7 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
         {isLoading?<Spinner></Spinner> : <FilledButton onClick={(createReview)}>Submit</FilledButton>}
         <FilledButton style={{width:"20rem"}} onClick={improveFeedback}>Improve this feedback</FilledButton>
       </div>
-      {improvement==="Loading..." && <Loader>Loading...</Loader>} {improvement? <Tip>{improvement}</Tip> : null}
+      {improvement==="Loading..." && <Loader>Loading...</Loader>} {improvement? <Tip dangerouslySetInnerHTML={{__html:improvement}}></Tip> : null}
     </ReviewFrame>
   )
 }

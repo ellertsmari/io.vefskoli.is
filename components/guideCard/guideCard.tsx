@@ -138,7 +138,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#B5E2A8",
     backgroundImg: `url("check.svg")`,
     backgroundRepeat: "no-repeat",
-    href: `#`,
+    href: `/guide/${guide._id}?isReturned=${isReturned}`,
   },
   {
     text: "You did not pass this guide, Try again!",
@@ -154,7 +154,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#A5A6F6",
     backgroundImg: `url("star.svg")`,
     backgroundRepeat: "no-repeat",
-    href: `#`
+    href: `/guide/${guide._id}?isReturned=${isReturned}`
   },
   {
     text: "Waiting until someone reviews your project",
@@ -162,7 +162,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#B5E2A8",
     backgroundImg: `url("hourglass.svg")`,
     backgroundRepeat: "no-repeat",
-    href: `#`,
+    href: `/guide/${guide._id}?isReturned=${isReturned}`,
   },
 ];
   //Return hover state
