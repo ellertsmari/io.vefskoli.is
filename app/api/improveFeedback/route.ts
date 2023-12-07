@@ -13,7 +13,8 @@ export const GET = async (req: Request) => {
       just give very good tips on how to improve the feedback. Do not style any HTML tags. 
       Add classes and use them to style it nicely. 
       Also there is no need to repeat the original feedback. Just give the three tips in a nicely styled manner 
-      and nothing else. Your answer should only include the HTML code <div> and end with a </div> and nothing else (no intro saying something like "below is..." or outro saying something like "please note...").
+      and nothing else. Your answer should only include the HTML code <div> and end with a </div> and nothing else 
+      (no intro saying something like "below is..." or outro saying something like "please note..." and no markup like "\`\`\`html ").
       `  }],
     model: 'gpt-4-1106-preview',
   });

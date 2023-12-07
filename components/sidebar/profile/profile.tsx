@@ -2,6 +2,8 @@
 import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { ProfileModal, ProfileImage } from './profile.style'
+import { Title } from '../sidebar.style'
+import Dropdown from '../../dropDown/dropDown'
 
 import { UserWithIdType } from '@/models/user'
 import { ChangeEvent } from 'react'
@@ -14,6 +16,7 @@ const Profile = ( { user }:Props ) => {
   const student = user;
   const menuRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState<string>("")
   const handleUpload = async (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const data = new FormData();
@@ -37,6 +40,7 @@ const Profile = ( { user }:Props ) => {
   return(
     <div>
       <ProfileImage onClick={() => setIsOpen(!isOpen)} src="/default-profile-picture.svg"/>
+      <Title>{student?.name}</Title>
       {isOpen && (
       <ProfileModal>
           <div className="user-pic/name">

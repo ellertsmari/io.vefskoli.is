@@ -24,6 +24,7 @@ import {
 import ReviewComment from "@/components/ReviewComment/ReviewComment";
 import useServerUser from "@/utils/useServerUser";
 import { OmitPassword } from "@/utils/types/types";
+import { MainContent } from "@/components/mainLayout";
 
 const getReturn = async (id: string) => {
   
@@ -70,9 +71,7 @@ const review = async ({params} : {params: { id: string}}) => {
 
   return (
     <>
-      <AnimatedBackground />
-      <Layout>
-        <MainContainer>
+        <MainContent style={{flexDirection:"row"}}>
           <ReturnDetailsSection>
             <SectionTitle>Return Details</SectionTitle>
             {r.guide.title === "TypeScript In The Browser - Web APIs (24 - 28h.)" && 
@@ -147,8 +146,7 @@ const review = async ({params} : {params: { id: string}}) => {
             <ReviewComment returnId={JSON.parse(JSON.stringify(r._id))} userId={user._id} guideId={JSON.parse(JSON.stringify(r.guide._id))} />
 
           </ReviewSection>
-        </MainContainer>
-      </Layout>
+        </MainContent>
     </>
   );
 };
