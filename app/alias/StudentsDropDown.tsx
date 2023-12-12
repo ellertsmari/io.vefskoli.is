@@ -21,6 +21,7 @@ const StudentsDropDown = ({students}:Props) => {
     <div>
       <Title>you are now: {student==="sudo"?"yourself":JSON.parse(student).name}</Title>
       <Dropdown options={students.map(s=>JSON.stringify(s))} selected={student} setSelected={setStudent} />
+      {/* <Dropdown options={students.map(s=>s.name)} selected={student} setSelected={setStudent} /> */}
     </div>
   )
 }
