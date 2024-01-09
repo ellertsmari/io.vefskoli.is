@@ -3,7 +3,7 @@ import {MouseEvent, FormEvent, useRef, useState} from 'react';
 import { FilledButton } from '../buttons/filledButton';
 import { Comment, SubTitle, ReviewFrame, Loader, Tip } from '@/styles/pageStyles/review.styles';
 import { ObjectId } from "mongodb";
-import { Error } from '../guides/guides.styles';
+import { Error } from '../guides/styles';
 import { useRouter } from 'next/navigation';
 import Spinner from '../spinner/spinner';
 import { SP } from 'next/dist/shared/lib/utils';

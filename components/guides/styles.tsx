@@ -11,8 +11,46 @@ export const ModuleTitle = styled.h1`
   font-size: 3.2rem;
   font-weight: 500;
 `
+
+export const TopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const GradeContainer = styled.div`
+  display:flex;
+  flex-direction: row;
+  gap: 3rem;
+`
+
+export const CodeGrade = styled.p`
+  font-size: 2rem;
+  font-weight: 500;
+  color:#3b3a96;
+`
+export const CodeGradeContainer = styled.div`
+display: flex;
+gap: 1rem;
+font-size: 1.5rem;
+`
+
+export const DesignGrade = styled.p`
+  font-size: 2rem;
+  font-weight: 500;
+  color:#3b3a96;
+`
+export const DesignGradeContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+`
+
 export const DropdownContainer = styled.div`
   display: flex;
+  gap:2rem;
+  align-items: center;
 `
 
   export const GuidesContainer = styled(motion.div) `
