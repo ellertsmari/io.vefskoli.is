@@ -4,6 +4,7 @@ import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
 import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
+import review from "@/app/review/[id]/page";
 
 
 
@@ -21,10 +22,13 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   guide;
 const nrOfReviews = userReviews.length;
 const ungradedReviews = otherReviews.filter((review) => !review.grade);
-otherReviews.length && console.log(otherReviews);
+const reviewsForLatestReturn = otherReviews.filter((review  ) => review.return?.toString() === userReturns[userReturns.length-1]._id);
 
 //Getting vote(pass, no pass, recommended to galery) from "otherReviews" object
-const vote = otherReviews.length?otherReviews[0].vote:undefined;
+const vote = reviewsForLatestReturn.length?reviewsForLatestReturn[0].vote:undefined;
+console.log("this is the guide", guide)
+//
+
 
 //Calculating whether a student still has to review guide or guides based on when he has returned
 let hasOldReview = false
@@ -117,7 +121,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#F1F1F1",
     backgroundImg: "none",
     backgroundRepeat: "no-repeat",
-    href: `/guide/${guide._id}`,
+    href: `/guide/${guide._id}?isReturned=${isReturned}`,
   },
   {
     text: "You have got a review, please grade it",
@@ -133,7 +137,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#B5E2A8",
     backgroundImg: `url("check.svg")`,
     backgroundRepeat: "no-repeat",
-    href: `#`,
+    href: `/guide/${guide._id}?isReturned=${isReturned}`,
   },
   {
     text: "You did not pass this guide, Try again!",
@@ -141,7 +145,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#F99F9D",
     backgroundImg: `url("x.svg")`,
     backgroundRepeat: "no-repeat",
-    href: `#`,
+    href: `/guide/${guide._id}`,
   },
   {
     text: "Your guide was recommended to gallery, Well Done!",
@@ -149,7 +153,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#A5A6F6",
     backgroundImg: `url("star.svg")`,
     backgroundRepeat: "no-repeat",
-    href: `#`
+    href: `/guide/${guide._id}?isReturned=${isReturned}`
   },
   {
     text: "Waiting until someone reviews your project",
@@ -157,7 +161,7 @@ if (nrOfReviews === 1) {
     backgroundColor: "#B5E2A8",
     backgroundImg: `url("hourglass.svg")`,
     backgroundRepeat: "no-repeat",
-    href: `#`,
+    href: `/guide/${guide._id}?isReturned=${isReturned}`,
   },
 ];
   //Return hover state
@@ -195,7 +199,7 @@ if (nrOfReviews === 1) {
 
   return (
     <GuideCardContainer>
-      <StyledLink href={`/guide/${guide._id}?isReturned=${isReturned}`}>
+      <StyledLink href={returnStatus.href}>
         <CardInfo 
           style={{
             backgroundPosition:"center",

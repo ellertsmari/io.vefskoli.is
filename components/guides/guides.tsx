@@ -20,9 +20,9 @@ import { useSearchParams } from "next/navigation";
 
 type Props = {
   guides: AggregatedGuide[];
-};
+}
 
-const Guides = ({ guides }: Props) => {
+const Guides = ({guides}:Props) => {
   const options = [
     "MODULE 0",
     "MODULE 1",

@@ -5,6 +5,7 @@ import MiniCalendar from "./miniCalendar/miniCalendar";
 import NextUp from "./nextup/nextUp";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Guide } from "@/models/guide";
+import Dropdown from "../dropDown/dropDown";
 
 type Props = {
   student: UserWithIdType;
@@ -22,8 +23,7 @@ async function Sidebar({ student }: Props) {
   return (
     <Container>
       <ProfileContainer>
-        <Profile user={student} />
-        <Title>{student?.name}</Title>
+        <Profile user={student}/>
       </ProfileContainer>
       <MiniCalendar />
       <NextUp guides={JSON.parse(JSON.stringify(guides))} />

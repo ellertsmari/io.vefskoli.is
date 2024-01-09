@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 import { UserWithIdType } from "@/models/user";
-import { unsealData} from "iron-session/edge";
+import { unsealData } from "iron-session/edge";
 
 
 
 export default async function useServerUser() {
-const cookieStore = cookies();
+  const cookieStore = cookies();
   if(!cookieStore.has("session")){
     return "user not logged in"
   }
