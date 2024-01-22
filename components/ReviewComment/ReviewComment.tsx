@@ -73,8 +73,8 @@ const ReviewComment = ({returnId, userId, guideId}:Props) => {
             <label>pass</label><br />
             <input type="radio" name="vote" value="no pass"  onChange={createVote}/>
             <label>no pass</label><br />
-            <input type="radio" name="vote" value="recommend to gallery"  onChange={createVote}/>
-            <label>recommend to gallery</label>
+            <input type="radio" name="vote" value="recommend to Hall of fame"  onChange={createVote}/>
+            <label>recommend to Hall of fame</label>
           </form>
       <SubTitle>Comment</SubTitle>
       <Comment ref={commentRef} contentEditable></Comment>
