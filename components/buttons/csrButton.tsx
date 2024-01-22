@@ -1,15 +1,16 @@
-'use client'
-import { useRouter } from "next/navigation"
-import { FilledButton } from "@/components/buttons/filledButton"
+"use client";
+import { FilledButton } from "@/components/buttons/filledButton";
+import Link from "next/link";
 
 type Props = {
   module: string;
-}
-export default function({module}: Props) {
-  const router = useRouter()
+};
+export default function ({ module }: Props) {
   return (
     <div>
-      <FilledButton onClick={() => router.push(`/saveGuide/${module}`)}>Create Guide</FilledButton>
+      <Link href={`/saveGuide/${module}`}>
+        <FilledButton>Create Guide</FilledButton>
+      </Link>
     </div>
-  )
+  );
 }
