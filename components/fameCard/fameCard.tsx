@@ -4,7 +4,7 @@ import { useState } from "react";
 import { GuideType } from "@/models/guide";
 import { ReturnType } from "@/models/return";
 import React from "react";
-import { GuideCardContainer, CardInfo, Number, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle } from "./styles"
+import { GuideCardContainer, CardInfo, Title, TitleWrapper, DescriptionWrapper, DefaultDescription, HoveredDescription } from "./styles"
 
 type Props = {
   guide: GuideType;
@@ -40,16 +40,16 @@ const FameCard = ({ guide , returnData }: Props) => {
             // returnStatus.condition === !isUrl ? 'nota það' : returnStatus.backgroundImg
         }}
       >
-        <NumberWrapper>
-          <Number>{returnData.projectName}</Number>
-        </NumberWrapper>
         <TitleWrapper>
-          <DefaultTitle isShown={!isReturnHovered && !isReviewHovered}>
-          </DefaultTitle>
-          <HoveredTitle isShown={isReturnHovered || isReviewHovered}>
-            Click to view
-          </HoveredTitle>
+          <Title>{returnData.projectName}</Title>
         </TitleWrapper>
+        <DescriptionWrapper>
+          <DefaultDescription isShown={!isReturnHovered && !isReviewHovered}>
+          </DefaultDescription>
+          <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
+            Click to view
+          </HoveredDescription>
+        </DescriptionWrapper>
       </CardInfo>
     </GuideCardContainer>
   );
