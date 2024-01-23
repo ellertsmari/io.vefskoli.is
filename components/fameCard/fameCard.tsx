@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { GuideType } from "@/models/guide";
+import { ReturnType } from "@/models/return";
 import React from "react";
-import {GuideCardContainer, CardInfo, Number, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
+import { GuideCardContainer, CardInfo, Title, TitleWrapper, DescriptionWrapper, DefaultDescription, HoveredDescription } from "./styles"
 
 type Props = {
   guide: GuideType;
+  returnData: ReturnType;
 };
 
-const FameCard = ({ guide }: Props) => {
+const FameCard = ({ guide , returnData }: Props) => {
   const [isReviewHovered, setIsReviewHovered] = useState(false);
   const [isReturnHovered, setIsReturnHovered] = useState(false)
   const RetunrHandleMouseEnter = () => {
@@ -38,17 +40,16 @@ const FameCard = ({ guide }: Props) => {
             // returnStatus.condition === !isUrl ? 'nota það' : returnStatus.backgroundImg
         }}
       >
-        <NumberWrapper>
-          <Number>{guide.title}</Number>
-        </NumberWrapper>
         <TitleWrapper>
-          <DefaultTitle isShown={!isReturnHovered && !isReviewHovered}>
-            {guide.description}
-          </DefaultTitle>
-          <HoveredTitle isShown={isReturnHovered || isReviewHovered}>
-            Click to view
-          </HoveredTitle>
+          <Title>{returnData.projectName}</Title>
         </TitleWrapper>
+        <DescriptionWrapper>
+          <DefaultDescription isShown={!isReturnHovered && !isReviewHovered}>
+          </DefaultDescription>
+          <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
+            Click to view
+          </HoveredDescription>
+        </DescriptionWrapper>
       </CardInfo>
     </GuideCardContainer>
   );

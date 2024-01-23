@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Review, ReviewType } from "@/models/review";
+import "@/models/return";
+import "@/models/guide";
 
 // This is an asynchronous function named 'GET' that takes a request object 'req' of type 'NextRequest'
 export const GET = async (req: NextRequest) => {

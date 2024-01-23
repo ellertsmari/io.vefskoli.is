@@ -3,11 +3,13 @@ import { MainContent } from "@/components/mainLayout";
 import { GuidesContainer } from "@/components/guides/styles";
 import FameCard from "@/components/fameCard/fameCard";
 import { GuideType } from "@/models/guide";
+import { ReturnType } from "@/models/return";
 import { useState, useEffect } from "react";
 // Define a TypeScript type 'Review' with properties 'guide' of type 'GuideType' and '_id' of type 'string'
 type Review = {
   guide: GuideType;
   _id: string;
+  "return": ReturnType;
 };
 
 // Define a React functional component named 'guides'
@@ -44,6 +46,7 @@ const guides = () => {
                 // Use the guide's title as the key
                 key={review.guide.title.toString()}
                 // Pass the guide as a prop to the 'FameCard' component
+                returnData={review.return}
                 guide={review.guide}
               />
             );
