@@ -4,7 +4,6 @@ import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User, UserType } from "@/models/user";
 import { cookies } from "next/headers";
 import { unsealData, sealData} from "iron-session/edge";
-import { Resources} from "@/models/user";
 
 interface Success {
   message: string;
