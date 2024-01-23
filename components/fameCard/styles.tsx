@@ -34,13 +34,13 @@ export const CardInfo = styled.div`
 
    `
 
-export const Number = styled.h1`
+export const Title = styled.h1`
   font-size: 2.5rem;
   font-family: "Poppins";
   font-weight: 500;
 `;
 
-export const TitleWrapper = styled.div`
+export const DescriptionWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -48,13 +48,13 @@ export const TitleWrapper = styled.div`
   align-items: center;
 `
 
-export const NumberWrapper = styled.div`
+export const TitleWrapper = styled.div`
   position: relative;
   text-align: center;
   padding: 2rem;
 `;
 
-export const Title = styled.h2<TitleProps>`
+export const Description = styled.h2<TitleProps>`
   font-size: 1.5rem;
   font-family: "Poppins";
   transition: opacity 0.3s; // Add the transition effect
@@ -63,9 +63,9 @@ export const Title = styled.h2<TitleProps>`
   padding: 1rem;
 `;
 
-export const DefaultTitle = styled(Title)`
+export const DefaultDescription = styled(Description)`
   opacity: ${({ isShown }) => (isShown ? "1" : "0")};
 `
-export const HoveredTitle = styled(Title)`
+export const HoveredDescription = styled(Description)`
   opacity: ${({ isShown }) => (isShown ? "1" : "0")};
 `

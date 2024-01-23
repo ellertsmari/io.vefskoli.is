@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Review, ReviewType } from "@/models/review";
 import "@/models/return";
-import "@/models/guide"
+import "@/models/guide";
 
 // This is an asynchronous function named 'GET' that takes a request object 'req' of type 'NextRequest'
 export const GET = async (req: NextRequest) => {
@@ -14,7 +14,9 @@ export const GET = async (req: NextRequest) => {
   // with the actual 'guide' document from the 'Guide' collection
   const reviews = await Review.find({
     vote: "recommend to Hall of fame",
-  }).populate("guide").populate("return");
+  })
+    .populate("guide")
+    .populate("return");
 
   // Log the 'reviews' to the console
   console.log(reviews);
