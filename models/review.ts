@@ -5,7 +5,7 @@ const reviewSchema = new Schema({
   return: { type: Schema.Types.ObjectId, required: true, ref:"Return" },
   owner: { type: Schema.Types.ObjectId, required: true, ref:"User" },
   comment: { type: Schema.Types.String, required: true },
-  vote: { type: Schema.Types.String, required: true, enum:["no pass","pass", "recommend to gallery"] },
+  vote: { type: Schema.Types.String, required: true, enum:["no pass","pass", "recommend to Hall of fame"] },
   createdAt: { type: Schema.Types.Date, required: true, default: Date.now },
   updatedAt: { type: Schema.Types.Date, required: false },
   commentAnswer: { type: Schema.Types.String, required: false },

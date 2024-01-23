@@ -24,7 +24,7 @@ const nrOfReviews = userReviews.length;
 const ungradedReviews = otherReviews.filter((review) => !review.grade);
 const reviewsForLatestReturn = otherReviews.filter((review  ) => review.return?.toString() === userReturns[userReturns.length-1]._id);
 
-//Getting vote(pass, no pass, recommended to galery) from "otherReviews" object
+//Getting vote(pass, no pass, recommended to Hall of fame) from "otherReviews" object
 const vote = reviewsForLatestReturn.length?reviewsForLatestReturn[0].vote:undefined;
 console.log("this is the guide", guide)
 //
@@ -148,8 +148,8 @@ if (nrOfReviews === 1) {
     href: `/guide/${guide._id}`,
   },
   {
-    text: "Your guide was recommended to gallery, Well Done!",
-    condition: vote === "recommend to gallery",
+    text: "Your guide was recommended to Hall of fame, Well Done!",
+    condition: vote === "recommend to Hall of fame",
     backgroundColor: "#A5A6F6",
     backgroundImg: `url("star.svg")`,
     backgroundRepeat: "no-repeat",

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { NavContainer, Button } from "./nav.style";
 import Link from "next/link";
@@ -8,26 +8,27 @@ import Link from "next/link";
 // }
 
 const NavBar = () => {
-    const navOptions = [
-        ["home", "/"],
-        ["guides", "/guides"],
-        ["resources", "/resources"],
-        ["gallery", "/gallery"],
-        ["people", "/people"],
-        ["calendar", "/calendar"]
-    ]
+  const navOptions = [
+    ["home", "/"],
+    ["guides", "/guides"],
+    ["resources", "/resources"],
+    ["hall of fame", "/hallOfFame"],
+    ["hall of lame", "/hallOfLame"],
+    // ["people", "/people"],
+    ["calendar", "/calendar"],
+  ];
 
-    return ( 
-        <NavContainer>
-            {navOptions.map((option) => {
-                return(
-            <Link key={option[0]} href={option[1]}>
-                <Button>{option[0]}</Button>
-            </Link>
-                )
-            })}
-        </NavContainer>
-    );
-}
- 
+  return (
+    <NavContainer>
+      {navOptions.map((option) => {
+        return (
+          <Link key={option[0]} href={option[1]}>
+            <Button>{option[0]}</Button>
+          </Link>
+        );
+      })}
+    </NavContainer>
+  );
+};
+
 export default NavBar;
