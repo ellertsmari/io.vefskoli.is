@@ -37,16 +37,17 @@ const FameCard = ({ guide , returnData }: Props) => {
         style={{
           backgroundPosition: 'center'
           //backgroundImage:
-            // returnStatus.condition === !isUrl ? 'nota það' : returnStatus.backgroundImg
+            // returnStatus.condition === isUrl ? 'nota það' : returnStatus.backgroundImg
         }}
       >
         <TitleWrapper>
           <Title>{returnData.projectName}</Title>
         </TitleWrapper>
         <DescriptionWrapper>
-          <DefaultDescription isShown={!isReturnHovered && !isReviewHovered}>
+          <DefaultDescription isShown={!isReviewHovered}>
+            Click to view
           </DefaultDescription>
-          <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
+          <HoveredDescription isShown={isReviewHovered}>
             Click to view
           </HoveredDescription>
         </DescriptionWrapper>

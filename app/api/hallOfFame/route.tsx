@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Review, ReviewType } from "@/models/review";
+import { Return } from "@/models/return";
+import { ObjectId } from "mongodb";
 import "@/models/return";
 import "@/models/guide";
 
@@ -29,3 +31,11 @@ export const GET = async (req: NextRequest) => {
   // If reviews are found, return them as a JSON response with a 200 status
   return NextResponse.json(reviews, { status: 200 });
 };
+
+export async function PUT(request: Request) {
+  const client = await connectToDatabase()
+  const body = await request.json()
+  const id = new ObjectId(body.id)
+  await Return.updateOne({_id:id}, { $set: body.returns})
+  return Response.json({message: 'Project successfully updated.'})
+}
