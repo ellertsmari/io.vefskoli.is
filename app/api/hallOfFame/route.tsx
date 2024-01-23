@@ -33,9 +33,17 @@ export const GET = async (req: NextRequest) => {
 };
 
 export async function PUT(request: Request) {
-  const client = await connectToDatabase()
+  await connectToDatabase()
   const body = await request.json()
   const id = new ObjectId(body.id)
   await Return.updateOne({_id:id}, { $set: body.returns})
-  return Response.json({message: 'Project successfully updated.'})
+  return Response.json({message: 'Project information successfully updated.'})
+}
+
+export async function DELETE(request: Request) {
+  await connectToDatabase()
+  const body = await request.json()
+  const id = new ObjectId(body.id)
+  await Return.deleteOne({_id:id})
+  return Response.json({message: 'Project successfully removed from Hall of fame.'})
 }
