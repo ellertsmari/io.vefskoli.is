@@ -32,13 +32,24 @@ export const GET = async (req: NextRequest) => {
   return NextResponse.json(reviews, { status: 200 });
 };
 
+//Asynchronous function named "PUT" 
 export async function PUT(request: Request) {
   await connectToDatabase()
   const body = await request.json()
-  const id = new ObjectId(body.id)
-  await Return.updateOne({_id:id}, { $set: body.returns})
+  const id = body.id;
+  if (!id || id.length !== 24 || !id.match(/^[0-9a-fA-F]{24}$/)) {
+    console.log(id)  }
+  const object = new ObjectId(id);
+  console.log(object)
+  await Return.updateOne({_id:object}, { $set: {projectName:body.projectName, pictureUrl:body.pictureUrl}})
+  
   return Response.json({message: 'Project information successfully updated.'})
+
+
+    // Handle error (e.g., send an error response)
 }
+
+
 
 export async function DELETE(request: Request) {
   await connectToDatabase()
