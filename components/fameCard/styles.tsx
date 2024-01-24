@@ -59,7 +59,7 @@ export const PencilEdit = styled.div`
 export const Description = styled.h2<TitleProps>`
   font-size: 1.5rem;
   font-family: "Poppins";
-  transition: opacity 0.3s; // Add the transition effect
+  transition: opacity 0.3s;
   position: absolute;
   text-align: center;
   padding: 1rem;
