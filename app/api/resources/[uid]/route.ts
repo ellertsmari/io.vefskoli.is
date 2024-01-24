@@ -3,6 +3,9 @@ import { NextRequest, NextResponse as res} from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import resources from "@/app/resources/page";
 
+//This code is in the IUD folder of Resources
+//This code needs to be adjusted so it is picking the specifc module
+// files in UID are for the specific Module and Guide user has chosen. 
 interface Success {
   message: string;
 }
@@ -18,6 +21,4 @@ export const GET = async (
      return res.json(resources, { status: 200 });
   }
   
-  //Need to clear the route, aka file structure, for the resources in API. 
-  //THe file in UID should be for the specific Module and Guide user has chosen. 
-  //And the route.ts file this is written in should be under resources, not UID. git 
+ 
