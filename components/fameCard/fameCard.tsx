@@ -51,6 +51,7 @@ const FameCard = ({ guide, returnData }: Props) => {
     : "brightness(100%)";
 
   return (
+<<<<<<< HEAD
     <>
       <GuideCardContainer>
         <CardInfo
@@ -89,6 +90,29 @@ const FameCard = ({ guide, returnData }: Props) => {
         </Modal>
       )}
     </>
+=======
+    <GuideCardContainer>
+      <CardInfo
+        style={{
+          backgroundPosition: 'center'
+          //backgroundImage:
+            // returnStatus.condition === isUrl ? 'nota það' : returnStatus.backgroundImg
+        }}
+      >
+        <TitleWrapper>
+          <Title>{returnData.projectName}</Title>
+        </TitleWrapper>
+        <DescriptionWrapper>
+          <DefaultDescription isShown={!isReviewHovered}>
+            Click to view
+          </DefaultDescription>
+          <HoveredDescription isShown={isReviewHovered}>
+            Click to view
+          </HoveredDescription>
+        </DescriptionWrapper>
+      </CardInfo>
+    </GuideCardContainer>
+>>>>>>> 8d05ea8d33b2f0e9fbd5e5440b079000efb839bf
   );
 };
 

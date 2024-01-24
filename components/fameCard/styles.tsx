@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import starimg from "@/public/star.svg";
 
 type TitleProps = {
   isShown: boolean;
@@ -12,11 +13,6 @@ export const GuideCardContainer = styled.div`
   margin-right: auto;
 `;
 
-export const BackgroundImage = styled.img`
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="194" height="187" viewBox="0 0 194 187" fill="none" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.1025 187L52.865 117.859L0 71.3553L69.84 65.2039L97 0L124.16 65.2039L194 71.3553L141.135 117.859L156.897 187L97 150.338L37.1025 187Z" fill="black" fill-opacity="0.1"/></svg>');
-  background-image: cover;
-`;
-
 export const CardInfo = styled.div`
   box-shadow: 2px 3px 3px 2px rgba(196, 186, 186, 0.25);
   width: 24rem;
@@ -28,7 +24,9 @@ export const CardInfo = styled.div`
   align-items: center;
   flex-direction: column;
   background-position: center;
-  background-color: rgb(162, 161, 243);
+  background-color: #a5a6f6;
+  background-image: url("star.svg");
+  background-repeat: no-repeat;
 `;
 
 export const Title = styled.h1`
