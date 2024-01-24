@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
-
 type TitleProps = {
-    isShown: boolean;
-  }
+  isShown: boolean;
+};
 
 export const GuideCardContainer = styled.div`
   display: flex;
@@ -14,16 +13,15 @@ export const GuideCardContainer = styled.div`
 `;
 
 export const BackgroundImage = styled.img`
- background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="194" height="187" viewBox="0 0 194 187" fill="none" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.1025 187L52.865 117.859L0 71.3553L69.84 65.2039L97 0L124.16 65.2039L194 71.3553L141.135 117.859L156.897 187L97 150.338L37.1025 187Z" fill="black" fill-opacity="0.1"/></svg>');
- background-image: cover;
-
-`
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="194" height="187" viewBox="0 0 194 187" fill="none" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.1025 187L52.865 117.859L0 71.3553L69.84 65.2039L97 0L124.16 65.2039L194 71.3553L141.135 117.859L156.897 187L97 150.338L37.1025 187Z" fill="black" fill-opacity="0.1"/></svg>');
+  background-image: cover;
+`;
 
 export const CardInfo = styled.div`
   box-shadow: 2px 3px 3px 2px rgba(196, 186, 186, 0.25);
   width: 24rem;
   height: 20rem;
-  border-radius: 2rem ;
+  border-radius: 2rem;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -31,8 +29,7 @@ export const CardInfo = styled.div`
   flex-direction: column;
   background-position: center;
   background-color: rgb(162, 161, 243);
-
-   `
+`;
 
 export const Title = styled.h1`
   font-size: 2.5rem;
@@ -46,12 +43,19 @@ export const DescriptionWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 export const TitleWrapper = styled.div`
   position: relative;
   text-align: center;
   padding: 2rem;
+`;
+
+export const PencilEdit = styled.div`
+  position: relative;
+  bottom: 2.2rem;
+  left: 8.5rem;
+  font-size: 2rem;
 `;
 
 export const Description = styled.h2<TitleProps>`
@@ -63,9 +67,24 @@ export const Description = styled.h2<TitleProps>`
   padding: 1rem;
 `;
 
+export const Modal = styled.div`
+  position: fixed;
+  padding: 5rem;
+  background-color: #e0e0e0;
+  border-radius: 1.5rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+`;
+
+export const Label = styled.input`
+  outline: none;
+`;
+
 export const DefaultDescription = styled(Description)`
   opacity: ${({ isShown }) => (isShown ? "1" : "0")};
-`
+`;
 export const HoveredDescription = styled(Description)`
   opacity: ${({ isShown }) => (isShown ? "1" : "0")};
-`
+`;
