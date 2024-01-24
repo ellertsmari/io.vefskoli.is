@@ -40,7 +40,7 @@ export const DropdownContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 5rem;
-    width: 100%;
+    width: 100%;git
     height: 100%;
     padding: 1rem;
     overflow-y: scroll;
