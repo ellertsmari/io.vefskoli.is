@@ -29,6 +29,7 @@ const guides = () => {
       setData(fameReview);
       // Log the parsed response to the console
       console.log(fameReview);
+      // review ID þarf að vera til í returns ID
     }
     // Call the 'logFameGuides' function
     logFameGuides();

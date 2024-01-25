@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import starimg from "@/public/star.svg";
 
 type TitleProps = {
   isShown: boolean;
@@ -83,6 +82,7 @@ export const Label = styled.input`
 export const DefaultDescription = styled(Description)`
   opacity: ${({ isShown }) => (isShown ? "1" : "0")};
 `;
+
 export const HoveredDescription = styled(Description)`
   opacity: ${({ isShown }) => (isShown ? "1" : "0")};
 `;

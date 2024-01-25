@@ -20,9 +20,6 @@ export const GET = async (req: NextRequest) => {
     .populate("guide")
     .populate("return");
 
-  // Log the 'reviews' to the console
-  console.log(reviews);
-
   // If no reviews are found (i.e., 'reviews' is null), return a JSON response with a message and a 404 status
   if (reviews === null) {
     return NextResponse.json({ message: "Review not found" }, { status: 404 });
@@ -32,29 +29,10 @@ export const GET = async (req: NextRequest) => {
   return NextResponse.json(reviews, { status: 200 });
 };
 
-//Asynchronous function named "PUT" 
-export async function PUT(request: Request) {
-  await connectToDatabase()
-  const body = await request.json()
-  const id = body.id;
-  if (!id || id.length !== 24 || !id.match(/^[0-9a-fA-F]{24}$/)) {
-    console.log(id)  }
-  const object = new ObjectId(id);
-  console.log(object)
-  await Return.updateOne({_id:object}, { $set: {projectName:body.projectName, pictureUrl:body.pictureUrl}})
-  
-  return Response.json({message: 'Project information successfully updated.'})
-
-
-    // Handle error (e.g., send an error response)
-}
-
-
-
-export async function DELETE(request: Request) {
+/*export async function DELETE(request: Request) {
   await connectToDatabase()
   const body = await request.json()
   const id = new ObjectId(body.id)
   await Return.deleteOne({_id:id})
   return Response.json({message: 'Project successfully removed from Hall of fame.'})
-}
+}*/

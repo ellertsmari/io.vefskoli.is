@@ -14,9 +14,7 @@ import {
   HoveredDescription,
   PencilEdit,
 } from "./styles";
-import { Modal, Label } from "./styles";
 import Edit from "./editCard";
-import { ObjectId } from "mongoose";
 type Props = {
   guide: GuideType;
   returnData: ReturnType;
@@ -26,11 +24,9 @@ const FameCard = ({ guide, returnData }: Props) => {
   const [isReviewHovered, setIsReviewHovered] = useState(false);
   const [isReturnHovered, setIsReturnHovered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-
   const handleOpenModal = () => {
     setModalOpen(!modalOpen);
   };
-
   const ReturnHandleMouseEnter = () => {
     setIsReturnHovered(true);
   };
@@ -40,7 +36,6 @@ const FameCard = ({ guide, returnData }: Props) => {
   const returnModifiedColor = isReturnHovered
     ? "brightness(80%)"
     : "brightness(100%)";
-
   //Review hover state
   const ReviewHandleMouseEnter = () => {
     setIsReviewHovered(true);
@@ -51,7 +46,7 @@ const FameCard = ({ guide, returnData }: Props) => {
   const reviewModifiedColor = isReviewHovered
     ? "brightness(80%)"
     : "brightness(100%)";
-
+    
   return (
     <>
       <GuideCardContainer>
@@ -75,16 +70,17 @@ const FameCard = ({ guide, returnData }: Props) => {
               Click to view
             </HoveredDescription>
           </DescriptionWrapper>
-          {isReturnHovered && (
+            {isReturnHovered && (
             <PencilEdit onClick={handleOpenModal}>✏️</PencilEdit>
           )}
         </CardInfo>
       </GuideCardContainer>
       {modalOpen && (
-       <Edit returns={{
-          _id:"",
+        <Edit returns={{
+          _id:returnData._id,
           projectName: "",
-          pictureUrl: ""
+          pictureUrl: "",
+          vote: ""
         }}></Edit>
       )}
     </>

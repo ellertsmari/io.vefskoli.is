@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Review, ReviewType } from "@/models/review";
 import { ObjectId } from "mongodb";
+import { Return } from "@/models/return";
 
 interface Success {
   message: string;
@@ -67,3 +68,16 @@ export const GET_ID = async (req: NextRequest,
   return;
 }
 */
+
+//Asynchronous function named "PUT" 
+export async function PUT(request: Request) {
+  await connectToDatabase()
+  const body = await request.json()
+  const id = body.id;
+  const object = new ObjectId(id);
+  console.log(object)
+  delete body.id
+  await Review.updateOne({_id:object}, { $set: body})
+  return Response.json({message: 'Project information successfully updated.'})
+    // Handle error (e.g., send an error response)
+}
