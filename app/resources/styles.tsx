@@ -58,7 +58,7 @@ export const DropdownContainer = styled.div`
     height: 250px;
     background-color: #D1D1D1;
     border-radius: 20px;
-    background-image: url(${props => props.image || 'https://www.agilealliance.org/wp-content/uploads/2022/09/error-404-search.png'});
+    background-image: url(${props => props.image || ''});
     display: flex;
     justify-content: center;
     align-items: center;
