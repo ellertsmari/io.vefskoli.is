@@ -2,6 +2,7 @@ import { NextRequest, NextResponse as res} from "next/server";
 /*import type { NextApiRequest, NextApiResponse as res } from "next";*/
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import resources from "@/app/resources/page";
+import { Resources } from "@/models/resources";
 
 interface Success {
   message: string;

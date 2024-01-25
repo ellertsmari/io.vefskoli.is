@@ -4,7 +4,7 @@ import { OmitPassword } from "@/utils/types/types";
 import { ObjectId } from "mongodb";
 import { MainContent } from "@/components/mainLayout"; //mainlayout.tsx
 import { Resources } from "@/models/resources";
-import { TopContainer, DropdownContainer, ModuleTitle } from "./styles";
+import { Title,TopContainer, GuidesContainer, DropdownContainer, ModuleTitle, VideoCard } from "./styles";
 import Dropdown from "@/components/dropDown/dropDown";
 import { useState, useEffect } from "react";
 import useLocalStorage from "@/utils/useLocalStorage";
@@ -12,6 +12,8 @@ import useUser from "@/utils/useUser";
 import { useSearchParams } from "next/navigation";
 import { AggregatedGuide } from "@/utils/types/types";
 import CsrButton from "@/components/buttons/csrButton";
+import { FilledButton } from "@/components/buttons";
+
 
 // //THESE props should point to the right place. I don't know if we can use AggregatedGuide in the same way for Resources
 // type Props = {
@@ -19,18 +21,19 @@ import CsrButton from "@/components/buttons/csrButton";
 // }
 
 
-// const Guides = ({guides}:Props) => {
-//   const options = [
-//     "MODULE 0",
-//     "MODULE 1",
-//     "MODULE 2",
-//     "MODULE 3",
-//     "MODULE 4",
-//     "MODULE 5",
-//     "MODULE 6",
-//     "MODULE 7",
-//   ];
-
+{/* const Guides = ({guides}:Props) => {
+   const options = [
+     "MODULE 0",
+    "MODULE 1",
+    "MODULE 2",
+     "MODULE 3",
+     "MODULE 4",
+     "MODULE 5",
+     "MODULE 6",
+    "MODULE 7",
+  ];
+ }
+*/}
 
 //   const { user } = useUser();
 //   const searchParams = useSearchParams();
@@ -86,18 +89,20 @@ const resources = async () => {
   return (
     <>
       <MainContent>
-        {/*<TopContainer>
+        <Title>Videos and Recordings</Title>
+        <FilledButton>Drive</FilledButton>
+        <GuidesContainer> {resources.map(resource => {
+          return (
+            <VideoCard image="" key={resource._id}><a href={resource.link}>{resource.description}</a></VideoCard>
+          )
+         })}</GuidesContainer>
+       {/* <TopContainer>
           <DropdownContainer>
             <Dropdown options={options} selected={selected} setSelected={option} />
             <ModuleTitle>{module.substring(3)}</ModuleTitle>
-          </DropdownContainer>
-      </TopContainer> */}
-        {resources.map(resource => {
-          return (
-            <div key={resource._id}><a href={resource.link}>{resource.description}</a></div>
-          )
-         })}
-     </MainContent>
+  </DropdownContainer>
+      </TopContainer>*/}
+        </MainContent>
     </>
   );
 };
