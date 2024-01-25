@@ -13,8 +13,8 @@ import { useSearchParams } from "next/navigation";
 import { AggregatedGuide } from "@/utils/types/types";
 import CsrButton from "@/components/buttons/csrButton";
 import { FilledButton } from "@/components/buttons";
+import Modal from "@/components/modal/modal"
 
-import React from 'react';
 
 
 // //THESE props should point to the right place. I don't know if we can use AggregatedGuide in the same way for Resources
@@ -96,7 +96,8 @@ const resources = async () => {
         <FilledButton>Drive</FilledButton>
         <GuidesContainer> {resources.map(resource => {
           return (
-            <VideoCardText href={resource.link}>
+            <VideoCardText> 
+              <Modal/> 
             <VideoCard image="" key={resource._id}>{resource.description}</VideoCard>
             </VideoCardText>
           )

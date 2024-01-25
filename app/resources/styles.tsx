@@ -2,7 +2,7 @@
 'use client';
 //THIS FILE needs to be reworked for the purpose of the Resources container. 
 //I've removed some stuff we didn't need. 
-import Link  from "next/link";
+
 
 type Props={
  image?: string;
@@ -72,7 +72,7 @@ export const DropdownContainer = styled.div`
     cursor:pointer;
     `
 
-    export const VideoCardText = styled(Link)`
+    export const VideoCardText = styled.div`
     font-family: Poppins;
     font-size: 40px;
     font-weight: 500;
