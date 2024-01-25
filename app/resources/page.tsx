@@ -4,7 +4,7 @@ import { OmitPassword } from "@/utils/types/types";
 import { ObjectId } from "mongodb";
 import { MainContent } from "@/components/mainLayout"; //mainlayout.tsx
 import { Resources } from "@/models/resources";
-import { Title,TopContainer, GuidesContainer, DropdownContainer, ModuleTitle, VideoCard } from "./styles";
+import { VideoCardText, Title,TopContainer, GuidesContainer, DropdownContainer, ModuleTitle, VideoCard } from "./styles";
 import Dropdown from "@/components/dropDown/dropDown";
 import { useState, useEffect } from "react";
 import useLocalStorage from "@/utils/useLocalStorage";
@@ -13,6 +13,8 @@ import { useSearchParams } from "next/navigation";
 import { AggregatedGuide } from "@/utils/types/types";
 import CsrButton from "@/components/buttons/csrButton";
 import { FilledButton } from "@/components/buttons";
+
+import React from 'react';
 
 
 // //THESE props should point to the right place. I don't know if we can use AggregatedGuide in the same way for Resources
@@ -78,7 +80,8 @@ const resources = async () => {
   const user: OmitPassword | string = await useServerUser();
   const resources: any[] | undefined | null = await getResources(user);
   if (!resources) return <>No resources found</>;
-  console.log(resources)
+  console.log(resources);
+
 
   // //DO WE NEED THIS?  SHOULD this be in another file. use client and then server side?
   // useEffect(() => {
@@ -93,7 +96,9 @@ const resources = async () => {
         <FilledButton>Drive</FilledButton>
         <GuidesContainer> {resources.map(resource => {
           return (
-            <VideoCard image="" key={resource._id}><a href={resource.link}>{resource.description}</a></VideoCard>
+            <VideoCardText href={resource.link}>
+            <VideoCard image="" key={resource._id}>{resource.description}</VideoCard>
+            </VideoCardText>
           )
          })}</GuidesContainer>
        {/* <TopContainer>

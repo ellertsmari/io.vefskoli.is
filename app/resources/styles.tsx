@@ -1,20 +1,26 @@
 
+'use client';
 //THIS FILE needs to be reworked for the purpose of the Resources container. 
 //I've removed some stuff we didn't need. 
+import Link  from "next/link";
 
 type Props={
  image?: string;
 }
 
 
-'use client';
 import styled from "styled-components"
 import { motion } from "framer-motion"
 import { type } from "os";
 
 export const Title = styled.h1`
-    font-style: Poppins;
-    size:24px;
+//styleName: desktop/heading2;
+font-family: Poppins;
+font-size: 24px;
+font-weight: 500;
+line-height: 36px;
+letter-spacing: 0px;
+text-align: left;
 `
 
 export const ModuleTitle = styled.h1`
@@ -62,11 +68,18 @@ export const DropdownContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
     text-align: center;
+    cursor:pointer;
     `
-    export const VideoCardText = styled.a`
-    font-size: 1.5rem;
 
+    export const VideoCardText = styled(Link)`
+    font-family: Poppins;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 30px;
+    letter-spacing: 0px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
     `
     
