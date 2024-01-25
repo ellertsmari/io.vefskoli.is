@@ -15,6 +15,8 @@ import {
   PencilEdit,
 } from "./styles";
 import { Modal, Label } from "./styles";
+import Edit from "./editCard";
+import { ObjectId } from "mongoose";
 type Props = {
   guide: GuideType;
   returnData: ReturnType;
@@ -79,14 +81,11 @@ const FameCard = ({ guide, returnData }: Props) => {
         </CardInfo>
       </GuideCardContainer>
       {modalOpen && (
-        <Modal>
-          <GuideCardContainer>
-            <Label placeholder="Change title" type="text" />
-            <Label placeholder="Change description" type="text" />
-            <Label placeholder="Change picture" type="text" />
-            <button onClick={handleOpenModal}>Save</button>
-          </GuideCardContainer>
-        </Modal>
+       <Edit returns={{
+          _id:"",
+          projectName: "",
+          pictureUrl: ""
+        }}></Edit>
       )}
     </>
   );
