@@ -47,8 +47,9 @@ repeating everything
 
           return (
             <VideoCardText> 
-              <Modal/> 
+              <Modal> 
             <VideoCard image="" key={resource._id}>{resource.description}</VideoCard>
+            </Modal> 
             </VideoCardText>
           )
          })}</GuidesContainer>
