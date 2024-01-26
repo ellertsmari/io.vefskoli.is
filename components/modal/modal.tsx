@@ -3,9 +3,14 @@ import { BulletList } from "@/styles/pageStyles/review.styles";
 import { useState, useEffect } from "react";
 import styled from "styled-components"
 type Props = {
-    ZoomVideo:{};
+    ZoomVideo:{
+        recording_files:{
+            download_url:string
+        }[]
+    };
 }
-const Modal =() => {
+const Modal =({ZoomVideo}:Props) => {
+    console.log (ZoomVideo)
 const ClickArea = styled.div `
 width:250px;
 height:250px;
@@ -62,6 +67,11 @@ return (
         <ClickArea onClick={showModal}>GUIDE 1</ClickArea>
 
        {isOpen&& <OverLay>Content Modal has to be here <CloseButton onClick={closeModal}>Close</CloseButton>
+       <video width="320" height="240" controls>
+ 
+  <source src={ZoomVideo.recording_files[0].download_url} />
+
+</video>
        </OverLay>
 
        }
