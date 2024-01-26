@@ -29,7 +29,8 @@ repeating everything
 //module title prob not used
 
   return (
-    <>
+
+    <div style={{position:"relative"}}>
       <MainContent>
       <TopContainer>
         <DropdownContainer>
@@ -40,16 +41,17 @@ repeating everything
         <Title>Videos and Recordings</Title>
         <FilledButton>Drive</FilledButton>
         <GuidesContainer> {data.meetings.map(resource => {
+        
           return (
-            <VideoCardText> 
-              <Modal> 
-            <VideoCard image="" key={resource._id}>{resource.description}</VideoCard>
-            </Modal> 
-            </VideoCardText>
+             
+              <Modal ZoomVideo= {resource}/> 
+            
+           
+            
           )
          })}</GuidesContainer>
         </MainContent>
-    </>
+    </div>
   );
 };
 

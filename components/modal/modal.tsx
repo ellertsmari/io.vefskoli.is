@@ -2,6 +2,9 @@
 import { BulletList } from "@/styles/pageStyles/review.styles";
 import { useState, useEffect } from "react";
 import styled from "styled-components"
+type Props = {
+    ZoomVideo:{};
+}
 const Modal =() => {
 const ClickArea = styled.div `
 width:250px;
@@ -20,13 +23,13 @@ display: flex;
 
 `
 const OverLay = styled.div`
-width: 1540px;
+width: 94%;
 height: 950px;
 position: absolute;
 background-color: grey;
 border-radius: 30px;
-top:180px;
-right: 100px;
+top:3%;
+right: 3%;
 
 `
 const CloseButton = styled.button`
