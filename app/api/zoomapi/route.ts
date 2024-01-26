@@ -1,14 +1,20 @@
 
 
   let token = ""
+
 const getVideos= async(token:string)=>{
 
 try { 
   const url = "https://apaaaaai.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=2021-10-11"
+
+
+export const getVideos= async(token:string)=>{
+  const url = "https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=2021-10-11"
+
   
   const response = await fetch (url,{
       headers: {
-          authorization: "Bearer "+ token
+          authorization: "Bearer "+ token 
       }
   });
 
@@ -33,7 +39,7 @@ export const GET= async ()=>{
   const tokenResponse = await fetch ("https://zoom.us/oauth/token?grant_type=account_credentials&account_id=xTmwVbNdQRGv5XBIuyvI2A",{
       method: "POST",
       headers:{
-        authorization: process.env.BASIC_AUTH
+        authorization: process.env.BASIC_AUTH 
         
       }
   })  
@@ -43,10 +49,15 @@ export const GET= async ()=>{
   token = tokenData.access_token
   data = await getVideos(token)
   console.log (data)
+
   if (data.message){
     throw new Error("This surely is an error")
   }
   
+
+  console.log(data.recordings[0]);
+
+
   }
    
   if (token == null) throw new Error("Missing tokendata.")

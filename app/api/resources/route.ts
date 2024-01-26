@@ -9,6 +9,7 @@ interface Success {
 }
 
 // this is the same as in the route.ts from api/guides. Not sure if we need all this. 
+//WE might need it if we want to be able to create a resource manually?
 // export const POST = async (
 //     req: NextRequest
 //   ) => {
@@ -28,7 +29,7 @@ export const GET = async (
     req: NextRequest,  // NextRequest is something we'll use to filter our resources f.ex. when we are in a specific guide
   ) => {
     await connectToDatabase();
-    const rescources = await Resources.find({});
+    const resources = await Resources.find({});
     if (resources === null) {
       return res.json({ message: "Resource not found" }, { status: 404 });
     }
