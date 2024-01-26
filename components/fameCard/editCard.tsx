@@ -1,4 +1,7 @@
+//HALL OF FAME STUFF
+
 'use client'
+
 import { useState } from "react";
 import { Modal, Label, GuideCardContainer } from "../../components/fameCard/styles";
 import Remove from "./removeCard";

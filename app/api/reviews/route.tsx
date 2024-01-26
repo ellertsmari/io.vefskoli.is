@@ -1,8 +1,9 @@
+//HALL OF FAME STUFF IN THIS DOCUMENT
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Review, ReviewType } from "@/models/review";
 import { ObjectId } from "mongodb";
-import { Return } from "@/models/return";
 
 interface Success {
   message: string;
@@ -69,7 +70,8 @@ export const GET_ID = async (req: NextRequest,
 }
 */
 
-//Asynchronous function named "PUT" 
+//HALL OF FAME STUFF
+//PUT function finding the object with return id and vote as hall of fame to change the vote (called in removeCard)
 export async function PUT(request: Request) {
   await connectToDatabase()
   const body = await request.json()
@@ -77,7 +79,6 @@ export async function PUT(request: Request) {
   const object = new ObjectId(id);
   console.log(object)
   delete body.id
-  await Review.updateOne({_id:object}, { $set: body})
-  return Response.json({message: 'Project information successfully updated.'})
-    // Handle error (e.g., send an error response)
+  await Review.updateMany({return:object, vote:'recommend to Hall of fame'}, { $set: {vote:body.vote}})
+  return Response.json({message: 'Project successfully removed from Hall of fame.'}, {status: 200})
 }

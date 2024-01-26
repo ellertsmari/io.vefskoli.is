@@ -1,8 +1,14 @@
+//HALL OF FAME STUFF
+
 import styled from "styled-components";
 
 type TitleProps = {
   isShown: boolean;
 };
+
+type CardInfoProps = {
+  img: string | undefined
+}
 
 export const GuideCardContainer = styled.div`
   display: flex;
@@ -12,7 +18,7 @@ export const GuideCardContainer = styled.div`
   margin-right: auto;
 `;
 
-export const CardInfo = styled.div`
+export const CardInfo = styled.div<CardInfoProps>`
   box-shadow: 2px 3px 3px 2px rgba(196, 186, 186, 0.25);
   width: 24rem;
   height: 20rem;
@@ -23,10 +29,12 @@ export const CardInfo = styled.div`
   align-items: center;
   flex-direction: column;
   background-position: center;
+  background-image: ${({img}) => (img ? `url(${img})` : `url('star.svg')`)}
   background-color: #a5a6f6;
-  background-image: url("star.svg");
   background-repeat: no-repeat;
 `;
+
+//background-image: url("star.svg");
 
 export const Title = styled.h1`
   font-size: 2.5rem;

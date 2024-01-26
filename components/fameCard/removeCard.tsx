@@ -1,7 +1,7 @@
-'use client'
+//HALL OF FAME STUFF
+//function to remove cards from hall of fame by hardcoding the vote, changing it from recommend to hall of fame to pass
 
-import { useState } from "react"
-import { Label } from "./styles"
+'use client'
 
 type Props = {
     returns: {
@@ -27,7 +27,7 @@ const Remove = ({returns}:Props) => {
     }
     return (
         <>
-            <button onClick={removeCard}>Change vote</button>
+            <button onClick={removeCard}>Remove from Hall of fame</button>
         </>
     )
 }

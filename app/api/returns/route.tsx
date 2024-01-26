@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Return, ReturnType } from "@/models/return";
-import { ObjectId } from "mongodb";
 interface Success {
   message: string;
 }
@@ -25,7 +24,6 @@ interface Success {
  *         description: No returns found
  */
 
-
 export const POST = async (req: NextRequest) => {
   // TODO: Add logic to create a return
   connectToDatabase();
@@ -48,7 +46,7 @@ export const GET = async (req: NextRequest,
 }
 
 //Asynchronous function named "PUT" 
-export async function PUT(request: Request) {
+/*export async function PUT(request: Request) {
   await connectToDatabase()
   const body = await request.json()
   const id = body.id;
@@ -58,4 +56,4 @@ export async function PUT(request: Request) {
   await Return.updateOne({_id:object}, { $set: body})
   return Response.json({message: 'Project information successfully updated.'})
     // Handle error (e.g., send an error response)
-}
+}*/
