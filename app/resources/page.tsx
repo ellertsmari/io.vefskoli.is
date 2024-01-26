@@ -93,7 +93,7 @@ const resources = async () => {
     <>
       <MainContent>
         <Title>Videos and Recordings</Title>
-        <FilledButton>Drive</FilledButton>
+        <a href="https://drive.google.com/drive/folders/1EZreV5U-Xubx2bVdZ6ULDQaazAgeGvKW?usp=sharing" target="_blank"><FilledButton>Drive</FilledButton></a> 
         <GuidesContainer> {resources.map(resource => {
           return (
             <VideoCardText> 

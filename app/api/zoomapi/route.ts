@@ -2,18 +2,32 @@
 
   let token = ""
 const getVideos= async(token:string)=>{
-  const url = "https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=2021-10-11"
+
+try { 
+  const url = "https://apaaaaai.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=2021-10-11"
   
   const response = await fetch (url,{
       headers: {
           authorization: "Bearer "+ token
       }
-  })
+  });
+
+  if (response == null) throw new Error("Response is null.");
+  if (response.status == 404) throw new Error("Page not found.")
   return response.json()
+} catch (error) {
+  return error;
+
+}
+};
+
+type data = {
+  code: number;
 }
 
-
 export const GET= async ()=>{
+
+  try { 
   let data = await getVideos(token)
   if (data.code===124){
   const tokenResponse = await fetch ("https://zoom.us/oauth/token?grant_type=account_credentials&account_id=xTmwVbNdQRGv5XBIuyvI2A",{
@@ -23,15 +37,31 @@ export const GET= async ()=>{
         
       }
   })  
+
+  
   const tokenData = await tokenResponse.json() 
   token = tokenData.access_token
-  console.log (token)
   data = await getVideos(token)
   console.log (data)
+  if (data.message){
+    throw new Error("This surely is an error")
+  }
+  
   }
    
-  return Response.json(data)
+  if (token == null) throw new Error("Missing tokendata.")
+  return Response.json(data);
+  } catch (error) {
+    return Response.json(error);
+
+    
   }
+
+
+  };
+
+
+
 
 
 
