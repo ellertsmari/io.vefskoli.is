@@ -26,14 +26,16 @@ Also have to make it so that they only show one instance of eache 8 letters so t
 repeating everything
 */
 
+//module title prob not used
+
   return (
     <>
       <MainContent>
       <TopContainer>
-          <DropdownContainer>
-            <DropdownResources options={options} />
-            <ModuleTitle></ModuleTitle>
-      </DropdownContainer>
+        <DropdownContainer>
+          <DropdownResources options={options} />
+          <ModuleTitle></ModuleTitle>  
+        </DropdownContainer>
       </TopContainer>
         <Title>Videos and Recordings</Title>
         <FilledButton>Drive</FilledButton>
