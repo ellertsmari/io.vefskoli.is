@@ -1,100 +1,45 @@
-import { connectToDatabase } from "@/utils/mongoose-connector";
 import useServerUser from "@/utils/useServerUser";
 import { OmitPassword } from "@/utils/types/types";
-import { ObjectId } from "mongodb";
 import { MainContent } from "@/components/mainLayout"; //mainlayout.tsx
-import { Resources } from "@/models/resources";
 import { VideoCardText, Title,TopContainer, GuidesContainer, DropdownContainer, ModuleTitle, VideoCard } from "./styles";
-import Dropdown from "@/components/dropDown/dropDown";
-import { useState, useEffect } from "react";
-import useLocalStorage from "@/utils/useLocalStorage";
-import useUser from "@/utils/useUser";
-import { useSearchParams } from "next/navigation";
-import { AggregatedGuide } from "@/utils/types/types";
-import CsrButton from "@/components/buttons/csrButton";
 import { FilledButton } from "@/components/buttons";
 import Modal from "@/components/modal/modal"
-
-
-
-// //THESE props should point to the right place. I don't know if we can use AggregatedGuide in the same way for Resources
-// type Props = {
-//   guides: AggregatedGuide[];
-// }
-
-
-{/* const Guides = ({guides}:Props) => {
-   const options = [
-     "MODULE 0",
-    "MODULE 1",
-    "MODULE 2",
-     "MODULE 3",
-     "MODULE 4",
-     "MODULE 5",
-     "MODULE 6",
-    "MODULE 7",
-  ];
- }
-*/}
-
-//   const { user } = useUser();
-//   const searchParams = useSearchParams();
-//   const category = searchParams.get("category");
-  
-//   //SELECTION MODULE
-//   const moduleParam = searchParams.get("module");
-//   const [module, setModule] = useState<string>(moduleParam || "");
-//   const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module",{ selected: moduleParam || "MODULE 1" });
-
-//   const { selected } = moduleSelected;
-//   const option = (selected: string) => {
-//     setModuleSelected({ selected });
-//   };
-
-//   //THIS FUNCTION needs to be reworked for RESOURCES
-//   //Function that filters which guides should be displayed depending on a module and therefore which grades for the guides
-//   const filteredRescources = guides.filter((guide: AggregatedGuide) => {
-//     const isInModule = guide.module.title[0] === selected[selected.length - 1];
-//     if (!category) return isInModule;
-//     return isInModule && guide.category === category;
-//   });
-// }
-
-//This is a serverside component that mostly handles data fetching and passing it to the Resources component
-const getResources = async (user: OmitPassword | string ) => {
-  await connectToDatabase();
-  if (!user) return null;
-  const userId =new ObjectId((user as OmitPassword)._id);
-  try{
-    const resources = await Resources.find({});
-    
-    
-     return resources;
-   } catch (e) {
-     console.log(e);
-   }
-  
-};
+import DropdownResources from "@/components/dropDown/dropDownResource";
 
 const resources = async () => {
   const user: OmitPassword | string = await useServerUser();
-  const resources: any[] | undefined | null = await getResources(user);
-  if (!resources) return <>No resources found</>;
-  console.log(resources);
+  if (!user) return <>Please login</>
+
+  const response = await fetch("http://localhost:3000/api/zoomapi");  //this should eventually change to the io.vefskoli.is 
+  const data = await response.json();
+  if (!data || !data.meetings) return <>No resources found</>;
+  console.log(data);
+
+  // Define options for the dropdown. THis is assuming the recordings are an array. If it's not we have to structure differently. 
+  const options = data.meetings.map(recording => recording.topic.substring(0, 8));  // should filter by fyrst 8 digits. 
 
 
-  // //DO WE NEED THIS?  SHOULD this be in another file. use client and then server side?
-  // useEffect(() => {
-  //   //if the module in the url canges and is different from the localStorage, change the selected module.
-  //   moduleParam && setModuleSelected({ selected: moduleParam });
-  // }, [moduleParam]);
+/*Notes for what needs to be done so that the dropdownmenu works as it should. 
+Gera object med key og property fyrir thad sem vid thurfum. key 8 stafir then property should be "this sentence"
+that will then appear in the dropdown menu 
+Also have to make it so that they only show one instance of eache 8 letters so the dropdown menu isn't 
+repeating everything
+*/
+
+//module title prob not used
 
   return (
     <>
       <MainContent>
+      <TopContainer>
+        <DropdownContainer>
+          <DropdownResources options={options} />
+          <ModuleTitle></ModuleTitle>  
+        </DropdownContainer>
+      </TopContainer>
         <Title>Videos and Recordings</Title>
         <FilledButton>Drive</FilledButton>
-        <GuidesContainer> {resources.map(resource => {
+        <GuidesContainer> {data.meetings.map(resource => {
           return (
             <VideoCardText> 
               <Modal> 
@@ -103,12 +48,6 @@ const resources = async () => {
             </VideoCardText>
           )
          })}</GuidesContainer>
-       {/* <TopContainer>
-          <DropdownContainer>
-            <Dropdown options={options} selected={selected} setSelected={option} />
-            <ModuleTitle>{module.substring(3)}</ModuleTitle>
-  </DropdownContainer>
-      </TopContainer>*/}
         </MainContent>
     </>
   );
