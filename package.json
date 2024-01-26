@@ -36,7 +36,8 @@
     "styled-components": "^5.3.9",
     "swagger-ui-react": "^4.19.0",
     "swr": "^2.1.5",
-    "typescript": "5.0.2"
+    "typescript": "5.0.2",
+    "yarn": "^1.22.21"
   },
   "resolutions": {
     "styled-components": "^5"
