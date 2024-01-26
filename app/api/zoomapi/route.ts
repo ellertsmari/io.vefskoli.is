@@ -1,12 +1,13 @@
 
 
   let token = ""
-const getVideos= async(token:string)=>{
+
+export const getVideos= async(token:string)=>{
   const url = "https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=2021-10-11"
   
   const response = await fetch (url,{
       headers: {
-          authorization: "Bearer "+ token
+          authorization: "Bearer "+ token 
       }
   })
   return response.json()
@@ -19,7 +20,7 @@ export const GET= async ()=>{
   const tokenResponse = await fetch ("https://zoom.us/oauth/token?grant_type=account_credentials&account_id=xTmwVbNdQRGv5XBIuyvI2A",{
       method: "POST",
       headers:{
-        authorization: process.env.BASIC_AUTH
+        authorization: process.env.BASIC_AUTH 
         
       }
   })  
@@ -28,6 +29,8 @@ export const GET= async ()=>{
   console.log (token)
   data = await getVideos(token)
   console.log (data)
+  console.log(data.recordings[0]);
+
   }
    
   return Response.json(data)
