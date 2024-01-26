@@ -6,15 +6,46 @@ const Modal =() => {
 const ClickArea = styled.div `
 width:250px;
 height:250px;
-background-color: pink;
+background-color: #D1D1D1;
+border-radius: 20px;
+display: flex;
+  justify-content: center;
+  align-items: center;
+
+    
+   
+    
+    
+
 
 `
 const OverLay = styled.div`
-width: 700px;
-height: 700px;
+width: 1540px;
+height: 950px;
 position: absolute;
-background-color: yellow;
+background-color: grey;
+border-radius: 30px;
+top:180px;
+right: 100px;
+
 `
+const CloseButton = styled.button`
+background-color:#6563EB;
+border: none;
+color: white;
+padding: 10px 22px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+margin: 4px 2px;
+cursor: pointer;
+border-radius: 100px;
+position: absolute; 
+  right: 15px; 
+  top:15px;
+`;
+
 const [isOpen, setIsOpen ]= useState (false)
 const showModal =()=>{
 setIsOpen (true)
@@ -25,9 +56,9 @@ setIsOpen (false)
 }
 return (
     <div>
-        <ClickArea onClick={showModal}> </ClickArea>
+        <ClickArea onClick={showModal}>GUIDE 1</ClickArea>
 
-       {isOpen&& <OverLay>Content Modal has to be here <button onClick={closeModal}></button>
+       {isOpen&& <OverLay>Content Modal has to be here <CloseButton onClick={closeModal}>Close</CloseButton>
        </OverLay>
 
        }
