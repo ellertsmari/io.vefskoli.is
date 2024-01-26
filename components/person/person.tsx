@@ -50,7 +50,7 @@ type Props = {
 
     return (
         <div>
-            <h1>this is a person</h1>
+            <h1>this is a person component</h1>
             <h1>{student?.name}</h1>
             <h1>{student?.background}</h1>
             <h1>{student?.careerGoals}</h1>
