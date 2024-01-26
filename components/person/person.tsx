@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UserWithIdType } from '@/models/user';
+import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
 
 type Props = {
-    user: UserWithIdType; // Assuming this type has all the fields you're displaying
+    user: UserWithIdType;
 };
 
-const Person = ({ user }: Props) => {
-    // Directly use the 'user' prop to display user information
+const PersonInfo = ({ user }: Props) => (
+    <Container>
+        <PrimaryContainer>
+            <ProfilePicture className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic" />
+            <NameFont>{user.name}</NameFont>
+            <EmailFont>{user.email}</EmailFont>
+        </PrimaryContainer>
+        <SecondaryContainer>
+            <EmailFont>Background:</EmailFont> <InfoFont>{user.background}</InfoFont>
+            <EmailFont>Career Goals:</EmailFont> <InfoFont>{user.careerGoals}</InfoFont>
+            <EmailFont>Interest:</EmailFont> <InfoFont>{user.interests}</InfoFont>
+        </SecondaryContainer>
+    </Container>
+);
+
+const PersonDropDown = ({ user }: Props) => {
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!isDropdownOpen);
+    };
+
     return (
         <div>
-            <h1>This is a person component</h1>
-            <p>Name: {user.name}</p>
-            <p>Background: {user.background}</p>
-            <p>Career Goals: {user.careerGoals}</p>
-            <p>Favorite Artists: {user.favoriteArtists}</p>
+            <Button onClick={toggleDropdown}>{user.name}</Button>
+            {isDropdownOpen && <PersonInfo user={user} />}
         </div>
     );
 };
 
-export default Person;
+export default PersonDropDown;
