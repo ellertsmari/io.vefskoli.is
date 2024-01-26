@@ -38,11 +38,7 @@ repeating everything
         </DropdownContainer>
       </TopContainer>
         <Title>Videos and Recordings</Title>
-
         <a href="https://drive.google.com/drive/folders/1EZreV5U-Xubx2bVdZ6ULDQaazAgeGvKW?usp=sharing" target="_blank"><FilledButton>Drive</FilledButton></a> 
-        <GuidesContainer> {resources.map(resource => {
-
-        <FilledButton>Drive</FilledButton>
         <GuidesContainer> {data.meetings.map(resource => {
 
           return (
