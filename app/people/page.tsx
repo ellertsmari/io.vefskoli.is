@@ -1,28 +1,31 @@
-import { MainContent } from '@/components/mainLayout';
-import { UserWithIdType } from '@/models/user';
-import Person from '@/components/person/person';
+// People page component
+"use client";
+import Person from "@/components/person/person"; // Adjust the import path as necessary
+import { useEffect, useState } from "react";
+import { UserWithIdType } from "@/models/user";
 
 type Props = {
-    student: UserWithIdType;
+    user: UserWithIdType;
   };
 
-  const people = async ({student}: Props) => {
-    return (
-      <>
-        <MainContent>
-          {/* Render the People component with the obtained user data */}
-          <Person user={student}></Person>
-        </MainContent>
-      </>
-    );
-  };
-  export default people;
+const PeoplePage = ({user}: Props) => {
+  const [users, setUsers] = useState([]);
 
-/*export default async function people () {
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await fetch('/api/users');
+      const data = await response.json();
+      setUsers(data);
+    };
 
-    return(
-        <MainContent>
-            <h1>This is the people page</h1>
-        </MainContent>
-    )
-}*/
+    fetchUsers();
+  }, []);
+
+  return (
+    <div>
+      {users.map(user => <Person key={user} user={user} />)}
+    </div>
+  );
+};
+
+export default PeoplePage;
