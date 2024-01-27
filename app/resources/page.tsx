@@ -19,13 +19,13 @@ console.log(data);
 //To make sure the dropdown menu doesn't show only the first 8 digits we use key and property in an object. 
 const nameDrop = {
   'Module 1' : 'MODULE 1',
-  'Module 2' : 'Module 2',
-  'Module 3' : 'Module 3',
-  'Module 4' : 'Module 4',
-  'Module 5' : 'Module 5',
-  'Module 6' : 'Module 6',
-  'Las palm' : 'Las Palmas',
-  'Introduc' : 'Introduction',
+  'Module 2' : 'MODULE 2',
+  'Module 3' : 'MODULE 3',
+  'Module 4' : 'MODULE 4',
+  'Module 5' : 'MODULE 5',
+  'Module 6' : 'MODULE 6',
+  'Las palm' : 'LAS PALMAS',
+  'Introduc' : 'INTRO',
 };
 
 // Define options for the dropdown. Set is used to ensure that only unique values are present in optionsSet
