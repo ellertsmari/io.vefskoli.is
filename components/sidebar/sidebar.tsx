@@ -20,6 +20,11 @@ const getGuides = async () => {
 async function Sidebar({ student }: Props) {
   const guides = await getGuides();
   if (!student) return <>you need to log in</>;
+  if (student) {
+    console.log("Logged in user ID:", student._id);
+  } else {
+    console.log("No logged in user found");
+  }
   return (
     <Container>
       <ProfileContainer>

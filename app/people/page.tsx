@@ -5,51 +5,46 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { UserWithIdType } from "@/models/user";
 import { MainContent } from "@/components/mainLayout";
 import styled from 'styled-components'
+import useLoggedInUser from "@/hooks/useLoggedInUser";
 
 const TitlePage = styled.h1`
   font-style: Poppins;
   font-size: 32px;
 `
 
-type Props = {
-    user: UserWithIdType;
-  };
-
-const PeoplePage = ({user}: Props) => {
-  const [users, setUsers] = useState([]);
-  const student = user;
-
+const PeoplePage = () => {
+  const [users, setUsers] = useState<UserWithIdType[]>([]);
+  const {user: loggedInUser, loading, error} = useLoggedInUser();
+  
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await fetch('/api/users');
+      const response = await fetch(`/api/users`);
       const data = await response.json();
       setUsers(data);
     };
-
     fetchUsers();
   }, []);
 
-  // to be able to update your own profile in the dropdown - 
-  // we will have to figure out how to make the own users dropdown
-  // be different to others (have an "update" button)
-  const updateProfile = async (e:ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const res = await fetch( // not sure if const res works
-      `/api/users/${student._id}`,
-      {
-        method: 'PATCH',
-        body: data,
-      }
-    );
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+  if (!loggedInUser) {
+    return <div>You have to log in to see the content of this page</div>
   }
 
   return (
     <MainContent>
       <TitlePage>People</TitlePage>
-      {users.map(user => <Person key={user} user={user} />)}
+      {users.map(user =>( 
+        <Person 
+          user={user} 
+          isCurrentUser={user._id.toString() === loggedInUser._id.toString()} 
+        />
+      ))}
     </MainContent>
   );
 };
-
-export default PeoplePage;
+ export default PeoplePage;
