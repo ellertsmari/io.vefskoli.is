@@ -25,15 +25,24 @@ const url = `https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_s
 
       if (response == null) throw new Error("Response is null.");
       if (response.status == 404) throw new Error("Page not found.")
+      if (response.status == 401) { 
+        const error=new Error("My invalid access token.")
+        error.code = 124;
+        throw error 
+      }
+      
+      console.log (response.status)
       const json = await response.json()
+      console.log (json) 
       data = [...data, ...json.meetings]
       
     } catch (error) {
-      console.log("error")   //
-        return error;
+      console.log("error",error) 
+      const errorObject:{} = await error as object; 
+        return {...errorObject,meetings:data,}; 
       }
   };
-return data
+return {error:{},meetings:data, code:200}
 };
 
 
@@ -41,6 +50,7 @@ export const GET= async ()=> {
 
   try { 
     let data = await getVideos(token)
+    console.log ("This is data",data)
     if (data.code===124){
       const tokenResponse = await fetch ("https://zoom.us/oauth/token?grant_type=account_credentials&account_id=xTmwVbNdQRGv5XBIuyvI2A",{
           method: "POST",
@@ -59,7 +69,7 @@ export const GET= async ()=> {
       if (data.message){
         throw new Error("This surely is an error")
       }
-      console.log(data.recordings[0]);
+     
     }
     
     if (token == null) throw new Error("Missing tokendata.")
