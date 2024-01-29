@@ -17,7 +17,9 @@ type Props = {
     }
 }
 
-//A component for editing projects, fetching the data with the PUT method and a useState hook to manage the state
+//A component for editing projects
+//Fetching the data with the PUT method and a useState hook to manage the state
+//Error handling incase anything fails
 const Edit = ({returns}:Props) => {
     const [projectName, setProjectName] = useState(returns.projectName);
     const [pictureUrl, setPictureUrl] = useState(returns.pictureUrl);
@@ -41,6 +43,7 @@ const Edit = ({returns}:Props) => {
 
     //A modal that allows the user to change the name of the project as well as the picture representing the project
     //onChange handlers update their values
+    //Remove constant called here, from removeCard.tsx
     return(
     <Modal>
         <GuideCardContainer>

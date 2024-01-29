@@ -8,7 +8,8 @@ type Props = {
     }
 }
 
-//function to remove cards from hall of fame by hardcoding the vote, changing it from recommend to Hall of fame to pass
+//Function to remove cards from hall of fame by hardcoding the vote, changing it from recommend to Hall of fame to pass
+//Error handling in case anything fails
 const Remove = ({returns}:Props) => {
     const removeCard = async () => {
         try {
@@ -26,6 +27,7 @@ const Remove = ({returns}:Props) => {
         }
     }
 
+    //Button with onClick function to call the function
     return (
         <>
             <button onClick={removeCard}>Remove from Hall of fame</button>
