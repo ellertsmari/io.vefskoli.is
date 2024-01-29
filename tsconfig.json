@@ -40,7 +40,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "app/people/page.tsx"  ],
   "exclude": [
     "node_modules"
   ]

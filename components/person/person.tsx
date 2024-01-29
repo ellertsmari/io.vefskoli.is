@@ -1,62 +1,113 @@
-"use client";
-import { connectToDatabase } from '@/utils/mongoose-connector';
-import { UserWithIdType, UserType } from '@/models/user';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+import { UserWithIdType } from '@/models/user';
+import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
+import { ProfileModal } from '../sidebar/profile/profile.style';
+import Link from 'next/link';
 
 type Props = {
-    user: UserWithIdType
-  };
+    user: UserWithIdType;
+    isCurrentUser: boolean; // I'm adding this prop to be able to update profile for the user that is logged in
+};
 
- const getPerson = async ({ user }:Props ): Promise<UserType[] | null> => {
-    await connectToDatabase();
+const PersonInfo = ({ user }: Props) => (
+    <Container>
+        <PrimaryContainer>
+            <ProfilePicture className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic" />
+            <NameFont>{user.name}</NameFont>
+            <EmailFont>{user.email}</EmailFont>
+        </PrimaryContainer>
+        <SecondaryContainer>
+            <EmailFont>Background:</EmailFont> <InfoFont>{user.background}</InfoFont>
+            <EmailFont>Career Goals:</EmailFont> <InfoFont>{user.careerGoals}</InfoFont>
+            <EmailFont>Interest:</EmailFont> <InfoFont>{user.interests}</InfoFont>
+        </SecondaryContainer>
+    </Container>
+);
+
+const PersonDropDown = ({ user, isCurrentUser }: Props) => {
+    const [isDropdownOpen, setDropdownOpen] = useState(false); // state for the dropdown
+    const [isOpen, setIsOpen] = useState(false); // this state is for the update profile window
     const student = user;
-    try {
-      const users = await await fetch(
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!isDropdownOpen);
+    };
+
+    const openUpdateProfile = () => {
+      setIsOpen(!isOpen);
+    }
+
+    //Bjork figuring out how to update profile
+    const updateProfile = async (e:ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const res = await fetch(
         `/api/users/${student._id}`,
         {
           method: 'PATCH',
-
+          body: data,
         }
-      ); // Assuming User is the model for user data
-      if (Array.isArray(users) /* && users.every(user => checkIfUserType(user)) */) {
-        return users;
-    } else {
-        // Handle unexpected 'users' value (e.g., error messages) here
-        console.error('Unexpected response:', users);
-        return null;
-    }
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      return null;
-    }
-  };
-
-  const Person = ({user}: Props) => {
-    const [users, setUsers] = useState<UserType[] | null>(null);
-    const student = user;
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const fetchedUsers = await getPerson({user}); 
-            setUsers(fetchedUsers);
-        };
-        fetchUsers();
-    }, []); // Empty dependency array means this effect runs once on mount
-
-    if (!users) {
-        return <>Loading...</>;
+      );
     }
 
+    //this is to upload a profile picture
+    const handleUpload = async (e:ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      const data = new FormData();
+      const files = e.target.files as FileList;
+      data.append('file', files[0]);
+      data.append('upload_preset', 'profile-pictures');
+      //const res = await fetch(
+    }
 
+    //this is to logout
+    const x = { logout: () => {} }
+
+    console.log(isCurrentUser);
     return (
         <div>
-            <h1>this is a person</h1>
-            <h1>{student?.name}</h1>
-            <h1>{student?.background}</h1>
-            <h1>{student?.careerGoals}</h1>
-            <h1>{student?.favoriteArtists}</h1>
+            <Button onClick={toggleDropdown}>{user.name}</Button>
+            {isDropdownOpen && (
+            <div>
+              <PersonInfo user={user} isCurrentUser={isCurrentUser} />
+              {isCurrentUser && ( //if a user's dropdown is the same as the logged in user, a button shows to 'update profile'
+                <Button onClick={openUpdateProfile}>Update Profile</Button>
+              )}
+              {isOpen && (
+                /* here is the window that opens if you click on 'Update Profile', need to fix style*/
+                /*maybe it would be better to have this as a component*/
+              <ProfileModal>
+                  <div className="user-pic/name">
+                  <Link className="logout" onClick={x.logout} href="/authpage">Logout</Link>
+                  <div>
+                    <img className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
+                  </div>
+                  <div className="user-name">
+                    <h3 style={{fontSize: "1.8rem", fontWeight: "400"}}>{student?.name}</h3>
+                    <p style={{fontSize: "1.6rem"}}>{student?.email}</p>
+                  </div>
+                  <div className='pictureurl'>
+                    <p className='pictureurltxt'>Picture URL</p>
+                    <input className="URLpicinput" type="text" name="image" onChange={handleUpload}></input>
+                  </div>
+                  </div>
+                  <form onSubmit= {updateProfile} className='form-container'>
+                    <label className="profiletxt">Background - What have you studied or worked with?</label>
+                    <textarea className="profileinput" name="background"  ></textarea>
+                    <label className="profiletxt" >Near future career goals?</label>
+                    <textarea className="profileinput" name="careerGoals" ></textarea>
+                    <label className="profiletxt">Main interests?</label>
+                    <textarea className="profileinput" name="interests"  ></textarea>
+                    <label className="profiletxt">Favourite band/s or artist/s</label>
+                    <textarea className="profileinput" name="favoriteArtist"></textarea>
+                    <button className='savebtn'>SAVE</button>
+                </form>
+              </ProfileModal>
+              )}
+            </div>
+            )}
         </div>
-    )
-
+    );
 };
-export default Person;
+
+export default PersonDropDown;
