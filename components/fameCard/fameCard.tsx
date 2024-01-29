@@ -15,6 +15,8 @@ import {
   DefaultDescription,
   HoveredDescription,
   PencilEdit,
+  CloseX,
+  Overlay,
 } from "./styles";
 import Edit from "./editCard";
 type Props = {
@@ -79,14 +81,32 @@ const FameCard = ({ guide, returnData }: Props) => {
         </CardInfo>
       </GuideCardContainer>
       {modalOpen && (
-        <Edit
-          returns={{
-            _id: returnData._id,
-            projectName: "",
-            pictureUrl: "",
-            vote: "",
-          }}
-        ></Edit>
+        <>
+          <Overlay onClick={handleOpenModal}></Overlay>
+          <div
+            style={{
+              marginRight: "16rem",
+              display: "flex",
+              flexDirection: "column",
+              justifySelf: "center",
+              alignSelf: "center",
+              position: "fixed",
+              backgroundColor: "#ad90f6",
+              borderRadius: " 1.5rem ",
+              zIndex: "20",
+            }}
+          >
+            <CloseX onClick={handleOpenModal}>X</CloseX>
+            <Edit
+              returns={{
+                _id: returnData._id,
+                projectName: "",
+                pictureUrl: "",
+                vote: "",
+              }}
+            ></Edit>
+          </div>
+        </>
       )}
     </>
   );
