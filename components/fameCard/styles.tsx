@@ -37,6 +37,10 @@ background-image: ${({img}) => (img ? `url('${img}')` : `url('star.svg')`)};
 background-size: cover;
 background-repeat: no-repeat;
 border-radius: 0 0 2rem 2rem;
+transition: 2s;
+&:hover {
+  background: #ffffff;
+}
 `;
 
 export const Title = styled.h1`
