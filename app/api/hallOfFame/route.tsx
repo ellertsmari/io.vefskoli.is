@@ -47,11 +47,3 @@ export const GET = async (req: NextRequest) => {
   // If reviews are found, return them as a JSON response with a 200 status
   return NextResponse.json(populatedReviews, { status: 200 });
 };
-
-/*export async function DELETE(request: Request) {
-  await connectToDatabase()
-  const body = await request.json()
-  const id = new ObjectId(body.id)
-  await Return.deleteOne({_id:id})
-  return Response.json({message: 'Project successfully removed from Hall of fame.'})
-}*/
