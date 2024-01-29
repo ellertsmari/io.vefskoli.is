@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { UserWithIdType } from "@/models/user";
 import { MainContent } from "@/components/mainLayout";
 import styled from 'styled-components'
+import JokePage from "@/components/person/Jokes/route";
 
 const TitlePage = styled.h1`
   font-style: Poppins;
@@ -32,7 +33,11 @@ const PeoplePage = ({user}: Props) => {
     <MainContent>
       <TitlePage>People</TitlePage>
       {users.map(user => <Person key={user} user={user} />)}
+      <div>
+        <JokePage/>
+      </div>
     </MainContent>
+  
   );
 };
 
