@@ -15,6 +15,8 @@ import {
   DefaultDescription,
   HoveredDescription,
   PencilEdit,
+  CloseX,
+  Overlay,
   ImgStyle,
 } from "./styles";
 import Edit from "./editCard";
@@ -49,7 +51,7 @@ const FameCard = ({ guide, returnData }: Props) => {
   const reviewModifiedColor = isReviewHovered
     ? "brightness(80%)"
     : "brightness(100%)";
-    
+
   return (
     <>
       <GuideCardContainer>
@@ -60,30 +62,48 @@ const FameCard = ({ guide, returnData }: Props) => {
           <TitleWrapper>
             <Title>{returnData.projectName}</Title>
           </TitleWrapper>
-          <ImgStyle
-          img={returnData.pictureUrl}
-          >
-          <DescriptionWrapper>
-            <DefaultDescription
-              isShown={!isReturnHovered && !isReviewHovered}
-            ></DefaultDescription>
-            <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
-              Click to view
-            </HoveredDescription>
-          </DescriptionWrapper>
+          <ImgStyle img={returnData.pictureUrl}>
+            <DescriptionWrapper>
+              <DefaultDescription
+                isShown={!isReturnHovered && !isReviewHovered}
+              ></DefaultDescription>
+              <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
+                Click to view
+              </HoveredDescription>
+            </DescriptionWrapper>
             {isReturnHovered && (
-            <PencilEdit onClick={handleOpenModal}>✏️</PencilEdit>
-          )}
+              <PencilEdit onClick={handleOpenModal}>✏️</PencilEdit>
+            )}
           </ImgStyle>
         </CardInfo>
       </GuideCardContainer>
       {modalOpen && (
-        <Edit returns={{
-          _id:returnData._id,
-          projectName: "",
-          pictureUrl: "",
-          vote: ""
-        }}></Edit>
+        <>
+          <Overlay onClick={handleOpenModal}></Overlay>
+          <div
+            style={{
+              marginRight: "16rem",
+              display: "flex",
+              flexDirection: "column",
+              justifySelf: "center",
+              alignSelf: "center",
+              position: "fixed",
+              backgroundColor: "#ad90f6",
+              borderRadius: " 1.5rem ",
+              zIndex: "20",
+            }}
+          >
+            <CloseX onClick={handleOpenModal}>X</CloseX>
+            <Edit
+              returns={{
+                _id: returnData._id,
+                projectName: "",
+                pictureUrl: "",
+                vote: "",
+              }}
+            ></Edit>
+          </div>
+        </>
       )}
     </>
   );
