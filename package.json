@@ -32,7 +32,7 @@
     "remark-gfm": "^4.0.0",
     "request": "^2.88.2",
     "sass": "^1.66.1",
-    "styled-components": "^5.3.9",
+    "styled-components": "^5.3.11",
     "swagger-ui-react": "^4.19.0",
     "swr": "^2.1.5",
     "typescript": "5.0.2"

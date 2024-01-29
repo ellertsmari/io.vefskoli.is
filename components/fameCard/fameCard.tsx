@@ -17,6 +17,7 @@ import {
   PencilEdit,
   CloseX,
   Overlay,
+  ImgStyle,
 } from "./styles";
 import Edit from "./editCard";
 type Props = {
@@ -55,29 +56,25 @@ const FameCard = ({ guide, returnData }: Props) => {
     <>
       <GuideCardContainer>
         <CardInfo
-          img={returnData.pictureUrl}
           onMouseEnter={ReturnHandleMouseEnter}
           onMouseLeave={ReturnHandleMouseLeave}
-          style={{
-            backgroundPosition: "center",
-            //backgroundImage:
-            // returnStatus.condition === !isUrl ? 'nota það' : returnStatus.backgroundImg
-          }}
         >
           <TitleWrapper>
             <Title>{returnData.projectName}</Title>
           </TitleWrapper>
-          <DescriptionWrapper>
-            <DefaultDescription
-              isShown={!isReturnHovered && !isReviewHovered}
-            ></DefaultDescription>
-            <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
-              Click to view
-            </HoveredDescription>
-          </DescriptionWrapper>
-          {isReturnHovered && (
-            <PencilEdit onClick={handleOpenModal}>✏️</PencilEdit>
-          )}
+          <ImgStyle img={returnData.pictureUrl}>
+            <DescriptionWrapper>
+              <DefaultDescription
+                isShown={!isReturnHovered && !isReviewHovered}
+              ></DefaultDescription>
+              <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
+                Click to view
+              </HoveredDescription>
+            </DescriptionWrapper>
+            {isReturnHovered && (
+              <PencilEdit onClick={handleOpenModal}>✏️</PencilEdit>
+            )}
+          </ImgStyle>
         </CardInfo>
       </GuideCardContainer>
       {modalOpen && (
