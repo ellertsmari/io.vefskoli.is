@@ -44,16 +44,3 @@ export const GET = async (req: NextRequest,
   res.json(returns, {status: 200});
   return;
 }
-
-//Asynchronous function named "PUT" 
-/*export async function PUT(request: Request) {
-  await connectToDatabase()
-  const body = await request.json()
-  const id = body.id;
-  const object = new ObjectId(id);
-  console.log(object)
-  delete body.id
-  await Return.updateOne({_id:object}, { $set: body})
-  return Response.json({message: 'Project information successfully updated.'})
-    // Handle error (e.g., send an error response)
-}*/
