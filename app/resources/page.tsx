@@ -7,47 +7,46 @@ import Modal from "@/components/modal/modal"
 import DropdownResources from "@/components/dropDown/dropDownResource";
 
 const resources = async () => {
-  const user: OmitPassword | string = await useServerUser();
-  if (!user) return <>Please login</>
+const user: OmitPassword | string = await useServerUser();
+if (!user) return <>Please login</>
 
-  const response = await fetch("http://localhost:3000/api/zoomapi");  //this should eventually change to the io.vefskoli.is 
-  const data = await response.json();
-  if (!data || !data.meetings) return <>No resources found</>;
-  console.log(data);
+const response = await fetch("http://localhost:3000/api/zoomapi");  //this should eventually change to the io.vefskoli.is 
+const data = await response.json();
+if (!data || !data.meetings) return <>No resources found</>;
+console.log(data);
 
-  // Define options for the dropdown. THis is assuming the recordings are an array. If it's not we have to structure differently. 
-  const options = data.meetings.map(recording => recording.topic.substring(0, 8));  // should filter by fyrst 8 digits. 
+//We filter the videos with the first 8 digits in their title (topic). 
+//To make sure the dropdown menu doesn't show only the first 8 digits we use key and property in an object. 
+const nameDrop = {
+  'Module 1' : 'MODULE 1',
+  'Module 2' : 'MODULE 2',
+  'Module 3' : 'MODULE 3',
+  'Module 4' : 'MODULE 4',
+  'Module 5' : 'MODULE 5',
+  'Module 6' : 'MODULE 6',
+  'Las palm' : 'LAS PALMAS',
+  'Introduc' : 'INTRO',
+};
 
-
-/*Notes for what needs to be done so that the dropdownmenu works as it should. 
-Gera object med key og property fyrir thad sem vid thurfum. key 8 stafir then property should be "this sentence"
-that will then appear in the dropdown menu 
-Also have to make it so that they only show one instance of eache 8 letters so the dropdown menu isn't 
-repeating everything
-*/
-
-//module title prob not used
+// Define options for the dropdown. Set is used to ensure that only unique values are present in optionsSet
+// This filters by the first 8 digits. 
+const optionsSet = new Set(data.meetings.map(recording => nameDrop[recording.topic.substring(0, 8)] || recording.topic.substring(0, 8)));  
+const options = Array.from(optionsSet);   //Array.from() is used to convert the Set back into an array which can be used as the options for dropdown. This will ensure that each module only appears once in the dropdown, regardless of how many videos it has.
 
   return (
-
     <div style={{position:"relative"}}>
       <MainContent>
-      <TopContainer>
-        <DropdownContainer>
-          <DropdownResources options={options} />
-          <ModuleTitle></ModuleTitle>  
-        </DropdownContainer>
-      </TopContainer>
+        <TopContainer>
+          <DropdownContainer>
+            <DropdownResources options={options} />
+            <ModuleTitle>Resources</ModuleTitle>  
+          </DropdownContainer>
+        </TopContainer>
         <Title>Videos and Recordings</Title>
-        <a href="https://drive.google.com/drive/folders/1EZreV5U-Xubx2bVdZ6ULDQaazAgeGvKW?usp=sharing" target="_blank"><FilledButton>Drive</FilledButton></a> 
+        <a href="https://drive.google.com/drive/folders/1EZreV5U-Xubx2bVdZ6ULDQaazAgeGvKW?usp=sharing" target="_blank" rel="noopener"><FilledButton>Drive</FilledButton></a>  
         <GuidesContainer> {data.meetings.map(resource => {
-        
           return (
-             
-              <Modal ZoomVideo= {resource}/> 
-            
-           
-            
+              <Modal ZoomVideo= {resource}/>  //sko[a]   key={} 
           )
          })}</GuidesContainer>
         </MainContent>
