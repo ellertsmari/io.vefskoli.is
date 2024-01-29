@@ -6,8 +6,8 @@ import { useState } from "react";
 import { Modal, Label, GuideCardContainer } from "../../components/fameCard/styles";
 import Remove from "./removeCard";
 
-//Props with the property "returns"
-//The returns is an object with three string properties
+// props with the property "returns"
+// the returns is an object with three string properties
 type Props = {
     returns: {
         _id: string;
@@ -17,12 +17,15 @@ type Props = {
     }
 }
 
-//A component for editing projects
-//Fetching the data with the PUT method and a useState hook to manage the state
-//Error handling incase anything fails
+// a component for editing projects
+// fetching the data with the PUT method and a useState hook to manage the change
+// error handling incase anything fails
 const Edit = ({returns}:Props) => {
     const [projectName, setProjectName] = useState(returns.projectName);
     const [pictureUrl, setPictureUrl] = useState(returns.pictureUrl);
+
+    // async function to edit project details
+    // throws an error if the update fails
     const editCard = async ()=> {
         try {
             const response = await fetch ('/api/returns', {
@@ -41,9 +44,9 @@ const Edit = ({returns}:Props) => {
         }
     }
 
-    //A modal that allows the user to change the name of the project as well as the picture representing the project
-    //onChange handlers update their values
-    //Remove constant called here, from removeCard.tsx
+    // a modal that allows the user to change the name of the project as well as the picture representing the project
+    // onChange handlers update their values
+    // remove constant called here, from removeCard.tsx
     return(
     <Modal>
         <GuideCardContainer>

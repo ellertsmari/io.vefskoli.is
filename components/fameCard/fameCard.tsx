@@ -63,17 +63,17 @@ const FameCard = ({ guide, returnData }: Props) => {
           <ImgStyle
           img={returnData.pictureUrl}
           >
-          <DescriptionWrapper>
-            <DefaultDescription
-              isShown={!isReturnHovered && !isReviewHovered}
-            ></DefaultDescription>
-            <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
-              Click to view
-            </HoveredDescription>
-          </DescriptionWrapper>
+            <DescriptionWrapper>
+              <DefaultDescription
+                isShown={!isReturnHovered && !isReviewHovered}
+              ></DefaultDescription>
+              <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
+                Click to view
+              </HoveredDescription>
+            </DescriptionWrapper>
             {isReturnHovered && (
             <PencilEdit onClick={handleOpenModal}>✏️</PencilEdit>
-          )}
+            )}
           </ImgStyle>
         </CardInfo>
       </GuideCardContainer>
