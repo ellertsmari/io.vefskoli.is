@@ -34,6 +34,8 @@ const Edit = ({returns}:Props) => {
             } else {
                 console.error('Failed to update project')
             }
+
+//error handling if the fetch isn't successful
         } catch (error) {
             console.error('Error updating project:', error)
         }
