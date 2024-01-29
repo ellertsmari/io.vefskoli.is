@@ -7,7 +7,10 @@ type Props = {
     ZoomVideo:{
         recording_files:{
             download_url:string
+            file_type: string
         }[]
+        topic:string 
+        
     };
 }
 
@@ -22,8 +25,12 @@ const Modal =({ZoomVideo}:Props) => {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    font-size: 20px;
+    
   `
+
+  
+  
   const OverLay = styled.div`
     width: 94%;
     height: 100%;  //changed this to 100% so it would fit the window it is in
@@ -65,21 +72,26 @@ const Modal =({ZoomVideo}:Props) => {
   const closeModal = () =>{
     setIsOpen (false)
   }
-
+   const videoUrl= ZoomVideo.recording_files [0].file_type==="MP4"? ZoomVideo.recording_files[0].download_url:ZoomVideo.recording_files[1].download_url
   return (
     <div>
-      <ClickArea onClick={showModal}>Title of video</ClickArea>
-      {isOpen&& 
-        <OverLay>
-          <CloseButton onClick={closeModal}>Close</CloseButton>
-          <Video width="320" height="240" controls>
-            <source src={ZoomVideo.recording_files[0].download_url} />
-          </Video>
-        </OverLay>
-      }
+    
+          <ClickArea onClick={showModal}>
+            {ZoomVideo.topic}
+          </ClickArea>
+          {isOpen && 
+            <OverLay>
+              <CloseButton onClick={closeModal}>Close</CloseButton>
+              <Video width="320" height="240" controls>
+                <source src={videoUrl} />
+              </Video>
+            </OverLay>
+          }
+       
+     
     </div>
-  )
-} 
+  );
+}
 
 export default Modal
 
