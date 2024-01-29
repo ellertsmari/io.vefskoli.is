@@ -46,7 +46,7 @@ const FameCard = ({ guide, returnData }: Props) => {
   const reviewModifiedColor = isReviewHovered
     ? "brightness(80%)"
     : "brightness(100%)";
-    
+
   return (
     <>
       <GuideCardContainer>
@@ -70,18 +70,20 @@ const FameCard = ({ guide, returnData }: Props) => {
               Click to view
             </HoveredDescription>
           </DescriptionWrapper>
-            {isReturnHovered && (
+          {isReturnHovered && (
             <PencilEdit onClick={handleOpenModal}>✏️</PencilEdit>
           )}
         </CardInfo>
       </GuideCardContainer>
       {modalOpen && (
-        <Edit returns={{
-          _id:returnData._id,
-          projectName: "",
-          pictureUrl: "",
-          vote: ""
-        }}></Edit>
+        <Edit
+          returns={{
+            _id: returnData._id,
+            projectName: "",
+            pictureUrl: "",
+            vote: "",
+          }}
+        ></Edit>
       )}
     </>
   );
