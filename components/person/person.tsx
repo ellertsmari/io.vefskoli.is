@@ -25,13 +25,17 @@ const PersonInfo = ({ user }: Props) => (
 );
 
 const PersonDropDown = ({ user, isCurrentUser }: Props) => {
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isOpen, setIsOpen] = useState(false); // this is for the update profile window
+    const [isDropdownOpen, setDropdownOpen] = useState(false); // state for the dropdown
+    const [isOpen, setIsOpen] = useState(false); // this state is for the update profile window
     const student = user;
 
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
     };
+
+    const openUpdateProfile = () => {
+      setIsOpen(!isOpen);
+    }
 
     //Bjork figuring out how to update profile
     const updateProfile = async (e:ChangeEvent<HTMLFormElement>) => {
@@ -66,8 +70,8 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
             {isDropdownOpen && (
             <div>
               <PersonInfo user={user} isCurrentUser={isCurrentUser} />
-              {isCurrentUser && (
-                <Button onClick={() => setIsOpen(!isOpen)}>Update Profile</Button>
+              {isCurrentUser && ( //if a user's dropdown is the same as the logged in user, a button shows to 'update profile'
+                <Button onClick={openUpdateProfile}>Update Profile</Button>
               )}
               {isOpen && (
                 /* here is the window that opens if you click on 'Update Profile', need to fix style*/

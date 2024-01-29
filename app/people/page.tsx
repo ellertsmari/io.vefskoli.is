@@ -13,23 +13,26 @@ const TitlePage = styled.h1`
 `
 
 const PeoplePage = () => {
-  const [users, setUsers] = useState<UserWithIdType[]>([]);
-  const {user: loggedInUser, loading, error} = useLoggedInUser();
+  const [users, setUsers] = useState<UserWithIdType[]>([]); //UserWithIdType holds a schema for the user info as well as user_id
+  const {user: loggedInUser, loading, error} = useLoggedInUser(); //user, loading and error is from the useLoggedInUser hook
   
   useEffect(() => {
+    //fetching the users from /api/users that will display on the page
     const fetchUsers = async () => {
       const response = await fetch(`/api/users`);
       const data = await response.json();
       setUsers(data);
     };
     fetchUsers();
+    //do we need error handling here?
   }, []);
 
+  //these are the states from 'useLoggedInUser' hook
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; //maybe we could do a nicer loading thing
   }
   if (error) {
-    return <div>{error}</div>;
+    return <div>{error}</div>; //error message from the hook
   }
   if (!loggedInUser) {
     return <div>You have to log in to see the content of this page</div>
@@ -38,10 +41,10 @@ const PeoplePage = () => {
   return (
     <MainContent>
       <TitlePage>People</TitlePage>
-      {users.map(user =>( 
-        <Person 
+      {users.map(user =>(  // mapping users from the 'fetchUsers' function
+        <Person //component
           user={user} 
-          isCurrentUser={user._id.toString() === loggedInUser._id.toString()} 
+          isCurrentUser={user._id.toString() === loggedInUser._id.toString()} //comparing the logged in user to the users in the list, if it's the same user then he get's an 'update profile' option (see in Person component)
         />
       ))}
     </MainContent>
