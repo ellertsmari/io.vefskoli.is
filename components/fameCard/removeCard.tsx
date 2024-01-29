@@ -1,8 +1,8 @@
 //HALL OF FAME STUFF
-//function to remove cards from hall of fame by hardcoding the vote, changing it from recommend to hall of fame to pass
 
 'use client'
 
+//function to remove cards from hall of fame by hardcoding the vote, changing it from recommend to Hall of fame to pass
 type Props = {
     returns: {
         _id: string
@@ -25,6 +25,7 @@ const Remove = ({returns}:Props) => {
             console.error('Error removing project:', error)
         }
     }
+    
     return (
         <>
             <button onClick={removeCard}>Remove from Hall of fame</button>

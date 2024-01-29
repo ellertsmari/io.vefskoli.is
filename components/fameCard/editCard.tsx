@@ -42,14 +42,14 @@ const Edit = ({returns}:Props) => {
     //A modal that allows the user to change the name of the project as well as the picture representing the project
     //onChange handlers update their values
     return(
-        <Modal>
+    <Modal>
         <GuideCardContainer>
-        <Label placeholder="Change title" value={projectName} onChange={(e) =>setProjectName(e.target.value)} type="text" />
-        <Label placeholder="Change picture" value={pictureUrl} onChange={(e)=>setPictureUrl(e.target.value)} type="text" />
-        <button onClick={editCard}>Save</button>
-        <Remove returns={{
-                    _id:returns._id
-                }}></Remove>
+            <Label placeholder="Change title" value={projectName} onChange={(e) =>setProjectName(e.target.value)} type="text" />
+            <Label placeholder="Change picture" value={pictureUrl} onChange={(e)=>setPictureUrl(e.target.value)} type="text" />
+            <button onClick={editCard}>Save</button>
+            <Remove returns={{
+                _id:returns._id
+            }}></Remove>
         </GuideCardContainer>
     </Modal>
     )

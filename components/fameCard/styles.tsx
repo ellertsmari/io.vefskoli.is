@@ -38,7 +38,7 @@ background-size: cover;
 background-repeat: no-repeat;
 border-radius: 0 0 2rem 2rem;
 transition: 2s;
-&:hover {
+&:hover {t
   background: #ffffff;
 }
 `;
