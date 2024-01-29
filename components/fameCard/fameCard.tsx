@@ -58,8 +58,6 @@ const FameCard = ({ guide, returnData }: Props) => {
           onMouseLeave={ReturnHandleMouseLeave}
           style={{
             backgroundPosition: "center",
-            //backgroundImage:
-            // returnStatus.condition === !isUrl ? 'nota það' : returnStatus.backgroundImg
           }}
         >
           <TitleWrapper>

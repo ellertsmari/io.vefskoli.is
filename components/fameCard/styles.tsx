@@ -29,7 +29,7 @@ export const CardInfo = styled.div<CardInfoProps>`
   align-items: center;
   flex-direction: column;
   background-position: center;
-  background-image: ${({img}) => (img ? `url(${img})` : `url('star.svg')`)}
+  background-image: ${({img}) => (img ? `url('${img}')` : `url('star.svg')`)};
   background-color: #a5a6f6;
   background-repeat: no-repeat;
 `;
