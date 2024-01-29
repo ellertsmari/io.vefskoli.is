@@ -1,10 +1,14 @@
+//HALL OF FAME STUFF
+
 "use client";
+
 import { MainContent } from "@/components/mainLayout";
 import { GuidesContainer } from "@/components/guides/styles";
 import FameCard from "@/components/fameCard/fameCard";
 import { GuideType } from "@/models/guide";
 import { ReturnType } from "@/models/return";
 import { useState, useEffect } from "react";
+
 // Define a TypeScript type 'Review' with properties 'guide' of type 'GuideType' and '_id' of type 'string'
 type Review = {
   guide: GuideType;

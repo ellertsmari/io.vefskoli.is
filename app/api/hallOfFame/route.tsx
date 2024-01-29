@@ -1,8 +1,8 @@
+//HALL OF FAME STUFF
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
-import { Review, ReviewType } from "@/models/review";
-import { Return } from "@/models/return";
-import { ObjectId } from "mongodb";
+import { Review } from "@/models/review";
 import "@/models/return";
 import "@/models/guide";
 

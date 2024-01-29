@@ -1,3 +1,5 @@
+//HALL OF FAME STUFF
+
 "use client";
 
 import { useState } from "react";
@@ -51,6 +53,7 @@ const FameCard = ({ guide, returnData }: Props) => {
     <>
       <GuideCardContainer>
         <CardInfo
+          img={returnData.pictureUrl}
           onMouseEnter={ReturnHandleMouseEnter}
           onMouseLeave={ReturnHandleMouseLeave}
           style={{
