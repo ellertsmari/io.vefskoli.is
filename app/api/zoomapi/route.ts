@@ -1,7 +1,20 @@
 let token = ""
 
 const getVideos= async(token:string)=>{
-  const url = "https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=2021-10-11"
+  let data:{}[] = []
+  const months:number[] = [7,8,9,10,11,0,1,2,3,4];
+  for (let i = 0; i < months.length; i++) {
+    const fromDate = new Date();
+    fromDate.setFullYear(fromDate.getMonth() > 4? fromDate.getFullYear():fromDate.getFullYear()-1);  //if month is larger than may it gets the previous year
+    fromDate.setMonth(months[i]);
+    fromDate.setDate(1); // set to the first day of the month
+    fromDate.setHours(0, 0, 0, 0); // set to the start of the day
+
+    const toDate = new Date(fromDate);
+    toDate.setMonth(months[i] + 1);
+    console.log({from: fromDate, to: toDate})
+    
+const url = `https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=${fromDate.toISOString().split('T')[0]}&to=${toDate.toISOString().split('T')[0]}`
 
   try {     
         const response = await fetch (url,{
@@ -12,15 +25,17 @@ const getVideos= async(token:string)=>{
 
       if (response == null) throw new Error("Response is null.");
       if (response.status == 404) throw new Error("Page not found.")
-      return response.json()
+      const json = await response.json()
+      data = [...data, ...json.meetings]
+      
     } catch (error) {
+      console.log("error")   //
         return error;
       }
+  };
+return data
 };
 
-type data = {
-  code: number;
-}
 
 export const GET= async ()=> {
 
@@ -29,14 +44,15 @@ export const GET= async ()=> {
     if (data.code===124){
       const tokenResponse = await fetch ("https://zoom.us/oauth/token?grant_type=account_credentials&account_id=xTmwVbNdQRGv5XBIuyvI2A",{
           method: "POST",
+          cache:"no-cache",
           headers:{
             authorization: process.env.BASIC_AUTH 
-            
           }
       })  
 
       const tokenData = await tokenResponse.json() 
       token = tokenData.access_token
+      console.log(token);
       data = await getVideos(token)
       console.log (data)
 
@@ -56,7 +72,7 @@ export const GET= async ()=> {
   };
 
 
-
+//curl -H "Authorization: Bearer eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6ImJmNTM4NGMxLTMyODAtNDAwOC05YmQyLTZjZWUwZDU4ZTA5MiJ9.eyJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiI5T3VlNWJJSFNNQ3lUUlB5M3AxSGtBIiwidmVyIjo5LCJhdWlkIjoiYTdjNzdlY2EyNGM1NTEyNDVhOTA3ZDc2NjI4ZTMyOTAiLCJuYmYiOjE3MDY1MjQyMzQsImNvZGUiOiJySVdIQ0xjVVFIV0d2ckQwRVJhc3JRWE9RTUhxaWtkalkiLCJpc3MiOiJ6bTpjaWQ6eUZEUU9KaXdTNjZtaklfaWY1SUltdyIsImdubyI6MCwiZXhwIjoxNzA2NTI3ODM0LCJ0eXBlIjozLCJpYXQiOjE3MDY1MjQyMzQsImFpZCI6InhUbXdWYk5kUVJHdjVYQkl1eXZJMkEifQ.zuVLg3qOzkxfVNcpDdxJVFB-FvNOVclf-mFXAqRmNiHR19xB0iGJnTYGkII-_ToiRnh6itdDcDBCB9yE4pNe0w" https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=2021-10-11&to=2024-01-22
 
 
 
