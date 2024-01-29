@@ -18,26 +18,33 @@ export const GuideCardContainer = styled.div`
   margin-right: auto;
 `;
 
-export const CardInfo = styled.div<CardInfoProps>`
+export const CardInfo = styled.div`
   box-shadow: 2px 3px 3px 2px rgba(196, 186, 186, 0.25);
   width: 24rem;
   height: 20rem;
   border-radius: 2rem;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  background-position: center;
-  background-image: ${({img}) => (img ? `url(${img})` : `url('star.svg')`)}
-  background-color: #a5a6f6;
-  background-repeat: no-repeat;
 `;
 
-//background-image: url("star.svg");
+export const ImgStyle = styled.div<CardInfoProps>`
+height: 20rem;
+width: 24rem;
+background-position: center;
+background-image: ${({img}) => (img ? `url('${img}')` : `url('star.svg')`)};
+background-size: cover;
+background-repeat: no-repeat;
+border-radius: 0 0 2rem 2rem;
+transition: 2s;
+&:hover {
+  background: #ffffff;
+}
+`;
 
 export const Title = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-family: "Poppins";
   font-weight: 500;
 `;
@@ -53,7 +60,6 @@ export const DescriptionWrapper = styled.div`
 export const TitleWrapper = styled.div`
   position: relative;
   text-align: center;
-  padding: 2rem;
 `;
 
 export const PencilEdit = styled.div`

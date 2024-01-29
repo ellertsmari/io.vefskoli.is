@@ -53,22 +53,7 @@ export const GET = async (req: NextRequest,
     return NextResponse.json({ message: "Review not found" }, {status: 404});
   }
   return NextResponse.json(reviews, {status: 200});
-  
 }
-
-/*
-export const GET_ID = async (req: NextRequest,
-) => {
-  const id = await req.json();
-  const review = await Review.findById(id);
-  if (review === null) {
-    NextResponse.json({ message: "Review not found" }, {status: 404});
-    return;
-  }
-  NextResponse.json(review, {status: 200});
-  return;
-}
-*/
 
 //HALL OF FAME STUFF
 //PUT function finding the object with return id and vote as hall of fame to change the vote (called in removeCard)

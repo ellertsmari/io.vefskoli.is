@@ -15,6 +15,7 @@ import {
   DefaultDescription,
   HoveredDescription,
   PencilEdit,
+  ImgStyle,
 } from "./styles";
 import Edit from "./editCard";
 type Props = {
@@ -53,18 +54,15 @@ const FameCard = ({ guide, returnData }: Props) => {
     <>
       <GuideCardContainer>
         <CardInfo
-          img={returnData.pictureUrl}
           onMouseEnter={ReturnHandleMouseEnter}
           onMouseLeave={ReturnHandleMouseLeave}
-          style={{
-            backgroundPosition: "center",
-            //backgroundImage:
-            // returnStatus.condition === !isUrl ? 'nota það' : returnStatus.backgroundImg
-          }}
         >
           <TitleWrapper>
             <Title>{returnData.projectName}</Title>
           </TitleWrapper>
+          <ImgStyle
+          img={returnData.pictureUrl}
+          >
           <DescriptionWrapper>
             <DefaultDescription
               isShown={!isReturnHovered && !isReviewHovered}
@@ -76,6 +74,7 @@ const FameCard = ({ guide, returnData }: Props) => {
             {isReturnHovered && (
             <PencilEdit onClick={handleOpenModal}>✏️</PencilEdit>
           )}
+          </ImgStyle>
         </CardInfo>
       </GuideCardContainer>
       {modalOpen && (
