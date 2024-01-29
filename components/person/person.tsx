@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
 import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
 import { ProfileModal } from '../sidebar/profile/profile.style';
+import UpdateUserProfile from './updateProfile/updateProfile';
 import Link from 'next/link';
 
 type Props = {
@@ -76,33 +77,12 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
               {isOpen && (
                 /* here is the window that opens if you click on 'Update Profile', need to fix style*/
                 /*maybe it would be better to have this as a component*/
-              <ProfileModal>
-                  <div className="user-pic/name">
-                  <Link className="logout" onClick={x.logout} href="/authpage">Logout</Link>
-                  <div>
-                    <img className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
-                  </div>
-                  <div className="user-name">
-                    <h3 style={{fontSize: "1.8rem", fontWeight: "400"}}>{student?.name}</h3>
-                    <p style={{fontSize: "1.6rem"}}>{student?.email}</p>
-                  </div>
-                  <div className='pictureurl'>
-                    <p className='pictureurltxt'>Picture URL</p>
-                    <input className="URLpicinput" type="text" name="image" onChange={handleUpload}></input>
-                  </div>
-                  </div>
-                  <form onSubmit= {updateProfile} className='form-container'>
-                    <label className="profiletxt">Background - What have you studied or worked with?</label>
-                    <textarea className="profileinput" name="background"  ></textarea>
-                    <label className="profiletxt" >Near future career goals?</label>
-                    <textarea className="profileinput" name="careerGoals" ></textarea>
-                    <label className="profiletxt">Main interests?</label>
-                    <textarea className="profileinput" name="interests"  ></textarea>
-                    <label className="profiletxt">Favourite band/s or artist/s</label>
-                    <textarea className="profileinput" name="favoriteArtist"></textarea>
-                    <button className='savebtn'>SAVE</button>
-                </form>
-              </ProfileModal>
+              <UpdateUserProfile
+                student={student}
+                updateProfile={updateProfile}
+                handleUpload={handleUpload}
+              />
+                  
               )}
             </div>
             )}
