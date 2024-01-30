@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
 import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
-import { ProfileModal } from '../sidebar/profile/profile.style';
 import UpdateUserProfile from './updateProfile/updateProfile';
-import Link from 'next/link';
+import { DropdownButton } from '../dropDown/styles';
+import { FilledButton } from '../buttons';
 
 type Props = {
     user: UserWithIdType;
@@ -13,7 +13,7 @@ type Props = {
 const PersonInfo = ({ user }: Props) => (
     <Container>
         <PrimaryContainer>
-            <ProfilePicture className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic" />
+            <ProfilePicture className='default-profile-picture' src={user.avatarUrl} alt="user-pic" />
             <NameFont>{user.name}</NameFont>
             <EmailFont>{user.email}</EmailFont>
         </PrimaryContainer>
@@ -39,17 +39,7 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
     }
 
     //Bjork figuring out how to update profile
-    const updateProfile = async (e:ChangeEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const data = new FormData(e.target);
-      const res = await fetch(
-        `/api/users/${student._id}`,
-        {
-          method: 'PATCH',
-          body: data,
-        }
-      );
-    }
+    
 
     //this is to upload a profile picture
     const handleUpload = async (e:ChangeEvent<HTMLInputElement>) => {
@@ -72,17 +62,15 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
             <div>
               <PersonInfo user={user} isCurrentUser={isCurrentUser} />
               {isCurrentUser && ( //if a user's dropdown is the same as the logged in user, a button shows to 'update profile'
-                <Button onClick={openUpdateProfile}>Update Profile</Button>
+                <FilledButton onClick={openUpdateProfile}>Update Profile</FilledButton>
               )}
               {isOpen && (
                 /* here is the window that opens if you click on 'Update Profile', need to fix style*/
-                /*maybe it would be better to have this as a component*/
               <UpdateUserProfile
                 student={student}
-                updateProfile={updateProfile}
                 handleUpload={handleUpload}
+                userData={user}
               />
-                  
               )}
             </div>
             )}

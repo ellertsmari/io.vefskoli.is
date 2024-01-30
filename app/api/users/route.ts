@@ -1,7 +1,9 @@
-import { NextResponse as res } from "next/server";
+import { NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User, UserType } from "@/models/user";
 import bcrypt from "bcrypt";
+import { NextApiRequest, NextApiResponse } from "next";
+import { RESPONSE_LIMIT_DEFAULT } from "next/dist/server/api-utils";
 
 interface Success {
   message: string;
@@ -30,7 +32,6 @@ type RequestWithBody = Request & {
  *         description: No users found
  */
 
-
 export const POST = async (req:Request) => {
   await connectToDatabase();
   const body = await req.json()
@@ -56,3 +57,21 @@ export const GET = async () => {
   }
   return res.json(users, { status: 200 });
 }
+
+//Bjork adding a function to PATCH - be able to update profile data
+/*export const PATCH = async (req: NextRequest) => {
+  await connectToDatabase();
+  const { id } = req.query; // Assuming the user ID is passed as a query parameter
+  const body = await req.json();
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, body, { new: true });
+    if (!updatedUser) {
+      return res.json({ message: "User not found" }, { status: 404});
+    }
+    return res.json(updatedUser);
+  } catch (error) {
+    console.error("Error in PATCH:", error);
+    return res.json({ message: "Internal Server Error" }, {status: 500});
+  }
+};*/

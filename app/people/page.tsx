@@ -21,6 +21,7 @@ const PeoplePage = () => {
     const fetchUsers = async () => {
       const response = await fetch(`/api/users`);
       const data = await response.json();
+      
       setUsers(data);
     };
     fetchUsers();

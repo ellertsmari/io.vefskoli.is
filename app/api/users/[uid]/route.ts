@@ -4,6 +4,7 @@ import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User, UserType } from "@/models/user";
 import { cookies } from "next/headers";
 import { unsealData, sealData} from "iron-session/edge";
+import { NextApiRequest, NextApiResponse } from "next";
 interface Success {
   message: string;
 }
@@ -110,4 +111,29 @@ export const POST = async ( req: NextRequest, { params }: { params: { uid: strin
   }
   console.log("the session role is: ",session.role)
   return res.json({ message: "User updated successfully" }, { status: 200});
+}
+
+// bjork trying to add PUT method
+export const PUT = async (req: NextApiRequest, res: NextApiResponse) => {
+  await connectToDatabase();
+
+  if (req.method === 'PUT') {
+    const { uid } = req.query; // 'uid' is extracted from the URL path
+    console.log("UID", uid);
+    try {
+      const body = req.body;
+      console.log("Body", body)
+      const updatedUser = await User.findByIdAndUpdate(uid, body, { new: true });
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.status(200).json(updatedUser);
+    } catch (error) {
+      console.error("Error in PUT /api/users/[uid]:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  } else {
+    res.setHeader('Allow', ['PUT']);
+    return res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
 }
