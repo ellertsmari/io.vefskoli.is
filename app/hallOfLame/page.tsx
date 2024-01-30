@@ -1,4 +1,4 @@
-//HALL OF LAME STUFF
+// HALL OF LAME STUFF
 
 'use client'
 

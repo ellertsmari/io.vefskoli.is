@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF
+// HALL OF FAME STUFF
 
 "use client";
 
@@ -49,7 +49,7 @@ const guides = () => {
             return (
               <FameCard
                 // Use the guide's title as the key
-                key={review.guide.title.toString()}
+                key={review.return.createdAt.toString()}
                 // Pass the guide as a prop to the 'FameCard' component
                 returnData={review.return}
                 guide={review.guide}

@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF
+// HALL OF FAME STUFF
 
 "use client";
 
@@ -26,7 +26,6 @@ type Props = {
 };
 
 const FameCard = ({ guide, returnData }: Props) => {
-  const [isReviewHovered, setIsReviewHovered] = useState(false);
   const [isReturnHovered, setIsReturnHovered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpenModal = () => {
@@ -38,19 +37,6 @@ const FameCard = ({ guide, returnData }: Props) => {
   const ReturnHandleMouseLeave = () => {
     setIsReturnHovered(false);
   };
-  const returnModifiedColor = isReturnHovered
-    ? "brightness(80%)"
-    : "brightness(100%)";
-  //Review hover state
-  const ReviewHandleMouseEnter = () => {
-    setIsReviewHovered(true);
-  };
-  const ReviewHandleMouseLeave = () => {
-    setIsReviewHovered(false);
-  };
-  const reviewModifiedColor = isReviewHovered
-    ? "brightness(80%)"
-    : "brightness(100%)";
 
   return (
     <>
@@ -64,10 +50,7 @@ const FameCard = ({ guide, returnData }: Props) => {
           </TitleWrapper>
           <ImgStyle img={returnData.pictureUrl}>
             <DescriptionWrapper>
-              <DefaultDescription
-                isShown={!isReturnHovered && !isReviewHovered}
-              ></DefaultDescription>
-              <HoveredDescription isShown={isReturnHovered || isReviewHovered}>
+              <HoveredDescription isShown={isReturnHovered}>
                 Click to view
               </HoveredDescription>
             </DescriptionWrapper>
