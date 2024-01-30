@@ -18,6 +18,7 @@ import {
   CloseX,
   Overlay,
   ImgStyle,
+  OpenModal,
 } from "./styles";
 import Edit from "./editCard";
 type Props = {
@@ -26,8 +27,7 @@ type Props = {
 };
 
 const FameCard = ({ guide, returnData }: Props) => {
-
-  //State variables used for hover states over the Fame cards. 
+  //State variables used for hover states over the Fame cards.
   //When you hover over the Fame card, 'click to view' appears as well as a pencil icon
   //When the pencil icon is clicked, the modal opens which allows you to 1.change the title of the guide 2. change the picture 3. remove guide from hall of fame
   const [isReturnHovered, setIsReturnHovered] = useState(false);
@@ -41,7 +41,7 @@ const FameCard = ({ guide, returnData }: Props) => {
   const ReturnHandleMouseLeave = () => {
     setIsReturnHovered(false);
   };
-    
+
   return (
     <>
       <GuideCardContainer>
@@ -67,19 +67,7 @@ const FameCard = ({ guide, returnData }: Props) => {
       {modalOpen && (
         <>
           <Overlay onClick={handleOpenModal}></Overlay>
-          <div
-            style={{
-              marginRight: "16rem",
-              display: "flex",
-              flexDirection: "column",
-              justifySelf: "center",
-              alignSelf: "center",
-              position: "fixed",
-              backgroundColor: "#ad90f6",
-              borderRadius: " 1.5rem ",
-              zIndex: "20",
-            }}
-          >
+          <OpenModal>
             <CloseX onClick={handleOpenModal}>X</CloseX>
             <Edit
               returns={{
@@ -89,7 +77,7 @@ const FameCard = ({ guide, returnData }: Props) => {
                 vote: "",
               }}
             ></Edit>
-          </div>
+          </OpenModal>
         </>
       )}
     </>

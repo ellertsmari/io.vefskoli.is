@@ -86,6 +86,18 @@ export const Modal = styled.div`
   align-items: center;
 `;
 
+export const OpenModal = styled.div`
+  margin-right: 16rem;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-self: center;
+  position: fixed;
+  background-color: #ad90f6;
+  border-radius: 1.5rem;
+  z-index: 20;
+`;
+
 export const Overlay = styled.div`
   position: fixed;
   left: 0;
