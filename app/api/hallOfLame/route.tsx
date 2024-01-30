@@ -1,4 +1,4 @@
-//HALL OF LAME STUFF
+// HALL OF LAME STUFF
 
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { NextRequest, NextResponse } from "next/server";
