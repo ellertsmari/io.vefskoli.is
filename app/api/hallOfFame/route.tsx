@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF
+// HALL OF FAME STUFF
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
@@ -7,14 +7,11 @@ import { Guide } from "@/models/guide";
 import "@/models/return";
 import "@/models/guide";
 
-// This is an asynchronous function named 'GET' that takes a request object 'req' of type 'NextRequest'
+// this is an asynchronous function named 'GET' that takes a request object 'req' of type 'NextRequest'
 export const GET = async (req: NextRequest) => {
-  // Connect to the database
+  // connect to the database
   await connectToDatabase();
 
-  // Find all reviews in the 'Review' collection where the 'vote' field is "recommend to Hall of fame"
-  // The 'populate("guide")' function is used to replace the 'guide' field in the 'Review' documents
-  // with the actual 'guide' document from the 'Guide' collection
   const reviews = await Review.aggregate([
     {
       $match: {
@@ -31,13 +28,16 @@ export const GET = async (req: NextRequest) => {
     {
       $replaceRoot: {newRoot: '$review'},
     },
+    {
+      $sort: {
+        createdAt: 1   // ascending order by createdAt
+      }
+    },
   ]).exec()
   const populatedReviews = await Review.populate(reviews, [
     {path: 'guide'},
     {path: 'return'}
   ])
-
-  //const guides = await Guide.populate(reviews, {path: 'guide'})
 
   // If no reviews are found (i.e., 'reviews' is null), return a JSON response with a message and a 404 status
   if (reviews === null) {

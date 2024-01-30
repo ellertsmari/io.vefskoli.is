@@ -1,5 +1,6 @@
-//HALL OF FAME STUFF
 
+// HALL OF FAME STUFF
+// function to remove cards from hall of fame by hardcoding the vote, changing it from recommend to hall of fame to pass
 'use client'
 
 type Props = {
@@ -8,12 +9,10 @@ type Props = {
     }
 }
 
-// function to remove cards from hall of fame by hardcoding the vote, changing it from recommend to Hall of fame to pass, using a PUT function
-// throws error if the project removal fails
+// the Remove component definition with one prop: 'returns'
 const Remove = ({returns}:Props) => {
 
-    // async function to remove the card from Hall of fame
-    // throws error if the removal fails
+    // function to remove the card making a PUT request to api/reviews
     const removeCard = async () => {
         try {
             const response = await fetch ('/api/reviews', {
@@ -30,7 +29,7 @@ const Remove = ({returns}:Props) => {
         }
     }
 
-    // button with onClick to call the function
+    // the component returns a button that, when clicked, calls the removeCard function
     return (
         <>
             <button onClick={removeCard}>Remove from Hall of fame</button>

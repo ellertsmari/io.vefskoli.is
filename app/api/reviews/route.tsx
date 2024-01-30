@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF IN THIS DOCUMENT
+// HALL OF FAME STUFF IN THIS DOCUMENT
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
@@ -55,8 +55,8 @@ export const GET = async (req: NextRequest,
   return NextResponse.json(reviews, {status: 200});
 }
 
-//HALL OF FAME STUFF
-//PUT function finding the object with return id and vote as hall of fame to change the vote (called in removeCard)
+// HALL OF FAME STUFF
+// PUT function finding the object with return id and vote as hall of fame to change the vote (called in removeCard)
 export async function PUT(request: Request) {
   await connectToDatabase()
   const body = await request.json()

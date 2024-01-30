@@ -1,64 +1,88 @@
-//HALL OF FAME STUFF
+// HALL OF FAME STUFF
 
-'use client'
+"use client";
 
 import { useState } from "react";
-import { Modal, Label, GuideCardContainer } from "../../components/fameCard/styles";
+import {
+    Modal,
+    Label,
+    GuideCardContainer,
+} from "../../components/fameCard/styles";
 import Remove from "./removeCard";
 
-// props with the property "returns"
-// the returns is an object with three string properties
+
+
+// defining the type of the props that the edit component will receive
 type Props = {
     returns: {
         _id: string;
         projectName: string;
         pictureUrl: string;
         vote: string;
-    }
-}
+    };
+};
 
-// a component for editing projects
-// fetching the data with the PUT method and a useState hook to manage the change
-// error handling incase anything fails
-const Edit = ({returns}:Props) => {
+
+// the Edit component definition which receives one prop: 'returns'
+const Edit = ({ returns }: Props) => {
+
+    // using the useState hook to manage state for projectName, pictureUrl, and the modal
     const [projectName, setProjectName] = useState(returns.projectName);
     const [pictureUrl, setPictureUrl] = useState(returns.pictureUrl);
+    const [closeModal, setCloseModal] = useState(false);
+    
+    // function to toggle the modal open/closed
+    const handleCloseModal = () => {
+        setCloseModal(!closeModal);
+    };
 
-    // async function to edit project details
-    // throws an error if the update fails
-    const editCard = async ()=> {
+    // function to edit the card, making a PUT request to api/returns
+    const editCard = async () => {
         try {
-            const response = await fetch ('/api/returns', {
+            const response = await fetch("/api/returns", {
                 method: "PUT",
-                body: JSON.stringify({projectName, pictureUrl, id:returns._id}),
-            })
+                body: JSON.stringify({ projectName, pictureUrl, id: returns._id }),
+            });
             if (response.ok) {
-                setProjectName(projectName)
-                setPictureUrl(pictureUrl)
-                console.log('Project updated successfully')
+                setProjectName(projectName);
+                setPictureUrl(pictureUrl);
+                console.log("Project updated successfully");
             } else {
-                console.error('Failed to update project')
+                console.error("Failed to update project");
             }
+
+//error handling if the fetch isn't successful
         } catch (error) {
-            console.error('Error updating project:', error)
+            console.error("Error updating project:", error);
         }
-    }
+    };
 
-    // a modal that allows the user to change the name of the project as well as the picture representing the project
-    // onChange handlers update their values
-    // remove constant called here, from removeCard.tsx
-    return(
-    <Modal>
-        <GuideCardContainer>
-            <Label placeholder="Change title" value={projectName} onChange={(e) =>setProjectName(e.target.value)} type="text" />
-            <Label placeholder="Change picture" value={pictureUrl} onChange={(e)=>setPictureUrl(e.target.value)} type="text" />
-            <button onClick={editCard}>Save</button>
-            <Remove returns={{
-                _id:returns._id
-            }}></Remove>
-        </GuideCardContainer>
-    </Modal>
-    )
-}
 
-export default Edit
+    // the component returns a modal with a form to edit the card
+    return (
+        <Modal>
+            <GuideCardContainer>
+                <Label
+                    placeholder="Change title"
+                    value={projectName}
+                    onChange={(e) => setProjectName(e.target.value)}
+                    type="text"
+                />
+                <Label
+                    placeholder="Change picture"
+                    value={pictureUrl}
+                    onChange={(e) => setPictureUrl(e.target.value)}
+                    type="text"
+                />
+                <button onClick={editCard}>Save</button>
+                <Remove
+                    returns={{
+                        _id: returns._id,
+                    }}
+                ></Remove>
+            </GuideCardContainer>
+        </Modal>
+    );
+};
+
+export default Edit;

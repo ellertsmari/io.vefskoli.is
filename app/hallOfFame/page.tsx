@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF
+// HALL OF FAME STUFF
 
 "use client";
 
@@ -27,11 +27,11 @@ const guides = () => {
     async function logFameGuides() {
       // Fetch data from the API
       const response = await fetch("http://localhost:3000/api/hallOfFame");
-      // Parse the response as JSON
+      // Converting the response to JSON files
       const fameReview = await response.json();
       // Update the 'data' state variable with the parsed response
       setData(fameReview);
-      // Log the parsed response to the console
+      // Logging the response into the console
       console.log(fameReview);
       // review ID þarf að vera til í returns ID
     }
@@ -49,7 +49,7 @@ const guides = () => {
             return (
               <FameCard
                 // Use the guide's title as the key
-                key={review.guide.title.toString()}
+                key={review.return.createdAt.toString()}
                 // Pass the guide as a prop to the 'FameCard' component
                 returnData={review.return}
                 guide={review.guide}
