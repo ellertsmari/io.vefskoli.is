@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF IN THIS DOCUMENT
+// HALL OF FAME STUFF IN THIS DOCUMENT
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";

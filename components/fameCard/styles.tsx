@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF
+// HALL OF FAME STUFF
 
 import styled from "styled-components";
 
@@ -96,7 +96,7 @@ export const Overlay = styled.div`
   filter: opacity(0.7);
   z-index: 19;
 `;
-//Hello
+
 export const CloseX = styled.span`
   color: white;
   padding: 1rem 1.5rem 0 0;

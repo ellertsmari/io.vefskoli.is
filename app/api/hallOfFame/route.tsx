@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF
+// HALL OF FAME STUFF
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
@@ -7,9 +7,9 @@ import { Guide } from "@/models/guide";
 import "@/models/return";
 import "@/models/guide";
 
-// This is an asynchronous function named 'GET' that takes a request object 'req' of type 'NextRequest'
+// this is an asynchronous function named 'GET' that takes a request object 'req' of type 'NextRequest'
 export const GET = async (req: NextRequest) => {
-  // Connect to the database
+  // connect to the database
   await connectToDatabase();
 
   // Find all reviews in the 'Review' collection where the 'vote' field is "recommend to Hall of fame"
