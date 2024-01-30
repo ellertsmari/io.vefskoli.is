@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+//import dropdownArrow from '@/public/dropdownArrow'
 
 export const Container = styled.div`
     margin-top: 10px;
@@ -30,14 +31,26 @@ export const ProfilePicture = styled.img`
     margin-right: 10px;
 `;
 
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+`;
+
 export const Button = styled.button`
+    width: 100vh;
     background-color: #f9f9f9;
     color: #666666;
     font-style: Poppins;
     padding: 16px;
     cursor: pointer;
     border-radius: 30px;
-
+    display: inline-block;
+    position: relative;
+    margin-bottom: 10px;
 `;
 
 export const NameFont = styled.h2`
