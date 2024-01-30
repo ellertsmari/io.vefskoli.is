@@ -26,6 +26,10 @@ type Props = {
 };
 
 const FameCard = ({ guide, returnData }: Props) => {
+
+  //State variables used for hover states over the Fame cards. 
+  //When you hover over the Fame card, 'click to view' appears as well as a pencil icon
+  //When the pencil icon is clicked, the modal opens which allows you to 1.change the title of the guide 2. change the picture 3. remove guide from hall of fame
   const [isReturnHovered, setIsReturnHovered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const handleOpenModal = () => {
@@ -37,7 +41,7 @@ const FameCard = ({ guide, returnData }: Props) => {
   const ReturnHandleMouseLeave = () => {
     setIsReturnHovered(false);
   };
-
+    
   return (
     <>
       <GuideCardContainer>
