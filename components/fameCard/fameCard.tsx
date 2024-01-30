@@ -19,6 +19,7 @@ import {
   CloseX,
   Overlay,
   ImgStyle,
+  OpenModal,
 } from "./styles";
 
 // defining the type of the props that the FameCard component will receive
@@ -79,20 +80,8 @@ const FameCard = ({ guide, returnData }: Props) => {
       {modalOpen && (
         <>
           <Overlay onClick={handleOpenModal}></Overlay>
-          <div
-            style={{
-              marginRight: "16rem",
-              display: "flex",
-              flexDirection: "column",
-              justifySelf: "center",
-              alignSelf: "center",
-              position: "fixed",
-              backgroundColor: "#ad90f6",
-              borderRadius: " 1.5rem ",
-              zIndex: "20",
-            }}
-          >
-            {/* onClick of the x, the modal closes */}
+
+          <OpenModal>
             <CloseX onClick={handleOpenModal}>X</CloseX>
             <Edit
               // options for editing, the id is the return id, projectName and pictureUrl are initially empty
@@ -104,7 +93,7 @@ const FameCard = ({ guide, returnData }: Props) => {
                 vote: "",
               }}
             ></Edit>
-          </div>
+          </OpenModal>
         </>
       )}
     </>
