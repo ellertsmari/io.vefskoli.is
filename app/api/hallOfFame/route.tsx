@@ -3,7 +3,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Review } from "@/models/review";
-import { Guide } from "@/models/guide";
 import "@/models/return";
 import "@/models/guide";
 
@@ -35,6 +34,11 @@ export const GET = async (req: NextRequest) => {
       // The $replaceRoot stage replaces the input document with the specified document.
       $replaceRoot: { newRoot: "$review" }, // Replace each input document with the document specified by the 'review' field
     },
+    {
+      $sort: {
+        createdAt: 1   // ascending order by createdAt
+      }
+    }
   ]).exec(); // Execute the aggregation pipeline
 
   // Populate the 'reviews' documents with documents from other collections which are referenced in the 'reviews' documents

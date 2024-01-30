@@ -44,37 +44,40 @@ const Edit = ({ returns }: Props) => {
                 body: JSON.stringify({ projectName, pictureUrl, id: returns._id }),
             });
             if (response.ok) {
+                // if everything is ok, update the project name and picture url
                 setProjectName(projectName);
                 setPictureUrl(pictureUrl);
                 console.log("Project updated successfully");
             } else {
                 console.error("Failed to update project");
             }
-
-//error handling if the fetch isn't successful
+        //error handling if the fetch isn't successful
         } catch (error) {
             console.error("Error updating project:", error);
         }
     };
 
-
-    // the component returns a modal with a form to edit the card
+    // the component returns a modal with a form to edit the card with onChange
     return (
         <Modal>
             <GuideCardContainer>
+                {/* change the name of the project */}
                 <Label
                     placeholder="Change title"
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                     type="text"
                 />
+                {/* change the picture of the project */}
                 <Label
                     placeholder="Change picture"
                     value={pictureUrl}
                     onChange={(e) => setPictureUrl(e.target.value)}
                     type="text"
                 />
+                {/* save changes, call the editCard function */}
                 <button onClick={editCard}>Save</button>
+                {/* remove the card from Hall of fame by calling the removeCard function */}
                 <Remove
                     returns={{
                         _id: returns._id,
