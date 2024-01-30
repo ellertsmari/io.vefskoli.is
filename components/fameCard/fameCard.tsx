@@ -7,6 +7,7 @@ import { useState } from "react";
 import { GuideType } from "@/models/guide";
 import { ReturnType } from "@/models/return";
 import React from "react";
+import Edit from "./editCard";
 import {
   GuideCardContainer,
   CardInfo,
@@ -19,7 +20,6 @@ import {
   Overlay,
   ImgStyle,
 } from "./styles";
-import Edit from "./editCard";
 
 // defining the type of the props that the FameCard component will receive
 type Props = {
