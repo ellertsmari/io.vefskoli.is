@@ -10,6 +10,8 @@ import {
 } from "../../components/fameCard/styles";
 import Remove from "./removeCard";
 
+
+
 // defining the type of the props that the edit component will receive
 type Props = {
     returns: {
@@ -19,6 +21,7 @@ type Props = {
         vote: string;
     };
 };
+
 
 // the Edit component definition which receives one prop: 'returns'
 const Edit = ({ returns }: Props) => {
@@ -53,6 +56,7 @@ const Edit = ({ returns }: Props) => {
             console.error("Error updating project:", error);
         }
     };
+
 
     // the component returns a modal with a form to edit the card
     return (
