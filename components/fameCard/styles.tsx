@@ -65,8 +65,8 @@ export const TitleWrapper = styled.div`
 
 export const PencilEdit = styled.div`
   position: relative;
-  bottom: 2.2rem;
-  left: 8.5rem;
+  bottom: 4rem;
+  left: 19rem;
   font-size: 2rem;
 `;
 
