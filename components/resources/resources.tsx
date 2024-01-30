@@ -1,4 +1,5 @@
 'use client'
+
 import {useState, useEffect } from 'react'
 import { MainContent } from "../mainLayout"
 import { FilledButton } from "../buttons"
@@ -74,11 +75,17 @@ const Recordings =  ({ data}: Props) => {
             <TopContainer>
             <DropdownContainer>
                 <DropdownResources options={options} onChange={setSelectedOption} /> 
-                <ModuleTitle>Resources</ModuleTitle>  
+                <ModuleTitle>Fountain of Knowledge</ModuleTitle> 
             </DropdownContainer>
             </TopContainer>
-            <Title style={{fontSize: '30px'}}>Recordings</Title>
-            <a href="https://drive.google.com/drive/folders/1EZreV5U-Xubx2bVdZ6ULDQaazAgeGvKW?usp=sharing" target="_blank" rel="noopener"><FilledButton>Drive</FilledButton></a>  
+            <div>
+                <Title style={{fontSize: '30px', paddingBottom:'15px'}}>Zoom Recordings</Title>
+                <p style={{fontSize:"20px"}}>Here you will find recordings of all Zoom Meetings, 
+                    as well as a link to other resources on our Google Drive</p> 
+            </div>
+            <FilledButton onClick={() => window.open('https://drive.google.com/drive/folders/1EZreV5U-Xubx2bVdZ6ULDQaazAgeGvKW?usp=sharing', '_blank', 'noopener')}>
+                DRIVE
+            </FilledButton> 
             <GuidesContainer> {data.meetings.filter((meeting) => selectedOption ==='ALL VIDEOS' || nameDrop[meeting.topic.substring(0,8)] == selectedOption).map((meeting) => {
                 return (
                     <Modal ZoomVideo= {meeting}/> 

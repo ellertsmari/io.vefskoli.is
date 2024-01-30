@@ -1,7 +1,7 @@
 "use client"
-import { BulletList } from "@/styles/pageStyles/review.styles";
 import { useState, useEffect } from "react";
 import styled from "styled-components"
+
 
 type Props = {
     ZoomVideo:{
@@ -20,23 +20,29 @@ const Modal =({ZoomVideo}:Props) => {
   const ClickArea = styled.div `
     width:250px;
     height:250px;
-    background-color: #D1D1D1;
+    background-color: #a2a1f3c2;
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     font-size: 20px;
-    
+    font-weight: 600;
+    padding: 20px;
+    overflow-wrap: break-word; //For the text to break  if it's too long
+    word-wrap: break-word;
   `
+
   const OverLay = styled.div`
     width: 94%;
     height: 100%;  //changed this to 100% so it would fit the window it is in
     position: absolute;
-    background-color: #ececec;
+    background-color: #e8e7f8;
     border-radius: 30px;
     top:3%;
     right: 3%;
   `
+
   const CloseButton = styled.button`
     background-color:#6563EB;
     border: none;
@@ -72,8 +78,7 @@ const Modal =({ZoomVideo}:Props) => {
    const videoUrl= ZoomVideo.recording_files [0].file_type==="MP4"? ZoomVideo.recording_files[0].download_url:ZoomVideo.recording_files[1].download_url
   return (
     <div>
-    
-          <ClickArea onClick={showModal}>
+          <ClickArea onClick={showModal}>    
             {ZoomVideo.topic}
           </ClickArea>
           {isOpen && 
@@ -84,11 +89,14 @@ const Modal =({ZoomVideo}:Props) => {
               </Video>
             </OverLay>
           }
-       
-     
     </div>
   );
 }
 
 export default Modal
 
+/*
+It would be ideal to have the ClickArea show a thumbnail of each video,
+but the Zoom API doesn't provide them. We would need to generate them ourselves, 
+host them fex. in a cloud and then pass the url of each thumbnail to the ClickArea component. 
+*/
