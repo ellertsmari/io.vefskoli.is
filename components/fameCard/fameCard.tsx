@@ -47,8 +47,7 @@ const FameCard = ({ guide, returnData }: Props) => {
   const ReturnHandleMouseLeave = () => {
     setIsReturnHovered(false);
   };
-  
-  // rendering the component
+
   return (
     <>
       <GuideCardContainer>
