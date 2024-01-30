@@ -5,11 +5,21 @@
 import React, { useState } from "react";
 import Dropdown from "./dropDown";
 
-const DropdownResources = ({ options }) => {
-  const [selectedOption, setSelectedOption] = useState(options[0]); // initializes selected state to the first option
+type Props = {
+  options: string[];
+  onChange: (selected: string) => void; 
+};
 
+
+const DropdownResources = ({ options, onChange }:Props) => {
+  const [selectedOption, setSelectedOption] = useState('ALL VIDEOS'); // initializes selected state to the first option
+  const handleSelect = (option:string) => {
+    setSelectedOption(option);
+    onChange(option);
+  }
+  
   return (
-    <Dropdown options={options} selected={selectedOption} setSelected={setSelectedOption} />
+    <Dropdown options={options} selected={selectedOption} setSelected={handleSelect} />
   );
 };
 

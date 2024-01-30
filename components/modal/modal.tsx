@@ -28,9 +28,6 @@ const Modal =({ZoomVideo}:Props) => {
     font-size: 20px;
     
   `
-
-  
-  
   const OverLay = styled.div`
     width: 94%;
     height: 100%;  //changed this to 100% so it would fit the window it is in

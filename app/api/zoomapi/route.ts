@@ -1,11 +1,27 @@
-let token = ""
+import { NextResponse } from "next/server";
 
+let token = ""  //defining our token variable. Initalizing it first as an empty string. We'll get the auth token when we make our requests to the ZOOM API
+
+// creating a custom error object with a code property to handle specific error cases
+interface ErrorCode extends Error {
+  code?: number;
+}
+
+// getVideos fetches video data from the Zoom API and it takes token as a parameter for authentication. 
 const getVideos= async(token:string)=>{
-  let data:{}[] = []
-  const months:number[] = [7,8,9,10,11,0,1,2,3,4];
-  for (let i = 0; i < months.length; i++) {
-    const fromDate = new Date();
-    fromDate.setFullYear(fromDate.getMonth() > 4? fromDate.getFullYear():fromDate.getFullYear()-1);  //if month is larger than may it gets the previous year
+  let data:{}[] = []   // Initializing an empty array that will hold the fetched video data. 
+  const months:number[] = [7,8,9,10,11,0,1,2,3,4];  // This represents the months for which the function will fetch the data. School year months. 
+   
+    /*For Loop to iterate over each month in the array. It allows the code to be executed repeatedly.   
+    let is declaring variable. i<...etc is the condition. The loop will continue as long as this is true. 
+    it checks if i is less than the length of the months array. This ensures that the loop runs once for each element in the months array. i++ adds one month by each iteration*/
+  for (let i = 0; i < months.length; i++) {  
+    
+    const fromDate = new Date();   //our start date
+    const isSpring = fromDate.getMonth() < 7  //Defining what happens if user is fetching data in the fall term. 
+    const isFetchingFromSpring = months[i]< 7  //Defining what happens if user is fetching data in spring term. 
+   
+    fromDate.setFullYear(fromDate.getFullYear() - (Number(isSpring) - Number(isFetchingFromSpring)));  //This adjust our data according to when we are fetching it. 
     fromDate.setMonth(months[i]);
     fromDate.setDate(1); // set to the first day of the month
     fromDate.setHours(0, 0, 0, 0); // set to the start of the day
@@ -13,45 +29,52 @@ const getVideos= async(token:string)=>{
     const toDate = new Date(fromDate);
     toDate.setMonth(months[i] + 1);
     console.log({from: fromDate, to: toDate})
-    
-const url = `https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=${fromDate.toISOString().split('T')[0]}&to=${toDate.toISOString().split('T')[0]}`
+  
+      //The URL is constructed for the API request and the template literals add in the parameters from what is defined above. 
+    const url = `https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=${fromDate.toISOString().split('T')[0]}&to=${toDate.toISOString().split('T')[0]}`
 
-  try {     
+    try {     
         const response = await fetch (url,{
             headers: {
-                authorization: "Bearer "+ token 
+                authorization: "Bearer "+ token     //sending a request to the Zoom API with the constructed URL and the provided token.
             }
         });
 
       if (response == null) throw new Error("Response is null.");
       if (response.status == 404) throw new Error("Page not found.")
       if (response.status == 401) { 
-        const error=new Error("My invalid access token.")
+        const error: ErrorCode = new Error("My invalid access token.")
         error.code = 124;
         throw error 
       }
       
+        // This logs the status of the response and the JSON data.
       console.log (response.status)
       const json = await response.json()
       console.log (json) 
-      data = [...data, ...json.meetings]
+      data = [...data, ...json.meetings]   // This adds the fetched meetings to the data array.
       
-    } catch (error) {
+    } catch (error) {      //This block catches any errors that occur during the fetch operation, logs them, and returns an object containing the error and the fetched data.
       console.log("error",error) 
       const errorObject:{} = await error as object; 
-        return {...errorObject,meetings:data,}; 
+        return {...errorObject, meetings:data,}; 
       }
   };
-return {error:{},meetings:data, code:200}
+return {error:{},meetings:data, code:200}   //returning an object containing the fetched data and a status code of 200, indicating success.
 };
 
-
+// a GET function that is used to export from the module. 
+// This function calls the getVideos, handles the response, refreshes the tokens when and if necessary and then returns the final response
 export const GET= async ()=> {
 
   try { 
+    // This checks if the returned code is 124, indicating an invalid access token.
     let data = await getVideos(token)
     console.log ("This is data",data)
     if (data.code===124){
+      if (!process.env.BASIC_AUTH )  // This checks if the BASIC_AUTH environment variable is set.
+      return NextResponse.json({error:'You need the BASIC_AUTH in your .env.local file for this!'})   // If not, it returns an error.
+
       const tokenResponse = await fetch ("https://zoom.us/oauth/token?grant_type=account_credentials&account_id=xTmwVbNdQRGv5XBIuyvI2A",{
           method: "POST",
           cache:"no-cache",
@@ -60,22 +83,18 @@ export const GET= async ()=> {
           }
       })  
 
-      const tokenData = await tokenResponse.json() 
+      const tokenData = await tokenResponse.json()   // This fetches a new access token.
       token = tokenData.access_token
       console.log(token);
       data = await getVideos(token)
       console.log (data)
 
-      if (data.message){
-        throw new Error("This surely is an error")
-      }
-     
     }
     
     if (token == null) throw new Error("Missing tokendata.")
-    return Response.json(data);
+    return NextResponse.json(data);
     } catch (error) {
-      return Response.json(error);
+      return NextResponse.json(error);
 
     }
 
@@ -83,19 +102,6 @@ export const GET= async ()=> {
 
 
 //curl -H "Authorization: Bearer eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6ImJmNTM4NGMxLTMyODAtNDAwOC05YmQyLTZjZWUwZDU4ZTA5MiJ9.eyJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiI5T3VlNWJJSFNNQ3lUUlB5M3AxSGtBIiwidmVyIjo5LCJhdWlkIjoiYTdjNzdlY2EyNGM1NTEyNDVhOTA3ZDc2NjI4ZTMyOTAiLCJuYmYiOjE3MDY1MjQyMzQsImNvZGUiOiJySVdIQ0xjVVFIV0d2ckQwRVJhc3JRWE9RTUhxaWtkalkiLCJpc3MiOiJ6bTpjaWQ6eUZEUU9KaXdTNjZtaklfaWY1SUltdyIsImdubyI6MCwiZXhwIjoxNzA2NTI3ODM0LCJ0eXBlIjozLCJpYXQiOjE3MDY1MjQyMzQsImFpZCI6InhUbXdWYk5kUVJHdjVYQkl1eXZJMkEifQ.zuVLg3qOzkxfVNcpDdxJVFB-FvNOVclf-mFXAqRmNiHR19xB0iGJnTYGkII-_ToiRnh6itdDcDBCB9yE4pNe0w" https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=2021-10-11&to=2024-01-22
-
-
-
-
-
-
-
-
-  
-
-
-
-
 
   // curl --request GET {download_url} "authorization: Bearer {JWT}" --header "content-type: application/json".
   // curl -H "Authorization: Bearer eyJzdiI6IjAwMDAwMSIsImFsZyI6IkhTNTEyIiwidiI6IjIuMCIsImtpZCI6IjgwOWMxYTAxLWFjY2EtNDJkYS1iNzk4LTQ5YTJkNTg4MzkwZSJ9.eyJhdWQiOiJodHRwczovL29hdXRoLnpvb20udXMiLCJ1aWQiOiI5T3VlNWJJSFNNQ3lUUlB5M3AxSGtBIiwidmVyIjo5LCJhdWlkIjoiYTdjNzdlY2EyNGM1NTEyNDVhOTA3ZDc2NjI4ZTMyOTAiLCJuYmYiOjE3MDYxMDQ5MDYsImNvZGUiOiJkb2RmODRKSlJDaVdiVnduZU1YWnlBS09BYWQ0ZklDTWUiLCJpc3MiOiJ6bTpjaWQ6eUZEUU9KaXdTNjZtaklfaWY1SUltdyIsImdubyI6MCwiZXhwIjoxNzA2MTA4NTA2LCJ0eXBlIjozLCJpYXQiOjE3MDYxMDQ5MDYsImFpZCI6InhUbXdWYk5kUVJHdjVYQkl1eXZJMkEifQ.a9BQyqgR4xBDxJpnLqahBr08DwtltKjDZ7rGwtVkqZmyiwO5cqu8KKquCch4f0HjYRPTTRCqLlUvislwR5JMQw" https://api.zoom.us/v2/rec/archive/download/xyz
