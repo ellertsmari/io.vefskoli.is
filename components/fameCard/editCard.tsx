@@ -26,15 +26,9 @@ type Props = {
 // the Edit component definition which receives one prop: 'returns'
 const Edit = ({ returns }: Props) => {
 
-    // using the useState hook to manage state for projectName, pictureUrl, and the modal
+    // using the useState hook to manage state for projectName and pictureUrl
     const [projectName, setProjectName] = useState(returns.projectName);
     const [pictureUrl, setPictureUrl] = useState(returns.pictureUrl);
-    const [closeModal, setCloseModal] = useState(false);
-    
-    // function to toggle the modal open/closed
-    const handleCloseModal = () => {
-        setCloseModal(!closeModal);
-    };
 
     // function to edit the card, making a PUT request to api/returns
     const editCard = async () => {
