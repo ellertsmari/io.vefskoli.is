@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import styled from "styled-components";
 
 interface Joke {
     title: string;
