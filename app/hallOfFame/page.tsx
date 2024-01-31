@@ -1,4 +1,5 @@
 // HALL OF FAME STUFF
+// fetching the guides that are recommended to Hall of fame
 
 "use client";
 

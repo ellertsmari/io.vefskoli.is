@@ -40,7 +40,6 @@ const hallOfLame = () => {
   return (
     <>
       <MainContent>
-        <h1>hæ</h1>
         <GuidesContainer>
            {/* Mapping over the 'data' array and render a 'FameCard' component for each item */}
           {data.map((review: Review) => {
