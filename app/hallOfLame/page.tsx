@@ -44,7 +44,7 @@ const hallOfLame = () => {
           {data.map((review: Review) => {
             return (
               <FameCard
-              // Use the guide's title as the key
+              // key identifier
                 key={review.guide.title.toString()}
                // Pass the guide as a prop to the 'FameCard' component
                 returnData={review.return}

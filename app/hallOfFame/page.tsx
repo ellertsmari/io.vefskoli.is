@@ -46,7 +46,7 @@ const guides = () => {
           {data.map((review: Review) => {
             return (
               <FameCard
-                // Use the guide's title as the key
+                // Use the 'created at' as the key
                 key={review.return.createdAt.toString()}
                 // Pass the guide as a prop to the 'FameCard' component
                 returnData={review.return}
