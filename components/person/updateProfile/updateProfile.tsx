@@ -114,7 +114,7 @@ const UpdateUserProfile = ({ student, userData }: Props) => {
             <InputLabel>Favourite band/s or artist/s?</InputLabel>
             <ShortInput
                 type='text'
-                name='favouriteBands'
+                name='favoriteArtists'
                 defaultValue={userData.favoriteArtists || ''}
                 onChange={handleInputChange}
             ></ShortInput>
