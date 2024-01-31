@@ -60,11 +60,11 @@ export const GET = async (req: NextRequest) => {
 // HALL OF FAME STUFF
 // PUT function finding the object with return id and vote as hall of fame to change the vote (called in removeCard)
 // Define the PUT method for this endpoint
-export async function PUT(request: Request) {
+export async function PUT(req: NextRequest) {
   // Connect to the database
   await connectToDatabase();
   // Parse the JSON body of the request
-  const body = await request.json();
+  const body = await req.json();
   // Create a new ObjectId with the body id
   const object = new ObjectId(body.id);
   // Update many documents in the 'Review' collection where the 'return' field is the ObjectId and the 'vote' field is 'recommend to Hall of fame', setting the 'vote' field to the 'vote' field in the body

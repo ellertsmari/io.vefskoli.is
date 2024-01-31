@@ -1,5 +1,5 @@
 // HALL OF FAME STUFF
-// function to edit the name of the project and the picture url as well as making the modal to conduct the edit and remove cards
+// function to edit the name of the project and the picture url by using a fetch API to make a PUT request
 
 "use client";
 
@@ -31,23 +31,33 @@ const Edit = ({ returns }: Props) => {
     const [projectName, setProjectName] = useState(returns.projectName);
     const [pictureUrl, setPictureUrl] = useState(returns.pictureUrl);
 
-    // function to edit the card, making a PUT request to api/returns
+    // function to edit the card
     const editCard = async () => {
         try {
+            // sending a PUT request to api/returns with the updated data
             const response = await fetch("/api/returns", {
                 method: "PUT",
-                //
-                body: JSON.stringify({ projectName, pictureUrl, id: returns._id }),
+                // converting the JavaScript objects to a JSON string
+                body: JSON.stringify({
+                    projectName,
+                    pictureUrl,
+                    id: returns._id
+                }),
+                // telling the server I'm sending JSON data
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
             if (response.ok) {
                 // if everything is ok, update the project name and picture url
-                setProjectName(projectName);
-                setPictureUrl(pictureUrl);
+                const updatedReturn = await response.json()
+                setProjectName(updatedReturn.projectName);
+                setPictureUrl(updatedReturn.pictureUrl);
                 console.log("Project updated successfully");
             } else {
                 console.error("Failed to update project");
             }
-        //error handling if the fetch isn't successful
+        // error handling if the fetch isn't successful
         } catch (error) {
             console.error("Error updating project:", error);
         }
