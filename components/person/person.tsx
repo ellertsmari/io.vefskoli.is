@@ -36,7 +36,7 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
     //this is to logout
     const x = { logout: () => {} }
 
-    console.log(isCurrentUser);
+    console.log("user = current user?", {isCurrentUser});
     return (
         <div>
             <Button onClick={toggleDropdown}>{user.name}</Button>
