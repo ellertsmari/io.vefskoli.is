@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
-import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
+import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont, StyleDiv, QuestionFont} from './person-style';
 import UpdateUserProfile from './updateProfile/updateProfile';
 import { FilledButton } from '../buttons';
 import PersonInfo from './personInfo';

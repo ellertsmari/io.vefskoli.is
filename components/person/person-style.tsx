@@ -25,10 +25,11 @@ export const SecondaryContainer = styled.div`
 
 
 export const ProfilePicture = styled.img`
-    width: 64px;
-    height: 64px;
     border-radius: 50%;
     margin-right: 10px;
+    margin-left: 25px;
+    width: 104px;
+    height: 104px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -65,14 +66,32 @@ export const Button = styled.button`
     `;
 
 export const NameFont = styled.h2`
-    font-style: Poppins;
+    font-family: 'Poppins';
     font-size: 24px;
-`
+    align-items: center;
+    justify-content: center;
+    display: flex;
+`;
+
 export const EmailFont = styled.h3`
-    font-style: Poppins;
-    font-size: 20px;
-`
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+`; 
+
 export const InfoFont = styled.p`
-    font-style: Poppins;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+`; 
+
+export const StyleDiv = styled.div`
+  margin-bottom: 6px;
+  padding-top: 8px;
+`; 
+
+export const QuestionFont = styled.h3`
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
-`
+    font-weight: bold;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+`; 
