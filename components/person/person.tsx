@@ -3,26 +3,13 @@ import { UserWithIdType } from '@/models/user';
 import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
 import UpdateUserProfile from './updateProfile/updateProfile';
 import { FilledButton } from '../buttons';
+import PersonInfo from './personInfo';
 
 type Props = {
     user: UserWithIdType;
     isCurrentUser: boolean; // I'm adding this prop to be able to update profile for the user that is logged in
 };
 
-const PersonInfo = ({ user }: Props) => (
-    <Container>
-        <PrimaryContainer>
-            <ProfilePicture className='default-profile-picture' src={user.avatarUrl || '/default-profile-picture.svg'} alt="user-pic" />
-            <NameFont>{user.name}</NameFont>
-            <EmailFont>{user.email}</EmailFont>
-        </PrimaryContainer>
-        <SecondaryContainer>
-            <EmailFont>Background:</EmailFont> <InfoFont>{user.background}</InfoFont>
-            <EmailFont>Career Goals:</EmailFont> <InfoFont>{user.careerGoals}</InfoFont>
-            <EmailFont>Interest:</EmailFont> <InfoFont>{user.interests}</InfoFont>
-        </SecondaryContainer>
-    </Container>
-);
 
 const PersonDropDown = ({ user, isCurrentUser }: Props) => {
     const [isDropdownOpen, setDropdownOpen] = useState(false); // state for the dropdown
@@ -56,10 +43,7 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
             <Button onClick={toggleDropdown}>{user.name}</Button>
             {isDropdownOpen && (
             <div>
-              <PersonInfo user={user} isCurrentUser={isCurrentUser} />
-              {isCurrentUser && ( //if a user's dropdown is the same as the logged in user, a button shows to 'update profile'
-                <FilledButton onClick={openUpdateProfile}>Update Profile</FilledButton>
-              )}
+              <PersonInfo user={user} isCurrentUser={isCurrentUser} onOpenUpdateProfile={openUpdateProfile} />
               {isOpen && (
                 /* here is the window that opens if you click on 'Update Profile', need to fix style*/
               <UpdateUserProfile

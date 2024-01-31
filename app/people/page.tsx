@@ -49,6 +49,7 @@ const PeoplePage = () => {
       <ButtonContainer>
       {users.map(user =>(  // mapping users from the 'fetchUsers' function
         <PersonDropDown //component
+        //  key={user}
           user={user} 
           isCurrentUser={user._id.toString() === loggedInUser._id.toString()} //comparing the logged in user to the users in the list, if it's the same user then he get's an 'update profile' option (see in Person component)
         />
