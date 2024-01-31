@@ -1,4 +1,4 @@
-//HALL OF FAME STUFF
+// HALL OF FAME STUFF
 
 import styled from "styled-components";
 
@@ -7,8 +7,8 @@ type TitleProps = {
 };
 
 type CardInfoProps = {
-  img: string | undefined
-}
+  img: string | undefined;
+};
 
 export const GuideCardContainer = styled.div`
   display: flex;
@@ -18,23 +18,30 @@ export const GuideCardContainer = styled.div`
   margin-right: auto;
 `;
 
-export const CardInfo = styled.div<CardInfoProps>`
+export const CardInfo = styled.div`
   box-shadow: 2px 3px 3px 2px rgba(196, 186, 186, 0.25);
   width: 24rem;
   height: 20rem;
   border-radius: 2rem;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  background-position: center;
-  background-image: ${({img}) => (img ? `url(${img})` : `url('star.svg')`)}
-  background-color: #a5a6f6;
-  background-repeat: no-repeat;
 `;
 
-//background-image: url("star.svg");
+export const ImgStyle = styled.div<CardInfoProps>`
+  height: 20rem;
+  width: 24rem;
+  background-position: center;
+  background-image: ${({ img }) => (img ? `url('${img}')` : `url('star.svg')`)};
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 0 0 2rem 2rem;
+  transition: 2s;
+  &:hover {
+    background: #ffffff;
+  }
+`;
 
 export const Title = styled.h1`
   font-size: 2.5rem;
@@ -73,14 +80,30 @@ export const Description = styled.h2<TitleProps>`
 `;
 
 export const Modal = styled.div`
+  padding: 2rem 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Overlay = styled.div`
   position: fixed;
-  padding: 5rem;
-  background-color: #e0e0e0;
-  border-radius: 1.5rem;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #000000;
+  filter: opacity(0.7);
+  z-index: 19;
+`;
+
+export const CloseX = styled.span`
+  color: white;
+  padding: 1rem 1.5rem 0 0;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 2rem;
+  cursor: pointer;
 `;
 
 export const Label = styled.input`
