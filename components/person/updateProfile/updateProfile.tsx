@@ -12,11 +12,11 @@ import { FilledButton } from '@/components/buttons';
 
 type Props = {
   student: UserWithIdType;
-  handleUpload: (e: ChangeEvent<HTMLInputElement>) => void;
+  //handleUpload: (e: ChangeEvent<HTMLInputElement>) => void;
   userData: UserWithIdType;
 };
 
-const UpdateUserProfile = ({ student, handleUpload, userData }: Props) => {
+const UpdateUserProfile = ({ student, userData }: Props) => {
     const [formValues, setFormValues] = useState({
         email: userData.email,
         name: userData.name,
@@ -24,7 +24,6 @@ const UpdateUserProfile = ({ student, handleUpload, userData }: Props) => {
         careerGoals: userData.careerGoals,
         interests: userData.interests,
         favoriteArtists: userData.favoriteArtists,
-        // Include other fields as necessary
     });
     
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -74,7 +73,7 @@ const UpdateUserProfile = ({ student, handleUpload, userData }: Props) => {
         <div className="user-pic/name">
             <Link className="logout" onClick={logout} href="/authpage">Logout</Link>
             <div>
-                <img className='default-profile-picture' src={userData.avatarUrl} alt="user-pic"/>
+                <img className='default-profile-picture' src={userData.avatarUrl || '/default-profile-picture.svg'} alt="user-pic"/>
             </div>
             <div className="user-name">
                 <h3 style={{fontSize: "1.8rem", fontWeight: "400"}}>{student?.name}</h3>
@@ -86,8 +85,8 @@ const UpdateUserProfile = ({ student, handleUpload, userData }: Props) => {
             <ShortInput
                 type='text'
                 name='image'
-                defaultValue={userData.avatarUrl}
-                onChange={handleUpload}
+                defaultValue={userData.avatarUrl || ''}
+                //onChange={handleUpload}
             ></ShortInput>
         
         
@@ -95,28 +94,28 @@ const UpdateUserProfile = ({ student, handleUpload, userData }: Props) => {
             <ShortInput
                 type='text'
                 name='background'
-                defaultValue={userData.background}
+                defaultValue={userData.background || ''}
                 onChange={handleInputChange}
             ></ShortInput>
             <InputLabel>Near future career goals?</InputLabel>
             <ShortInput
                 type='text'
                 name='careerGoals'
-                defaultValue={userData.careerGoals}
+                defaultValue={userData.careerGoals || ''}
                 onChange={handleInputChange}
             ></ShortInput>
             <InputLabel>Main interests?</InputLabel>
             <ShortInput
                 type='text'
                 name='interests'
-                defaultValue={userData.interests}
+                defaultValue={userData.interests || ''}
                 onChange={handleInputChange}
             ></ShortInput>     
             <InputLabel>Favourite band/s or artist/s?</InputLabel>
             <ShortInput
                 type='text'
                 name='favouriteBands'
-                defaultValue={userData.favoriteArtists}
+                defaultValue={userData.favoriteArtists || ''}
                 onChange={handleInputChange}
             ></ShortInput>
             <ButtonWrapper>

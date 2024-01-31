@@ -2,7 +2,6 @@ import React, { ChangeEvent, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
 import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
 import UpdateUserProfile from './updateProfile/updateProfile';
-import { DropdownButton } from '../dropDown/styles';
 import { FilledButton } from '../buttons';
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
 const PersonInfo = ({ user }: Props) => (
     <Container>
         <PrimaryContainer>
-            <ProfilePicture className='default-profile-picture' src={user.avatarUrl} alt="user-pic" />
+            <ProfilePicture className='default-profile-picture' src={user.avatarUrl || '/default-profile-picture.svg'} alt="user-pic" />
             <NameFont>{user.name}</NameFont>
             <EmailFont>{user.email}</EmailFont>
         </PrimaryContainer>
@@ -36,20 +35,17 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
 
     const openUpdateProfile = () => {
       setIsOpen(!isOpen);
-    }
-
-    //Bjork figuring out how to update profile
-    
+    };
 
     //this is to upload a profile picture
-    const handleUpload = async (e:ChangeEvent<HTMLInputElement>) => {
+    /*const handleUpload = async (e:ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
       const data = new FormData();
       const files = e.target.files as FileList;
       data.append('file', files[0]);
       data.append('upload_preset', 'profile-pictures');
       //const res = await fetch(
-    }
+    }*/
 
     //this is to logout
     const x = { logout: () => {} }
@@ -68,7 +64,7 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
                 /* here is the window that opens if you click on 'Update Profile', need to fix style*/
               <UpdateUserProfile
                 student={student}
-                handleUpload={handleUpload}
+                //handleUpload={handleUpload}
                 userData={user}
               />
               )}

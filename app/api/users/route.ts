@@ -57,21 +57,3 @@ export const GET = async () => {
   }
   return res.json(users, { status: 200 });
 }
-
-//Bjork adding a function to PATCH - be able to update profile data
-/*export const PATCH = async (req: NextRequest) => {
-  await connectToDatabase();
-  const { id } = req.query; // Assuming the user ID is passed as a query parameter
-  const body = await req.json();
-
-  try {
-    const updatedUser = await User.findByIdAndUpdate(id, body, { new: true });
-    if (!updatedUser) {
-      return res.json({ message: "User not found" }, { status: 404});
-    }
-    return res.json(updatedUser);
-  } catch (error) {
-    console.error("Error in PATCH:", error);
-    return res.json({ message: "Internal Server Error" }, {status: 500});
-  }
-};*/

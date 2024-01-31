@@ -88,8 +88,6 @@ export default async function UserByIdHandler(
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
-
-  
 }*/
 
 export const POST = async ( req: NextRequest, { params }: { params: { uid: string } }) => { //changes the user if you are a teacher so you can view students profiles
@@ -115,19 +113,22 @@ export const POST = async ( req: NextRequest, { params }: { params: { uid: strin
 }
 
 // bjork trying to add PUT method
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== 'PUT') {
-        return res.status(405).end(`Method ${req.method} Not Allowed`);
-    }
+export const PUT = async (req: NextRequest, { params}: {params: {uid: string} }) => {
+   
 
-    await connectToDatabase();
-    const { uid } = req.query; // Assuming the user ID is passed as part of the URL
+    await connectToDatabase(); 
     let body;
-
+    const uid = params.uid;
+    
+    if (!req.body){
+        return res.json({ message: "Bad request - Invalid JSON" }, {status: 400});
+        
+    }
     try {
-        body = JSON.parse(req.body);
+        body = await req.json();
+        console.log(body);
     } catch (error) {
-        return res.status(400).json({ message: "Bad request - Invalid JSON" });
+        return res.json({ message: "Bad request - Invalid JSON" }, {status: 400});
     }
 
     try {
@@ -138,37 +139,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         );
 
         if (!updatedUser) {
-            return res.status(404).json({ message: "User not found" });
+            return res.json({ message: "User not found" }, {status:404});
         }
 
-        return res.status(200).json(updatedUser);
+        return res.json(updatedUser, {status:200});
     } catch (error) {
         console.error("Error updating user:", error);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.json({ message: "Internal Server Error" }, {status:500});
     }
 }
-
-
-/*export const PUT = async (req: NextApiRequest, res: NextApiResponse) => {
-  await connectToDatabase();
-
-  if (req.method === 'PUT') {
-    const { uid } = req.query; // 'uid' is extracted from the URL path
-    console.log("UID", uid);
-    try {
-      const body = req.body;
-      console.log("Body", body)
-      const updatedUser = await User.findByIdAndUpdate(uid, body, { new: true });
-      if (!updatedUser) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      return res.status(200).json(updatedUser);
-    } catch (error) {
-      console.error("Error in PUT /api/users/[uid]:", error);
-      return res.status(500).json({ message: "Internal Server Error" });
-    }
-  } else {
-    res.setHeader('Allow', ['PUT']);
-    return res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
-}*/
