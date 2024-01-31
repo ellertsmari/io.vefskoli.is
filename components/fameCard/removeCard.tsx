@@ -1,5 +1,5 @@
 // HALL OF FAME STUFF
-// function to remove cards from hall of fame by hardcoding the vote, changing it from recommend to hall of fame to pass
+// function to remove cards from hall of fame by hardcoding the vote, changing it from 'recommend to hall of fame' to 'pass'
 
 'use client'
 
