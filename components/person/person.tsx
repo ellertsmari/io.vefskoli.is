@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
-import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
-import { ProfileModal } from '../sidebar/profile/profile.style';
-import Link from 'next/link';
+import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont, StyleDiv, QuestionFont} from './person-style';
+import UpdateUserProfile from './updateProfile/updateProfile';
+import { DropdownButton } from '../dropDown/styles';
+import { FilledButton } from '../buttons';
 
 type Props = {
     user: UserWithIdType;
@@ -12,14 +13,15 @@ type Props = {
 const PersonInfo = ({ user }: Props) => (
     <Container>
         <PrimaryContainer>
-            <ProfilePicture className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic" />
+            <ProfilePicture className='default-profile-picture' src={user.avatarUrl} alt="user-pic" />
             <NameFont>{user.name}</NameFont>
             <EmailFont>{user.email}</EmailFont>
         </PrimaryContainer>
         <SecondaryContainer>
-            <EmailFont>Background:</EmailFont> <InfoFont>{user.background}</InfoFont>
-            <EmailFont>Career Goals:</EmailFont> <InfoFont>{user.careerGoals}</InfoFont>
-            <EmailFont>Interest:</EmailFont> <InfoFont>{user.interests}</InfoFont>
+          
+            <StyleDiv><QuestionFont>Background:</QuestionFont> <InfoFont>{user.background}</InfoFont></StyleDiv>
+            <StyleDiv><QuestionFont>Career Goals:</QuestionFont> <InfoFont>{user.careerGoals}</InfoFont></StyleDiv>
+            <StyleDiv><QuestionFont>Interest:</QuestionFont> <InfoFont>{user.interests}</InfoFont></StyleDiv>
         </SecondaryContainer>
     </Container>
 );
@@ -38,17 +40,7 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
     }
 
     //Bjork figuring out how to update profile
-    const updateProfile = async (e:ChangeEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const data = new FormData(e.target);
-      const res = await fetch(
-        `/api/users/${student._id}`,
-        {
-          method: 'PATCH',
-          body: data,
-        }
-      );
-    }
+    
 
     //this is to upload a profile picture
     const handleUpload = async (e:ChangeEvent<HTMLInputElement>) => {
@@ -71,38 +63,15 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
             <div>
               <PersonInfo user={user} isCurrentUser={isCurrentUser} />
               {isCurrentUser && ( //if a user's dropdown is the same as the logged in user, a button shows to 'update profile'
-                <Button onClick={openUpdateProfile}>Update Profile</Button>
+                <FilledButton onClick={openUpdateProfile}>Update Profile</FilledButton>
               )}
               {isOpen && (
                 /* here is the window that opens if you click on 'Update Profile', need to fix style*/
-                /*maybe it would be better to have this as a component*/
-              <ProfileModal>
-                  <div className="user-pic/name">
-                  <Link className="logout" onClick={x.logout} href="/authpage">Logout</Link>
-                  <div>
-                    <img className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
-                  </div>
-                  <div className="user-name">
-                    <h3 style={{fontSize: "1.8rem", fontWeight: "400"}}>{student?.name}</h3>
-                    <p style={{fontSize: "1.6rem"}}>{student?.email}</p>
-                  </div>
-                  <div className='pictureurl'>
-                    <p className='pictureurltxt'>Picture URL</p>
-                    <input className="URLpicinput" type="text" name="image" onChange={handleUpload}></input>
-                  </div>
-                  </div>
-                  <form onSubmit= {updateProfile} className='form-container'>
-                    <label className="profiletxt">Background - What have you studied or worked with?</label>
-                    <textarea className="profileinput" name="background"  ></textarea>
-                    <label className="profiletxt" >Near future career goals?</label>
-                    <textarea className="profileinput" name="careerGoals" ></textarea>
-                    <label className="profiletxt">Main interests?</label>
-                    <textarea className="profileinput" name="interests"  ></textarea>
-                    <label className="profiletxt">Favourite band/s or artist/s</label>
-                    <textarea className="profileinput" name="favoriteArtist"></textarea>
-                    <button className='savebtn'>SAVE</button>
-                </form>
-              </ProfileModal>
+              <UpdateUserProfile
+                student={student}
+                handleUpload={handleUpload}
+                userData={user}
+              />
               )}
             </div>
             )}
