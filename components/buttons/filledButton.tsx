@@ -3,6 +3,9 @@
 import styled from "styled-components"
 
 export const FilledButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
     text-align: center;
     width: 12rem;
@@ -16,6 +19,7 @@ export const FilledButton = styled.button`
     font-size: 1.6rem;
     cursor: pointer;
     transition: 0.2s ease-in-out;
+    padding: 15px;
 
   &:hover{
     background-color: #3B3A96;
