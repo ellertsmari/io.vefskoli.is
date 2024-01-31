@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FilledButton } from "../buttons";
-import { Container, EmailFont, InfoFont, NameFont, PrimaryContainer, ProfilePicture, SecondaryContainer } from "./person-style";
+import { Container, EmailFont, InfoFont, NameFont, PrimaryContainer, ProfilePicture, QuestionFont, SecondaryContainer, StyleDiv } from "./person-style";
 import { UserWithIdType } from "@/models/user";
 
 type Props = {
@@ -18,9 +18,9 @@ const PersonInfo = ({ user, isCurrentUser, onOpenUpdateProfile }: Props & { onOp
                 <EmailFont>{user.email}</EmailFont>
             </PrimaryContainer>
             <SecondaryContainer>
-                <EmailFont>Background:</EmailFont> <InfoFont>{user.background}</InfoFont>
-                <EmailFont>Career Goals:</EmailFont> <InfoFont>{user.careerGoals}</InfoFont>
-                <EmailFont>Interest:</EmailFont> <InfoFont>{user.interests}</InfoFont>
+                <StyleDiv><QuestionFont>Background:</QuestionFont> <InfoFont>{user.background}</InfoFont></StyleDiv>
+                <StyleDiv><QuestionFont>Career Goals:</QuestionFont> <InfoFont>{user.careerGoals}</InfoFont></StyleDiv>
+                <StyleDiv><QuestionFont>Interest:</QuestionFont> <InfoFont>{user.interests}</InfoFont></StyleDiv>
                 {isCurrentUser && ( //if a user's dropdown is the same as the logged in user, a button shows to 'update profile'
                     <FilledButton onClick={onOpenUpdateProfile}>Update Profile</FilledButton>
                 )}

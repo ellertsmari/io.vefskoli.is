@@ -10,7 +10,6 @@ type Props = {
     isCurrentUser: boolean; // I'm adding this prop to be able to update profile for the user that is logged in
 };
 
-
 const PersonDropDown = ({ user, isCurrentUser }: Props) => {
     const [isDropdownOpen, setDropdownOpen] = useState(false); // state for the dropdown
     const [isOpen, setIsOpen] = useState(false); // this state is for the update profile window
