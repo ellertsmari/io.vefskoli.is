@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
-import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
+import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont, StyleDiv, QuestionFont} from './person-style';
 import UpdateUserProfile from './updateProfile/updateProfile';
 import { DropdownButton } from '../dropDown/styles';
 import { FilledButton } from '../buttons';
@@ -18,9 +18,10 @@ const PersonInfo = ({ user }: Props) => (
             <EmailFont>{user.email}</EmailFont>
         </PrimaryContainer>
         <SecondaryContainer>
-            <EmailFont>Background:</EmailFont> <InfoFont>{user.background}</InfoFont>
-            <EmailFont>Career Goals:</EmailFont> <InfoFont>{user.careerGoals}</InfoFont>
-            <EmailFont>Interest:</EmailFont> <InfoFont>{user.interests}</InfoFont>
+          
+            <StyleDiv><QuestionFont>Background:</QuestionFont> <InfoFont>{user.background}</InfoFont></StyleDiv>
+            <StyleDiv><QuestionFont>Career Goals:</QuestionFont> <InfoFont>{user.careerGoals}</InfoFont></StyleDiv>
+            <StyleDiv><QuestionFont>Interest:</QuestionFont> <InfoFont>{user.interests}</InfoFont></StyleDiv>
         </SecondaryContainer>
     </Container>
 );
