@@ -51,7 +51,18 @@ export const Button = styled.button`
     display: inline-block;
     position: relative;
     margin-bottom: 10px;
-`;
+    box-shadow: 1px 1px 4px 1px #00000040;
+    border: none;
+    border-radius: 3.5rem;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    text-align: left;
+
+    :hover{
+        background-color: #6563eb;
+        color:white;
+    }
+    `;
 
 export const NameFont = styled.h2`
     font-style: Poppins;
