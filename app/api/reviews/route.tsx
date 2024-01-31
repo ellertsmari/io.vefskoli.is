@@ -73,7 +73,12 @@ export async function PUT(req: NextRequest) {
     { return: object, vote: "recommend to Hall of fame" },
     { $set: { vote: body.vote } }
   );
-  //ADD ERROR HANDLING
+
+  // if no guide found, return a 404 status code and a message
+  if (object === null) {
+    return NextResponse.json({message: 'Guide not found'}, {status: 404})
+  }
+  
   // Return a 200 status code and a message
   return Response.json(
     { message: "Project successfully removed from Hall of fame." },
