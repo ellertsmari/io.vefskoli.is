@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse as res} from "next/server";
-/*import type { NextApiRequest, NextApiResponse as res } from "next";*/
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User, UserType } from "@/models/user";
 import { cookies } from "next/headers";
 import { unsealData, sealData} from "iron-session/edge";
 import { NextApiRequest, NextApiResponse } from "next";
+import { ObjectId } from "mongodb";
+
 interface Success {
   message: string;
 }
@@ -87,8 +88,6 @@ export default async function UserByIdHandler(
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
-
-  
 }*/
 
 export const POST = async ( req: NextRequest, { params }: { params: { uid: string } }) => { //changes the user if you are a teacher so you can view students profiles
@@ -114,26 +113,38 @@ export const POST = async ( req: NextRequest, { params }: { params: { uid: strin
 }
 
 // bjork trying to add PUT method
-export const PUT = async (req: NextApiRequest, res: NextApiResponse) => {
-  await connectToDatabase();
+export const PUT = async (req: NextRequest, { params}: {params: {uid: string} }) => {
+   
 
-  if (req.method === 'PUT') {
-    const { uid } = req.query; // 'uid' is extracted from the URL path
-    console.log("UID", uid);
-    try {
-      const body = req.body;
-      console.log("Body", body)
-      const updatedUser = await User.findByIdAndUpdate(uid, body, { new: true });
-      if (!updatedUser) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      return res.status(200).json(updatedUser);
-    } catch (error) {
-      console.error("Error in PUT /api/users/[uid]:", error);
-      return res.status(500).json({ message: "Internal Server Error" });
+    await connectToDatabase(); 
+    let body;
+    const uid = params.uid;
+    
+    if (!req.body){
+        return res.json({ message: "Bad request - Invalid JSON" }, {status: 400});
+        
     }
-  } else {
-    res.setHeader('Allow', ['PUT']);
-    return res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
+    try {
+        body = await req.json();
+        console.log(body);
+    } catch (error) {
+        return res.json({ message: "Bad request - Invalid JSON" }, {status: 400});
+    }
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            new ObjectId(uid as string),
+            body,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+            return res.json({ message: "User not found" }, {status:404});
+        }
+
+        return res.json(updatedUser, {status:200});
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return res.json({ message: "Internal Server Error" }, {status:500});
+    }
 }
