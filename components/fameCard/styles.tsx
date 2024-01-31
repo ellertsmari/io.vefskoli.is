@@ -44,7 +44,7 @@ export const ImgStyle = styled.div<CardInfoProps>`
 `;
 
 export const Title = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-family: "Poppins";
   font-weight: 500;
 `;
@@ -60,7 +60,7 @@ export const DescriptionWrapper = styled.div`
 export const TitleWrapper = styled.div`
   position: relative;
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
 `;
 
 export const PencilEdit = styled.div`

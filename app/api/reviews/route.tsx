@@ -78,9 +78,9 @@ export async function PUT(req: NextRequest) {
   if (object === null) {
     return NextResponse.json({message: 'Guide not found'}, {status: 404})
   }
-  
+
   // Return a 200 status code and a message
-  return Response.json(
+  return NextResponse.json(
     { message: "Project successfully removed from Hall of fame." },
     { status: 200 }
   );
