@@ -65,8 +65,8 @@ export const TitleWrapper = styled.div`
 
 export const PencilEdit = styled.div`
   position: relative;
-  bottom: 2.2rem;
-  left: 8.5rem;
+  bottom: 4rem;
+  left: 19rem;
   font-size: 2rem;
 `;
 
@@ -84,6 +84,18 @@ export const Modal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const OpenModal = styled.div`
+  margin-right: 16rem;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-self: center;
+  position: fixed;
+  background-color: #ad90f6;
+  border-radius: 1.5rem;
+  z-index: 20;
 `;
 
 export const Overlay = styled.div`

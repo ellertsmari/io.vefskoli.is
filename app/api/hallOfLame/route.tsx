@@ -1,25 +1,28 @@
-// HALL OF LAME STUFF
-
+//HALL OF LAME STUFF
+// Import the function to connect to the database
 import { connectToDatabase } from "@/utils/mongoose-connector";
+// Import the types for the request and response objects from Next.js
 import { NextRequest, NextResponse } from "next/server";
+// Import the Review model
 import { Review } from "@/models/review";
 
-//asynchronous GET function that fetches reviewed guides that didn't pass. 
-//the GET function connects to the database, fetches and populates the required reviews, checks if reviews are found and returns the appropriate JSON response.
+// Define the GET method for this endpoint
 export const GET = async (req: NextRequest) => {
-    await connectToDatabase()
-    const reviews = await Review.find({
-        vote: 'no pass',
-    })
-//for each review document fetched, related documents from guide and return collections will be included
-    .populate('guide')
-    .populate('return')
+  // Connect to the database
+  await connectToDatabase();
+  // Find all reviews in the 'Review' collection where the 'vote' field is 'no pass'
+  const reviews = await Review.find({
+    vote: "no pass",
+  })
+    // Populate the 'guide' and 'return' fields in the found reviews with the documents from other collections referenced by these fields
+    .populate("guide")
+    .populate("return");
 
+  // If no reviews were found, return a 404 status code and a message
+  if (reviews === null) {
+    return NextResponse.json({ message: "Review not found" }, { status: 404 });
+  }
 
-//error handling if no reviews are found
-    if (reviews === null) {
-        return NextResponse.json({message: 'Review not found'}, {status: 404})
-    }
-//if reviews are found the function returns them in a JSON response
-    return NextResponse.json(reviews, {status: 200})
-}
+  // If reviews were found, return a 200 status code and the reviews
+  return NextResponse.json(reviews, { status: 200 });
+};
