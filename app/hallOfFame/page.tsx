@@ -31,8 +31,6 @@ const guides = () => {
       const fameReview = await response.json();
       // Update the 'data' state variable with the parsed response
       setData(fameReview);
-      // Logging the response into the console
-      console.log(fameReview);
       // review ID þarf að vera til í returns ID
     }
     // Call the 'logFameGuides' function
