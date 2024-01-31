@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse as res} from "next/server";
-/*import type { NextApiRequest, NextApiResponse as res } from "next";*/
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User, UserType } from "@/models/user";
 import { cookies } from "next/headers";
 import { unsealData, sealData} from "iron-session/edge";
 import { NextApiRequest, NextApiResponse } from "next";
+import { ObjectId } from "mongodb";
+
 interface Success {
   message: string;
 }
@@ -114,7 +115,41 @@ export const POST = async ( req: NextRequest, { params }: { params: { uid: strin
 }
 
 // bjork trying to add PUT method
-export const PUT = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method !== 'PUT') {
+        return res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+
+    await connectToDatabase();
+    const { uid } = req.query; // Assuming the user ID is passed as part of the URL
+    let body;
+
+    try {
+        body = JSON.parse(req.body);
+    } catch (error) {
+        return res.status(400).json({ message: "Bad request - Invalid JSON" });
+    }
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            new ObjectId(uid as string),
+            body,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+
+/*export const PUT = async (req: NextApiRequest, res: NextApiResponse) => {
   await connectToDatabase();
 
   if (req.method === 'PUT') {
@@ -136,4 +171,4 @@ export const PUT = async (req: NextApiRequest, res: NextApiResponse) => {
     res.setHeader('Allow', ['PUT']);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
-}
+}*/
