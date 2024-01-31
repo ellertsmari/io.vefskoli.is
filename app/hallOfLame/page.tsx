@@ -1,5 +1,7 @@
 // HALL OF LAME STUFF
 
+//On this page we’re fetching the guides that are voted as a 'no pass'
+
 'use client'
 
 import FameCard from "@/components/fameCard/fameCard";

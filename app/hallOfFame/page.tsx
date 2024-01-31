@@ -1,5 +1,7 @@
 // HALL OF FAME STUFF
 
+//On this page we’re fetching the guides that are recommended to the Hall of fame.
+
 "use client";
 
 import { MainContent } from "@/components/mainLayout";
