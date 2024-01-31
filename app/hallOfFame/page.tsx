@@ -1,4 +1,5 @@
 // HALL OF FAME STUFF
+// fetching the guides that are recommended to Hall of fame
 
 //On this page we’re fetching the guides that are recommended to the Hall of fame.
 

@@ -1,4 +1,6 @@
 //HALL OF LAME STUFF
+// same purpose as the route for Hall of Fame but with the vote 'no pass'
+
 // Import the function to connect to the database
 import { connectToDatabase } from "@/utils/mongoose-connector";
 // Import the types for the request and response objects from Next.js

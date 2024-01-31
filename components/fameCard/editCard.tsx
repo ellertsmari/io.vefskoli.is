@@ -63,7 +63,7 @@ const Edit = ({ returns }: Props) => {
         }
     };
 
-    // the component returns a modal with a form to edit the card with onChange
+    // the component returns a modal with a form to edit the card with onChange event handler
     return (
         <Modal>
             <GuideCardContainer>

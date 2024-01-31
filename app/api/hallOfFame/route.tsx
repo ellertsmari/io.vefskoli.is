@@ -1,4 +1,5 @@
 // HALL OF FAME STUFF
+// using a GET request to fetch data from the database
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";

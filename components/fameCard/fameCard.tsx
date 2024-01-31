@@ -1,4 +1,5 @@
 // HALL OF FAME STUFF
+// creating the display for the guide information as well as a hover effect and a modal
 
 "use client";
 
@@ -40,7 +41,7 @@ const FameCard = ({ guide, returnData }: Props) => {
     setModalOpen(!modalOpen);
   };
 
-  // function to handle mouse enter and leavve events
+  // function to handle mouse enter and leave events
   // when you hover over the Fame card, 'click to view' appears as well as a pencil icon
   const ReturnHandleMouseEnter = () => {
     setIsReturnHovered(true);
