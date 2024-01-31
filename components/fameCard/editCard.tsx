@@ -1,4 +1,5 @@
 // HALL OF FAME STUFF
+// function to edit the name of the project and the picture url as well as making the modal to conduct the edit and remove cards
 
 "use client";
 
@@ -35,6 +36,7 @@ const Edit = ({ returns }: Props) => {
         try {
             const response = await fetch("/api/returns", {
                 method: "PUT",
+                //
                 body: JSON.stringify({ projectName, pictureUrl, id: returns._id }),
             });
             if (response.ok) {
