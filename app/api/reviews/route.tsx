@@ -1,4 +1,5 @@
 // HALL OF FAME STUFF IN THIS DOCUMENT
+// function to remove guides from Hall of Fame
 
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
@@ -72,6 +73,7 @@ export async function PUT(req: NextRequest) {
     { return: object, vote: "recommend to Hall of fame" },
     { $set: { vote: body.vote } }
   );
+  //ADD ERROR HANDLING
   // Return a 200 status code and a message
   return Response.json(
     { message: "Project successfully removed from Hall of fame." },

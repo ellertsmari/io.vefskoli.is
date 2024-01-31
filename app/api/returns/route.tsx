@@ -1,4 +1,5 @@
 // HALL OF FAME STUFF IN THIS FILE
+// function to edit information of guides in Hall of Fame
 
 import { NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
