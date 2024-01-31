@@ -5,6 +5,9 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { UserWithIdType } from "@/models/user";
 import { MainContent } from "@/components/mainLayout";
 import styled from 'styled-components'
+import { ButtonContainer } from "@/components/person/person-style";
+import PersonDropDown from "@/components/person/person";
+
 import useLoggedInUser from "@/hooks/useLoggedInUser";
 
 const TitlePage = styled.h1`
@@ -41,13 +44,16 @@ const PeoplePage = () => {
 
   return (
     <MainContent>
+     
       <TitlePage>People</TitlePage>
+      <ButtonContainer>
       {users.map(user =>(  // mapping users from the 'fetchUsers' function
-        <Person //component
+        <PersonDropDown //component
           user={user} 
           isCurrentUser={user._id.toString() === loggedInUser._id.toString()} //comparing the logged in user to the users in the list, if it's the same user then he get's an 'update profile' option (see in Person component)
         />
       ))}
+      </ButtonContainer>
     </MainContent>
   );
 };
