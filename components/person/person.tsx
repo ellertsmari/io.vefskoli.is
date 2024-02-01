@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { UserWithIdType } from '@/models/user';
-import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont, StyleDiv, QuestionFont} from './person-style';
+import { Button} from './person-style';
 import UpdateUserProfile from './updateProfile/updateProfile';
-import { FilledButton } from '../buttons';
 import PersonInfo from './personInfo';
+import { Overlay } from './updateProfile/updateProfile-style';
 
 type Props = {
     user: UserWithIdType;
@@ -12,7 +12,7 @@ type Props = {
 
 const PersonDropDown = ({ user, isCurrentUser }: Props) => {
     const [isDropdownOpen, setDropdownOpen] = useState(false); // state for the dropdown
-    const [isOpen, setIsOpen] = useState(false); // this state is for the update profile window
+    const [isUpdateProfileOpen, setIsUpdateProfileOpen] = useState(false); // this state is for the update profile window
     const student = user;
 
     const toggleDropdown = () => {
@@ -20,7 +20,11 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
     };
 
     const openUpdateProfile = () => {
-      setIsOpen(!isOpen);
+      setIsUpdateProfileOpen(!isUpdateProfileOpen);
+    };
+
+    const closeUpdateProfile = () => {
+      setIsUpdateProfileOpen(false);
     };
 
     //this is to upload a profile picture
@@ -33,9 +37,6 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
       //const res = await fetch(
     }*/
 
-    //this is to logout
-    const x = { logout: () => {} }
-
     console.log("user = current user?", {isCurrentUser});
     return (
         <div>
@@ -43,13 +44,16 @@ const PersonDropDown = ({ user, isCurrentUser }: Props) => {
             {isDropdownOpen && (
             <div>
               <PersonInfo user={user} isCurrentUser={isCurrentUser} onOpenUpdateProfile={openUpdateProfile} />
-              {isOpen && (
+              {isUpdateProfileOpen && (
                 /* here is the window that opens if you click on 'Update Profile', need to fix style*/
+              <Overlay onClick={closeUpdateProfile}>
               <UpdateUserProfile
                 student={student}
                 //handleUpload={handleUpload}
                 userData={user}
+                onClick={(e) => e.stopPropagation()}
               />
+              </Overlay>
               )}
             </div>
             )}

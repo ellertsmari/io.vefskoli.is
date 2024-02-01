@@ -42,7 +42,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const Button = styled.button`
-    width: 100vh;
+    width: 100%;
     background-color: #f9f9f9;
     color: #666666;
     font-style: Poppins;
