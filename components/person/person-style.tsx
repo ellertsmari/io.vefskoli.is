@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-//import dropdownArrow from '@/public/dropdownArrow'
+import { motion } from 'framer-motion';
 
 export const Container = styled.div`
     margin-top: 10px;
@@ -40,15 +40,15 @@ export const ButtonContainer = styled.div`
     position: relative;
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<{ isOpen?: boolean }>`
     width: 100vh;
-    background-color: #f9f9f9;
-    color: #666666;
+    background-color: ${(props) => (props.isOpen ? '#6563eb' : '#f9f9f9')};
+    color: ${(props) => (props.isOpen ? '#ffffff' : '#666666')};
     font-style: Poppins;
     padding: 16px;
     cursor: pointer;
     border-radius: 30px;
-    display: inline-block;
+    display: flex;
     position: relative;
     margin-bottom: 10px;
     box-shadow: 1px 1px 4px 1px #00000040;
@@ -60,9 +60,13 @@ export const Button = styled.button`
 
     :hover{
         background-color: #6563eb;
-        color:white;
+        color: white;
     }
-    `;
+
+    @media (max-width: 768px), (max-width: 1024px) {
+        width: 100%;
+`;
+
 
 export const NameFont = styled.h2`
     font-style: Poppins;
@@ -76,3 +80,7 @@ export const InfoFont = styled.p`
     font-style: Poppins;
     font-size: 16px;
 `
+
+export const ArrowImage = styled(motion.div)`
+    margin-left: auto;
+    `;

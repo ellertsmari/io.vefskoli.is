@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { UserWithIdType } from '@/models/user';
-import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont} from './person-style';
+import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont, ArrowImage } from './person-style';
+import Image from "next/image";
+import dropdownArrow from "../../public/dropdownArrow.svg";
 
 type Props = {
     user: UserWithIdType;
+    isOpen: boolean;
+    toggleDropdown: () => void;
 };
 
-const PersonInfo = ({ user }: Props) => (
+const arrowAnimation = {
+    closed: { rotate: 180 },
+    open: { rotate: 0 },
+};
+
+const PersonInfo = ({ user }: { user: UserWithIdType }) => (
     <Container>
         <PrimaryContainer>
             <ProfilePicture className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic" />
@@ -21,19 +30,19 @@ const PersonInfo = ({ user }: Props) => (
     </Container>
 );
 
-const PersonDropDown = ({ user }: Props) => {
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-
-    const toggleDropdown = () => {
-        setDropdownOpen(!isDropdownOpen);
-    };
-
-    return (
-        <div>
-            <Button onClick={toggleDropdown}>{user.name}</Button>
-            {isDropdownOpen && <PersonInfo user={user} />}
-        </div>
-    );
-};
+const PersonDropDown = ({ user, isOpen, toggleDropdown }: Props) => (
+    <div>
+        <Button isOpen={isOpen} onClick={toggleDropdown}>{user.name}
+        <ArrowImage
+              variants={arrowAnimation}
+              initial={"closed"}
+              animate={isOpen ? "open" : "closed"}
+            >
+                <Image alt="dropdownArrow" src={dropdownArrow}></Image>
+        </ArrowImage>
+        </Button>
+        {isOpen && <PersonInfo user={user} />}
+    </div>
+);
 
 export default PersonDropDown;
