@@ -10,8 +10,9 @@ import {
   CodeGrade,
   CodeGradeContainer,
   DesignGrade,
-  DesignGradeContainer
+  DesignGradeContainer,
 } from "./styles";
+import Blog from "@/app/blog";
 import Dropdown from "@/components/dropDown/dropDown";
 import { useState, useEffect } from "react";
 import useLocalStorage from "@/utils/useLocalStorage";
@@ -20,9 +21,9 @@ import { useSearchParams } from "next/navigation";
 
 type Props = {
   guides: AggregatedGuide[];
-}
+};
 
-const Guides = ({guides}:Props) => {
+const Guides = ({ guides }: Props) => {
   const options = [
     "MODULE 0",
     "MODULE 1",
@@ -34,15 +35,17 @@ const Guides = ({guides}:Props) => {
     "MODULE 7",
   ];
 
-
   const { user } = useUser();
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
-  
+
   //SELECTION MODULE
   const moduleParam = searchParams.get("module");
   const [module, setModule] = useState<string>(moduleParam || "");
-  const [moduleSelected, setModuleSelected] = useLocalStorage("Selected Module",{ selected: moduleParam || "MODULE 1" });
+  const [moduleSelected, setModuleSelected] = useLocalStorage(
+    "Selected Module",
+    { selected: moduleParam || "MODULE 1" }
+  );
 
   //GRADES
   const [averageCodeGrade, setAverageCodeGrade] = useState(0);
@@ -154,7 +157,7 @@ const Guides = ({guides}:Props) => {
   };
   gradeStatus();
 
-  console.log(showGrade)
+  console.log(showGrade);
 
   useEffect(() => {
     //if the module in the url canges and is different from the localStorage, change the selected module.
@@ -162,25 +165,29 @@ const Guides = ({guides}:Props) => {
   }, [moduleParam]);
   return (
     <>
-    <TopContainer>
-      <DropdownContainer>
-        <Dropdown options={options} selected={selected} setSelected={option} />
-        <ModuleTitle>{module.substring(3)}</ModuleTitle>
-      </DropdownContainer>
-      <GradeContainer>
-      {showGrade && (
-        <>
-          <CodeGradeContainer>
-          code
-          <CodeGrade>{averageCodeGrade.toFixed(1)}</CodeGrade>
-          </CodeGradeContainer>
-          <DesignGradeContainer>
-          Design
-          <DesignGrade>{averageDesignGrade.toFixed(1)}</DesignGrade>  
-          </DesignGradeContainer>
-        </>
-      )}
-      </GradeContainer>
+      <TopContainer>
+        <DropdownContainer>
+          <Dropdown
+            options={options}
+            selected={selected}
+            setSelected={option}
+          />
+          <ModuleTitle>{module.substring(3)}</ModuleTitle>
+        </DropdownContainer>
+        <GradeContainer>
+          {showGrade && (
+            <>
+              <CodeGradeContainer>
+                code
+                <CodeGrade>{averageCodeGrade.toFixed(1)}</CodeGrade>
+              </CodeGradeContainer>
+              <DesignGradeContainer>
+                Design
+                <DesignGrade>{averageDesignGrade.toFixed(1)}</DesignGrade>
+              </DesignGradeContainer>
+            </>
+          )}
+        </GradeContainer>
       </TopContainer>
       <GuidesContainer>
         {filteredGuides.map((guide: AggregatedGuide, nr: number) => {
@@ -188,6 +195,7 @@ const Guides = ({guides}:Props) => {
           return <GuideCard key={guide._id.toString()} guide={guide} nr={nr} />;
         })}
       </GuidesContainer>
+      <Blog />
     </>
   );
 };
