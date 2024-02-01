@@ -9,27 +9,28 @@ interface ErrorCode extends Error {
 
 // getVideos fetches video data from the Zoom API and it takes token as a parameter for authentication. 
 const getVideos= async(token:string)=>{
-  let data:{}[] = []   // Initializing an empty array that will hold the fetched video data. 
+  let data:{}[] = []   // Initializing an empty array of ojects that will hold the fetched video data. 
   const months:number[] = [7,8,9,10,11,0,1,2,3,4];  // This represents the months for which the function will fetch the data. School year months. 
    
   /*For Loop to iterate over each month in the array. It allows the code to be executed repeatedly.   
-  let is declaring variable. i<...etc is the condition. The loop will continue as long as this is true. 
-  it checks if i is less than the length of the months array. This ensures that the loop runs once for each element in the months array. i++ adds one month by each iteration*/
+  Declare our loop counter as 0. Runs until it's no longer true, or less than the length of the months array. 
+  This ensures that the loop runs once for each element in the months array. i++ adds one month by each iteration*/
   for (let i = 0; i < months.length; i++) {  
     
-    const fromDate = new Date();   //our start date
-    const isSpring = fromDate.getMonth() < 7  //Defining what happens if user is fetching data in the fall term. 
-    const isFetchingFromSpring = months[i]< 7  //Defining what happens if user is fetching data in spring term. 
+    const fromDate = new Date();   //our start date from fetching videos.
+    const isSpring = fromDate.getMonth() < 7  //Asking what month it is right now and if it is true (less than 7) it is spring.
+    const isFetchingFromSpring = months[i]< 7  //If the month we picked is less than 7 it's true and it is indeed spring: tells us if the videos we’re fetching are from a spring term.
    
-    fromDate.setFullYear(fromDate.getFullYear() - (Number(isSpring) - Number(isFetchingFromSpring)));  //This adjust our data according to when we are fetching it. 
-    fromDate.setMonth(months[i]);
-    fromDate.setDate(1); // set to the first day of the month
-    fromDate.setHours(0, 0, 0, 0); // set to the start of the day
+    fromDate.setFullYear(fromDate.getFullYear() - (Number(isSpring) - Number(isFetchingFromSpring)));  //This adjust our data according to when we are fetching it.
 
-    const toDate = new Date(fromDate);
-    toDate.setMonth(months[i] + 1);
+    fromDate.setMonth(months[i]); // sets our month in the fromDate to the first element in the array (7)
+    fromDate.setDate(1); // setting the day of the fromDate object to the first of each month. 
+    fromDate.setHours(0, 0, 0, 0); // set to midnight each day
+
+    const toDate = new Date(fromDate); //creates a new Date object with the end date for fetching videos.
+    toDate.setMonth(months[i] + 1); //Sets the month to a month before the start date. This ensures you get videos from the start of the month.
   
-    //The URL is constructed for the API request and the template literals add in the parameters from what is defined above. 
+    //The URL is constructed for the API request and the template literals add in the parameters from what is defined above. Changes the strings to ISO and T splits it into time. 
     const url = `https://api.zoom.us/v2/users/vefskolinn@tskoli.is/recordings?page_size=30&from=${fromDate.toISOString().split('T')[0]}&to=${toDate.toISOString().split('T')[0]}`
 
     try {     
@@ -83,8 +84,8 @@ export const GET= async ()=> {
     }
     
     if (token == null) throw new Error("Missing tokendata.")
-    return NextResponse.json(data);
+    return NextResponse.json(data);  //returns fetched data as json
     } catch (error) {
-      return NextResponse.json(error);
+      return NextResponse.json(error);  
     }
   };
