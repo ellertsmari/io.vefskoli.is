@@ -1,15 +1,38 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import styled from "styled-components";
+import { Button } from "../person-style";
 
 interface Joke {
     title: string;
     text: string;
 }
 
+interface ButtonProps {
+    isHovered: boolean
+    onClick: () => void;
+    onMouseEnter: () => void;
+    onMouseLeave: () => void;
+}
+
+const Container = styled.div`
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    color: #000;
+    display: flex;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+`;
+
 const JokePage = () => {
     const [joke, setJoke] = useState<string | null>(null);
     const [jokeList, setJokeList] = useState<string[]>([]);
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const [isHovered, setHovered] =useState(false);
 
     const fetchJoke = async () => {
         try {
@@ -37,14 +60,41 @@ const JokePage = () => {
         }
     };
 
+    const toggleDropdown = () => {
+        setDropdownOpen(!isDropdownOpen);
+    };
+
+    const closeDropdown = () => {
+        setDropdownOpen(false);
+    };
+
+    const handleHover = () => {
+        setHovered(true);
+    };
+
+    const handleMouseLeave = ()=>  {
+        setHovered(false);
+    };
+
+    useEffect(() => {
+        if (isDropdownOpen) {
+            fetchJoke(); 
+        }
+    }, [isDropdownOpen]);
+
     return (
         <div>
-            <button onClick={() => { fetchJoke(); }}>Get the useless fact of the day</button>
-            <br />
-            {joke && (
-                <div>
+            <Button 
+                onClick={toggleDropdown}
+                onMouseEnter={handleHover}
+                onMouseLeave={handleMouseLeave}
+            >GET THE USELESS FACTS OF THE DAY
+            </Button>
+            {isDropdownOpen && (
+                <Container>
                     <p>{joke}</p>
-                </div>
+                    <button onClick={closeDropdown}>Close</button>
+                </Container>
             )}
             <br />
             {jokeList.length > 0 && (

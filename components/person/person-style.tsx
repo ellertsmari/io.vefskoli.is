@@ -1,16 +1,7 @@
 import styled from 'styled-components'
+//import dropdownArrow from '@/public/dropdownArrow'
 
-export const Container = styled.div`
-    margin-top: 10px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    color: #000;
-    display: flex;
-    
 
-`;
 export const PrimaryContainer = styled.div`
     margin-top: 10px;
     padding: 10px;
@@ -24,31 +15,108 @@ export const SecondaryContainer = styled.div`
 
 
 export const ProfilePicture = styled.img`
-    width: 64px;
-    height: 64px;
     border-radius: 50%;
     margin-right: 10px;
+    margin-left: 25px;
+    width: 104px;
+    height: 104px;
+`;
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
 `;
 
 export const Button = styled.button`
-    background-color: #f9f9f9;
+    width: 100vh;
+    background-color: #FFFFFF;
     color: #666666;
     font-style: Poppins;
     padding: 16px;
     cursor: pointer;
     border-radius: 30px;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 10px;
+    box-shadow: 1px 1px 4px 1px #00000040;
+    border: none;
+    border-radius: 3.5rem;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    text-align: left;
 
-`;
+    :hover{
+        background-color: #6563eb;
+        color:white;
+    }
+    `;
+
+export const Container = styled.div`
+    margin-top: 10px;
+    width: 100vh;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    color: #000;
+    display: flex;
+    z-index: 1;
+    position: relative;
+    `;
+
+export const FilledButton = styled.button`
+    text-decoration: none;
+    text-align: center;
+    width: 8rem;
+    height: 2rem;
+    border-radius: 10.0rem;
+    background-color: #6563EB;
+    box-shadow: 1px 1px 5px 1px rgba(81, 81, 81, 0.25);
+    border-style: none;
+    color: white;
+    font-weight: 500;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    position: relative;
+    margin-left: 25px;
+
+&:hover{
+    background-color: #3B3A96;
+    }
+    `;
 
 export const NameFont = styled.h2`
-    font-style: Poppins;
+    font-family: 'Poppins';
     font-size: 24px;
-`
+    align-items: center;
+    justify-content: center;
+    display: flex;
+`;
+
 export const EmailFont = styled.h3`
-    font-style: Poppins;
-    font-size: 20px;
-`
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+`; 
+
 export const InfoFont = styled.p`
-    font-style: Poppins;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+`; 
+
+export const StyleDiv = styled.div`
+  margin-bottom: 6px;
+  padding-top: 8px;
+`; 
+
+export const QuestionFont = styled.h3`
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
-`
+    font-weight: bold;
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+`; 

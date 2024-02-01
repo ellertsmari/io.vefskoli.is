@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse as res} from "next/server";
-/*import type { NextApiRequest, NextApiResponse as res } from "next";*/
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User, UserType } from "@/models/user";
 import { cookies } from "next/headers";
 import { unsealData, sealData} from "iron-session/edge";
+import { NextApiRequest, NextApiResponse } from "next";
+import { ObjectId } from "mongodb";
+
 interface Success {
   message: string;
 }
@@ -86,8 +88,6 @@ export default async function UserByIdHandler(
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
-
-  
 }*/
 
 export const POST = async ( req: NextRequest, { params }: { params: { uid: string } }) => { //changes the user if you are a teacher so you can view students profiles
@@ -110,4 +110,41 @@ export const POST = async ( req: NextRequest, { params }: { params: { uid: strin
   }
   console.log("the session role is: ",session.role)
   return res.json({ message: "User updated successfully" }, { status: 200});
+}
+
+// bjork trying to add PUT method
+export const PUT = async (req: NextRequest, { params}: {params: {uid: string} }) => {
+   
+
+    await connectToDatabase(); 
+    let body;
+    const uid = params.uid;
+    
+    if (!req.body){
+        return res.json({ message: "Bad request - Invalid JSON" }, {status: 400});
+        
+    }
+    try {
+        body = await req.json();
+        console.log(body);
+    } catch (error) {
+        return res.json({ message: "Bad request - Invalid JSON" }, {status: 400});
+    }
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            new ObjectId(uid as string),
+            body,
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+            return res.json({ message: "User not found" }, {status:404});
+        }
+
+        return res.json(updatedUser, {status:200});
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return res.json({ message: "Internal Server Error" }, {status:500});
+    }
 }

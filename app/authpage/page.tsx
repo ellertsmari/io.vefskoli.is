@@ -253,7 +253,7 @@ const authPage = () => {
                 <InputLabel>Favourite band/s or artist/s</InputLabel>
                 <ShortInput
                   type="text"
-                  name="favouriteBands"
+                  name="favoriteArtists"
                   value={credentials.favoriteArtists}
                   onChange={handleInputChange}
                 />
