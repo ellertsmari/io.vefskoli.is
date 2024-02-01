@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { ButtonContainer } from '@/components/person/person-style';
 import PersonDropDown from '@/components/person/person';
 import useLoggedInUser from "@/hooks/useLoggedInUser";
+import JokePage from "@/components/person/Jokes/route";
 
 const TitlePage = styled.h1`
     font-style: Poppins;
@@ -46,11 +47,12 @@ const PeoplePage = ({user}: Props) => {
   if (!loggedInUser) {
     return <div>You have to log in to see the content of this page</div>
   }
-
+// I cant put in the curlybr around People without typescript whining about it
   return (
     <MainContent>
       <TitlePage>People</TitlePage>
       <ButtonContainer>
+      <JokePage/>
       {users.map((user) => 
         <PersonDropDown 
         key={user._id.toString()} 
@@ -61,7 +63,9 @@ const PeoplePage = ({user}: Props) => {
         />
         )}
       </ButtonContainer>
+      
     </MainContent>
+  
   );
 };
  export default PeoplePage;

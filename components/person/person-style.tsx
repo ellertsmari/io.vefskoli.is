@@ -43,7 +43,7 @@ export const ButtonContainer = styled.div`
 
 export const Button = styled.button<{ isOpen?: boolean }>`
     width: 100vh;
-    background-color: ${(props) => (props.isOpen ? '#6563eb' : '#f9f9f9')};
+    background-color: ${(props) => (props.isOpen ? '#6563eb' : '#FFFFFF')};
     color: ${(props) => (props.isOpen ? '#ffffff' : '#666666')};
     font-style: Poppins;
     padding: 16px;
@@ -68,6 +68,41 @@ export const Button = styled.button<{ isOpen?: boolean }>`
         width: 100%;
 `;
 
+export const JokeContainer = styled.div`
+    margin-top: 10px;
+    width: 100vh;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    color: #000;
+    display: flex;
+    z-index: 1;
+    position: relative;
+    `;
+
+export const FilledButton = styled.button`
+    text-decoration: none;
+    text-align: center;
+    width: 8rem;
+    height: 2rem;
+    border-radius: 10.0rem;
+    background-color: #6563EB;
+    box-shadow: 1px 1px 5px 1px rgba(81, 81, 81, 0.25);
+    border-style: none;
+    color: white;
+    font-weight: 500;
+    font-size: 10px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25px;
+
+&:hover{
+    background-color: #3B3A96;
+    }
+    `;
 
 export const NameFont = styled.h2`
     font-family: 'Poppins';
