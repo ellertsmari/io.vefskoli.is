@@ -79,10 +79,11 @@ export const FilledButton = styled.button`
     border-style: none;
     color: white;
     font-weight: 500;
-    font-size: 1.6rem;
+    font-size: 10px;
     cursor: pointer;
     transition: 0.2s ease-in-out;
-    position: relative;
+    justify-content: center;
+    align-items: center;
     margin-left: 25px;
 
 &:hover{
