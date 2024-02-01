@@ -16,7 +16,6 @@ type Props = {
     user: UserWithIdType;
 };
 
-
 const PeoplePage = ({user}: Props) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [users, setUsers] = useState<UserWithIdType[]>([]); //UserWithIdType holds a schema for the user info as well as user_id
@@ -50,7 +49,6 @@ const PeoplePage = ({user}: Props) => {
 
   return (
     <MainContent>
-     
       <TitlePage>People</TitlePage>
       <ButtonContainer>
       {users.map((user) => 
