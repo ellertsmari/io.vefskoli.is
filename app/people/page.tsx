@@ -1,21 +1,24 @@
-// People page
 "use client";
-import Person from "@/components/person/person"; // Adjust the import path as necessary
-import { ChangeEvent, useEffect, useState } from "react";
-import { UserWithIdType } from "@/models/user";
-import { MainContent } from "@/components/mainLayout";
-import styled from 'styled-components'
-import { ButtonContainer } from "@/components/person/person-style";
-import PersonDropDown from "@/components/person/person";
-
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { UserWithIdType } from '@/models/user';
+import { MainContent } from '@/components/mainLayout';
+import styled from 'styled-components';
+import { ButtonContainer } from '@/components/person/person-style';
+import PersonDropDown from '@/components/person/person';
 import useLoggedInUser from "@/hooks/useLoggedInUser";
+import JokePage from "@/components/person/Jokes/route";
 
 const TitlePage = styled.h1`
-  font-style: Poppins;
-  font-size: 32px;
-`
+    font-style: Poppins;
+    font-size: 32px;
+`;
 
-const PeoplePage = () => {
+type Props = {
+    user: UserWithIdType;
+};
+
+const PeoplePage = ({user}: Props) => {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [users, setUsers] = useState<UserWithIdType[]>([]); //UserWithIdType holds a schema for the user info as well as user_id
   const {user: loggedInUser, loading, error} = useLoggedInUser(); //user, loading and error is from the useLoggedInUser hook
   
@@ -31,6 +34,9 @@ const PeoplePage = () => {
     //do we need error handling here?
   }, []);
 
+  const toggleDropdown = (userId: string) => {
+    setOpenDropdown((prevOpenDropdown) => (prevOpenDropdown === userId ? null : userId));
+};
   //these are the states from 'useLoggedInUser' hook
   if (loading) {
     return <div>Loading...</div>; //maybe we could do a nicer loading thing
@@ -41,21 +47,25 @@ const PeoplePage = () => {
   if (!loggedInUser) {
     return <div>You have to log in to see the content of this page</div>
   }
-
+// I cant put in the curlybr around People without typescript whining about it
   return (
     <MainContent>
-     
       <TitlePage>People</TitlePage>
       <ButtonContainer>
-      {users.map(user =>(  // mapping users from the 'fetchUsers' function
-        <PersonDropDown //component
-        //  key={user}
-          user={user} 
-          isCurrentUser={user._id.toString() === loggedInUser._id.toString()} //comparing the logged in user to the users in the list, if it's the same user then he get's an 'update profile' option (see in Person component)
+      <JokePage/>
+      {users.map((user) => 
+        <PersonDropDown 
+        key={user._id.toString()} 
+        user={user}
+        isOpen={openDropdown === user._id.toString()}
+        toggleDropdown={() => toggleDropdown(user._id.toString())}
+        isCurrentUser={user._id.toString() === loggedInUser._id.toString()} //comparing the logged in user to the users in the list, if it's the same user then he get's an 'update profile' option (see in Person component) 
         />
-      ))}
+        )}
       </ButtonContainer>
+      
     </MainContent>
+  
   );
 };
  export default PeoplePage;

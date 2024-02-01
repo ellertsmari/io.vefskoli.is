@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-//import dropdownArrow from '@/public/dropdownArrow'
+import { motion } from 'framer-motion';
 
 export const Container = styled.div`
     margin-top: 10px;
@@ -41,15 +41,15 @@ export const ButtonContainer = styled.div`
     position: relative;
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<{ isOpen?: boolean }>`
     width: 100vh;
-    background-color: #f9f9f9;
-    color: #666666;
+    background-color: ${(props) => (props.isOpen ? '#6563eb' : '#FFFFFF')};
+    color: ${(props) => (props.isOpen ? '#ffffff' : '#666666')};
     font-style: Poppins;
     padding: 16px;
     cursor: pointer;
     border-radius: 30px;
-    display: inline-block;
+    display: flex;
     position: relative;
     margin-bottom: 10px;
     box-shadow: 1px 1px 4px 1px #00000040;
@@ -61,7 +61,46 @@ export const Button = styled.button`
 
     :hover{
         background-color: #6563eb;
-        color:white;
+        color: white;
+    }
+
+    @media (max-width: 768px), (max-width: 1024px) {
+        width: 100%;
+`;
+
+export const JokeContainer = styled.div`
+    margin-top: 10px;
+    width: 100vh;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #FFFFFF;
+    color: #000;
+    display: flex;
+    z-index: 1;
+    position: relative;
+    `;
+
+export const FilledButton = styled.button`
+    text-decoration: none;
+    text-align: center;
+    width: 8rem;
+    height: 2rem;
+    border-radius: 10.0rem;
+    background-color: #6563EB;
+    box-shadow: 1px 1px 5px 1px rgba(81, 81, 81, 0.25);
+    border-style: none;
+    color: white;
+    font-weight: 500;
+    font-size: 10px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25px;
+
+&:hover{
+    background-color: #3B3A96;
     }
     `;
 
@@ -92,6 +131,8 @@ export const StyleDiv = styled.div`
 export const QuestionFont = styled.h3`
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
-    font-weight: bold;
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
-`; 
+`
+
+export const ArrowImage = styled(motion.div)`
+    margin-left: auto;
+    `;
