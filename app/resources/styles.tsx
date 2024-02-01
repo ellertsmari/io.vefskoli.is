@@ -1,13 +1,9 @@
 
 'use client';
-//THIS FILE needs to be reworked for the purpose of the Resources container. 
-//I've removed some stuff we didn't need. 
-
 
 type Props={
  image?: string;
 }
-
 
 import styled from "styled-components"
 import { motion } from "framer-motion"
@@ -59,7 +55,7 @@ export const DropdownContainer = styled.div`
     font-weight: 500;
     margin: 0;
     `
-    export const VideoCard  = styled.div <Props>`
+  export const VideoCard  = styled.div <Props>`
     width: 250px;
     height: 250px;
     background-color: #D1D1D1;
@@ -72,7 +68,7 @@ export const DropdownContainer = styled.div`
     cursor:pointer;
     `
 
-    export const VideoCardText = styled.div`
+  export const VideoCardText = styled.div`
     font-family: Poppins;
     font-size: 40px;
     font-weight: 500;
