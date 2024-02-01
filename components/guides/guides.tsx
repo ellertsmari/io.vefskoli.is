@@ -12,7 +12,6 @@ import {
   DesignGrade,
   DesignGradeContainer,
 } from "./styles";
-import Blog from "@/app/blog";
 import Dropdown from "@/components/dropDown/dropDown";
 import { useState, useEffect } from "react";
 import useLocalStorage from "@/utils/useLocalStorage";
@@ -195,7 +194,6 @@ const Guides = ({ guides }: Props) => {
           return <GuideCard key={guide._id.toString()} guide={guide} nr={nr} />;
         })}
       </GuidesContainer>
-      <Blog />
     </>
   );
 };

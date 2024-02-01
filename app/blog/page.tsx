@@ -1,5 +1,3 @@
-"use client";
-
 const Blog = () => {
   return (
     <div>
