@@ -1,7 +1,9 @@
-import { NextResponse as res } from "next/server";
+import { NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User, UserType } from "@/models/user";
 import bcrypt from "bcrypt";
+import { NextApiRequest, NextApiResponse } from "next";
+import { RESPONSE_LIMIT_DEFAULT } from "next/dist/server/api-utils";
 
 interface Success {
   message: string;
@@ -29,7 +31,6 @@ type RequestWithBody = Request & {
  *       404:
  *         description: No users found
  */
-
 
 export const POST = async (req:Request) => {
   await connectToDatabase();

@@ -34,3 +34,4 @@ type DeepOmit<T, K extends string | number | symbol> = T extends object
 */
 
 export type OmitPassword = Omit<UserWithIdType, 'password'> & {password?:string};
+

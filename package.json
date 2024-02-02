@@ -15,11 +15,12 @@
     "@types/react-dom": "18.0.11",
     "@types/styled-components": "^5.1.26",
     "@uiw/react-md-editor": "^3.23.5",
+    "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "framer-motion": "^10.12.2",
     "iron-session": "^6.3.1",
     "mongodb": "^6.3.0",
-    "mongoose": "^7.0.3",
+    "mongoose": "^8.1.1",
     "next": "^13.4.17",
     "next-swagger-doc": "^0.4.0",
     "node-fetch": "^3.3.1",
@@ -36,7 +37,8 @@
     "styled-components": "^5.3.9",
     "swagger-ui-react": "^4.19.0",
     "swr": "^2.1.5",
-    "typescript": "5.0.2"
+    "typescript": "5.0.2",
+    "yarn": "^1.22.21"
   },
   "resolutions": {
     "styled-components": "^5"

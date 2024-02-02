@@ -37,6 +37,7 @@ const Profile = ( { user }:Props ) => {
     );
   }
   const x = { logout: () => {} }
+  console.log("logged in user", student._id);
   return(
     <div>
       <ProfileImage onClick={() => setIsOpen(!isOpen)} src="/default-profile-picture.svg"/>
