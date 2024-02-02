@@ -66,7 +66,7 @@ const Recordings =  ({ data}: Props) => {
         let options = Array.from(optionsSet);
 
         //Defining the order I want the dropdown menu to display. And then sorting them to the defined order. 
-        const order = ['MODULE 1', 'MODULE 2', 'MODULE 3', 'MODULE 4', 'MODULE 5', 'MODULE 6', 'MODULE 7', 'LAS PALMAS', 'GITHUB', 'GUESTS', 'MISC', 'ALL VIDEOS'];
+        const order = ['MODULE 1', 'MODULE 2', 'MODULE 3', 'MODULE 4', 'MODULE 5', 'MODULE 6', 'MODULE 7', 'GITHUB', 'GUESTS', 'MISC', 'LAS PALMAS', 'ALL VIDEOS'];
         options.sort((a, b) => order.indexOf(a) - order.indexOf(b));
         //adding the ALL VIDEOS option to the end of the array so user can always see all videos again.
          options.push('ALL VIDEOS')
