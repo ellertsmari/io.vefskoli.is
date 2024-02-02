@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { ButtonContainer } from '@/components/person/person-style';
 import PersonDropDown from '@/components/person/person';
 import useLoggedInUser from "@/hooks/useLoggedInUser";
-import JokePage from "@/components/person/Jokes/route";
+import JokePage from "@/components/person/Jokes/jokepage";
 
 const TitlePage = styled.h1`
     font-style: Poppins;
