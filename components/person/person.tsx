@@ -1,6 +1,6 @@
 //<------ Module 5 group project ------>
 // this is a PersonDropDown component, a dropdown that appears when clicking on a user in app/people/page.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
 import UpdateUserProfile from './updateProfile/updateProfile';
 import PersonInfo from './personInfo';
@@ -15,6 +15,7 @@ type Props = {
     isOpen: boolean;
     toggleDropdown: () => void;
     onUserDataUpdate: (updatedUserData: UserWithIdType) => void;
+    refetch: () => void;
 };
 
 const arrowAnimation = {
@@ -22,7 +23,7 @@ const arrowAnimation = {
   open: { rotate: 0 },
 };
 
-const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown, onUserDataUpdate }: Props) => {
+const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown, onUserDataUpdate, refetch }: Props) => {
     const [isUpdateProfileOpen, setIsUpdateProfileOpen] = useState(false); // this state is for the update profile window
     const student = user;
     const [userData, setUserData] = useState(user); // Initialize with default user data
@@ -38,6 +39,10 @@ const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown, onUserDat
     const handleUserDataUpdate = (updatedUserData: UserWithIdType) => {
       setUserData(updatedUserData); // Update the userData state with new data
   };
+
+  useEffect(() =>{
+    setUserData(user); //update local userData state when user information changes
+  }, [user]);
 
     return (
         <div>
@@ -61,6 +66,7 @@ const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown, onUserDat
                 userData={userData}
                 onClick={(e) => e.stopPropagation()} //making sure that when clicking on the window it doesn't close
                 onUserDataUpdate={onUserDataUpdate} // pass it down to UpdateUserProfile
+                refetch={refetch}
               />
               </Overlay>
               )}

@@ -9,7 +9,6 @@ type Props = {
 };
 
 const PersonInfo = ({ userData, isCurrentUser, onOpenUpdateProfile }: Props) => {
-    console.log("Rendering PersonInfo with userData:", userData);
     return (
         <Container>
             <PrimaryContainer>
