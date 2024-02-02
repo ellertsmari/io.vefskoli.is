@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import styled from "styled-components";
 import { Button } from "../person-style";
+import Image from "next/image";
+import dropdownArrow from "/public/dropdownArrow.svg";
+import { motion } from "framer-motion";
+import { ArrowImage } from "../person-style";
 
 interface Joke {
     title: string;
@@ -28,18 +31,24 @@ const Container = styled.div`
     z-index: 1;
 `;
 
+const arrowAnimation = {
+    closed: {rotate: 180},
+    open: {rotate:0},
+}
+
 const JokePage = () => {
     const [joke, setJoke] = useState<string | null>(null);
     const [jokeList, setJokeList] = useState<string[]>([]);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isHovered, setHovered] =useState(false);
+    const [isHovered, setHovered] = useState(false);
 
     const fetchJoke = async () => {
         try {
-            const response = await axios.get('https://uselessfacts.jsph.pl/random.json?language=en', {});
+            const response = await fetch('https://uselessfacts.jsph.pl/random.json?language=en');
+            const data = await response.json();
 
-            if (response.data && response.data.text) {
-                setJoke(response.data.text);
+            if (data && data.text) {
+                setJoke(data.text);
             }
 
         } catch (error) {
@@ -47,18 +56,10 @@ const JokePage = () => {
         }
     };
 
-    const fetchMultipleJokes = async () => {
-        try {
-            const response = await axios.get('https://uselessfacts.jsph.pl/random/5.json?language=en', {});
 
-            if (response.data && response.data.length > 0) {
-                setJokeList(response.data.map((j: Joke) => j.text));
-            }
-
-        } catch (error) {
-            console.log('Error fetching jokes:', error);
-        }
-    };
+const ArrowImage = styled(motion.div)`
+    margin-left: auto;
+    `;
 
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
@@ -72,29 +73,36 @@ const JokePage = () => {
         setHovered(true);
     };
 
-    const handleMouseLeave = ()=>  {
+    const handleMouseLeave = () => {
         setHovered(false);
     };
 
     useEffect(() => {
         if (isDropdownOpen) {
-            fetchJoke(); 
+            fetchJoke();
         }
     }, [isDropdownOpen]);
 
     return (
         <div>
-            <Button 
-                onClick={toggleDropdown}
-                onMouseEnter={handleHover}
-                onMouseLeave={handleMouseLeave}
-            >GET THE USELESS FACTS OF THE DAY
-            </Button>
+            <Button
+        onClick={toggleDropdown}
+        onMouseEnter={handleHover}
+        onMouseLeave={handleMouseLeave}
+      >
+        GET THE USELESS FACTS OF THE DAY
+        <ArrowImage
+          variants={arrowAnimation}
+          initial="closed"
+          animate={isDropdownOpen ? "open" : "closed"}
+        >
+          <Image alt="dropdownArrow" src={dropdownArrow} />
+        </ArrowImage>
+      </Button>
             {isDropdownOpen && (
                 <Container>
                     <p>{joke}</p>
-                    <button onClick={closeDropdown}>Close</button>
-                </Container>
+                 </Container>
             )}
             <br />
             {jokeList.length > 0 && (

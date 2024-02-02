@@ -6,7 +6,7 @@ export const Container = styled.div`
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #FFFFFF;
     color: #000;
     display: flex;
     
@@ -65,7 +65,7 @@ export const Button = styled.button<{ isOpen?: boolean }>`
     }
 
     @media (max-width: 768px), (max-width: 1024px) {
-        width: 100%;
+        width: 100%;}
 `;
 
 export const JokeContainer = styled.div`
@@ -98,6 +98,7 @@ export const FilledButton = styled.button`
     justify-content: center;
     align-items: center;
     margin-left: 25px;
+    margin-top: 6px;
 
 &:hover{
     background-color: #3B3A96;
