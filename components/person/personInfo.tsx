@@ -1,14 +1,13 @@
 import { useState } from "react";
-//import { FilledButton } from "../buttons";
 import { Container, EmailFont, InfoFont, NameFont, PrimaryContainer, ProfilePicture, QuestionFont, SecondaryContainer, StyleDiv, FilledButton} from "./person-style";
 import { UserWithIdType } from "@/models/user";
-import StudentsDropDown from "@/app/alias/StudentsDropDown";
 
 type Props = {
     user: UserWithIdType;
     isCurrentUser: boolean; // I'm adding this prop to be able to update profile for the user that is logged in
+    onOpenUpdateProfile: () => void;
+    userData: UserWithIdType;
 };
-
 
 const PersonInfo = ({ user, isCurrentUser, onOpenUpdateProfile }: Props & { onOpenUpdateProfile: () => void }) => {
     

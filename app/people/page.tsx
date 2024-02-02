@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
 import { MainContent } from '@/components/mainLayout';
 import styled from 'styled-components';
@@ -13,11 +13,7 @@ const TitlePage = styled.h1`
     font-size: 32px;
 `;
 
-type Props = {
-    user: UserWithIdType;
-};
-
-const PeoplePage = ({user}: Props) => {
+const PeoplePage = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [users, setUsers] = useState<UserWithIdType[]>([]); //UserWithIdType holds a schema for the user info as well as user_id
   const {user: loggedInUser, loading, error} = useLoggedInUser(); //user, loading and error is from the useLoggedInUser hook
@@ -31,7 +27,6 @@ const PeoplePage = ({user}: Props) => {
       setUsers(data);
     };
     fetchUsers();
-    //do we need error handling here?
   }, []);
 
   const toggleDropdown = (userId: string) => {

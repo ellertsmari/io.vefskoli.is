@@ -1,9 +1,10 @@
+// this is a PersonDropDown component, a dropdown that appears when clicking on a user in app/people/page.tsx
 import React, { useState } from 'react';
 import { UserWithIdType } from '@/models/user';
 import UpdateUserProfile from './updateProfile/updateProfile';
 import PersonInfo from './personInfo';
 import { Overlay } from './updateProfile/updateProfile-style';
-import { Container, PrimaryContainer, SecondaryContainer, ProfilePicture, Button, EmailFont, NameFont, InfoFont, ArrowImage } from './person-style';
+import { Button, ArrowImage } from './person-style';
 import Image from "next/image";
 import dropdownArrow from "../../public/dropdownArrow.svg";
 
@@ -22,6 +23,7 @@ const arrowAnimation = {
 const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown }: Props) => {
     const [isUpdateProfileOpen, setIsUpdateProfileOpen] = useState(false); // this state is for the update profile window
     const student = user;
+    const [userData, setUserData] = useState(user); // Initialize with default user data
 
     const openUpdateProfile = () => {
       setIsUpdateProfileOpen(!isUpdateProfileOpen);
@@ -30,6 +32,10 @@ const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown }: Props) 
     const closeUpdateProfile = () => {
       setIsUpdateProfileOpen(false);
     };
+
+    const handleUserDataUpdate = (updatedUserData: UserWithIdType) => {
+      setUserData(updatedUserData); // Update the userData state with new data
+  };
 
     return (
         <div>
@@ -44,15 +50,15 @@ const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown }: Props) 
             </Button>
             {isOpen && (
             <div>
-              <PersonInfo user={user} isCurrentUser={isCurrentUser} onOpenUpdateProfile={openUpdateProfile} />
+              <PersonInfo user={user} isCurrentUser={isCurrentUser} onOpenUpdateProfile={openUpdateProfile} userData={userData} />
               {isUpdateProfileOpen && (
                 /* here is the window that opens if you click on 'Update Profile'*/
-              <Overlay onClick={closeUpdateProfile}>
+              <Overlay onClick={closeUpdateProfile}> // when clicking outside of the update window, it closes
               <UpdateUserProfile
                 student={student}
-                //handleUpload={handleUpload}
                 userData={user}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()} //making sure that when clicking on the window it doesn't close
+                onUserDataUpdate={handleUserDataUpdate}
               />
               </Overlay>
               )}
