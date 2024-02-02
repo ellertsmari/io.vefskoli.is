@@ -17,7 +17,7 @@ const getVideos= async(token:string)=>{
   This ensures that the loop runs once for each element in the months array. i++ adds one month by each iteration*/
   for (let i = 0; i < months.length; i++) {  
     
-    const fromDate = new Date();   //our start date from fetching videos.
+    const fromDate = new Date();   //our start date from fetching video to be used in our URL
     const isSpring = fromDate.getMonth() < 7  //Asking what month it is right now and if it is true (less than 7) it is spring.
     const isFetchingFromSpring = months[i]< 7  //If the month we picked is less than 7 it's true and it is indeed spring: tells us if the videos we’re fetching are from a spring term.
    
@@ -49,17 +49,18 @@ const getVideos= async(token:string)=>{
       }
       
       const json = await response.json()
-      data = [...data, ...json.meetings]   // This adds the fetched meetings to the data array.
+      data = [...data, ...json.meetings]   // This adds all the iterations of the fetched meetings to the data array
       
     } catch (error) {      //This block catches any errors that occur during the fetch operation, logs them, and returns an object containing the error and the fetched data.
       const errorObject:{} = await error as object; 
         return {...errorObject, meetings:data,}; 
       }
   };
-return {error:{},meetings:data, code:200}   //returning an object containing the fetched data and a status code of 200, indicating success.
+return {error:{},meetings:data, code:200}   //returning final results: an object containing the fetched data and a status code of 200, indicating success.
 };
 
-// a GET function that is used to export from the module. 
+
+
 // This function calls the getVideos, handles the response, refreshes the tokens when and if necessary and then returns the final response
 export const GET= async ()=> {
 
@@ -70,6 +71,7 @@ export const GET= async ()=> {
       if (!process.env.BASIC_AUTH )  // This checks if the BASIC_AUTH environment variable is set.
       return NextResponse.json({error:'You need the BASIC_AUTH in your .env.local file for this!'})   // If not, it returns an error.
 
+      // We make a post request to the api oauth endpoint for a new access token. Await is used to wait for the promise returned by the fetch to resolve.  
       const tokenResponse = await fetch ("https://zoom.us/oauth/token?grant_type=account_credentials&account_id=xTmwVbNdQRGv5XBIuyvI2A",{
           method: "POST",
           cache:"no-cache",
@@ -78,7 +80,7 @@ export const GET= async ()=> {
           }
       })  
 
-      const tokenData = await tokenResponse.json()   // This fetches a new access token.
+      const tokenData = await tokenResponse.json()   // This parses the response from the previous fetch. 
       token = tokenData.access_token
       data = await getVideos(token)
     }

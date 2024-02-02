@@ -20,7 +20,7 @@ type Props = {
     };
 };
 
-// This object maps the first 8 characters of a video title to a more user-friendly name for the dropdown menu.
+// This object maps the first 8 characters of a video title to a more user-friendly name for the dropdown menu. String Keys and properties/values.. 
 // This can be adjusted at will when new naming convention for videos has been implemented or however smari and jakub want it. :)
 const nameDrop: {[key:string]:string} = {
     'Module 1' : 'MODULE 1',
