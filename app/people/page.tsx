@@ -17,7 +17,7 @@ const TitlePage = styled.h1`
 const PeoplePage = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [users, setUsers] = useState<UserWithIdType[]>([]); //UserWithIdType holds a schema for the user info as well as user_id
-  const {user: loggedInUser, loading, error} = useLoggedInUser(); //user, loading and error is from the useLoggedInUser hook
+  const {user: loggedInUser, loading, error, refetch} = useLoggedInUser(); //user, loading and error is from the useLoggedInUser hook
   
   useEffect(() => {
     //fetching the users from /api/users that will display on the page
@@ -62,6 +62,7 @@ const PeoplePage = () => {
         toggleDropdown={() => toggleDropdown(user._id.toString())}
         isCurrentUser={user._id.toString() === loggedInUser._id.toString()} //comparing the logged in user to the users in the list, if it's the same user then he get's an 'update profile' option (see in Person component) 
         onUserDataUpdate={updateUserInList} //passing the function down to PersonDropDown
+        refetch={refetch}
         />
         )}
       </ButtonContainer>

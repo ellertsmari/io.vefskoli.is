@@ -1,15 +1,16 @@
 //<------ Module 5 group project ------>
+//this is a component that gets displayed inside <PersonDropDown> 'app/components/person/person.tsx
+//it displays details/informations about the users
 import { Container, EmailFont, InfoFont, NameFont, PrimaryContainer, ProfilePicture, QuestionFont, SecondaryContainer, StyleDiv, FilledButton} from "./person-style";
 import { UserWithIdType } from "@/models/user";
 
 type Props = {
-    isCurrentUser: boolean; // I'm adding this prop to be able to update profile for the user that is logged in
-    onOpenUpdateProfile: () => void;
-    userData: UserWithIdType;
+    isCurrentUser: boolean; // Indicates if the displayed user is the currently logged-in user
+    onOpenUpdateProfile: () => void; // Function to call when the 'Update Profile' button is clicked
+    userData: UserWithIdType; // Data of the user to be displayed
 };
 
 const PersonInfo = ({ userData, isCurrentUser, onOpenUpdateProfile }: Props) => {
-    console.log("Rendering PersonInfo with userData:", userData);
     return (
         <Container>
             <PrimaryContainer>

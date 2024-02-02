@@ -11,10 +11,11 @@ type Props = {
   student: UserWithIdType; // the student that will be updated
   userData: UserWithIdType; // current user data to pre-fill the update form
   onClick:  React.MouseEventHandler<HTMLDivElement>; //handle click events
-  onUserDataUpdate: (updatedUserData: UserWithIdType) => void; // function to display the updated user data.
+  onUserDataUpdate: (updatedUserData: UserWithIdType) => void; // function to display the updated user data
+  refetch: () => void; //function to refetch "logged in user" data
 };
 
-const UpdateUserProfile = ({ student, userData, onClick, onUserDataUpdate }: Props) => {
+const UpdateUserProfile = ({ student, userData, onClick, onUserDataUpdate, refetch }: Props) => {
     const [updateMessage, setUpdateMessage] = useState(''); // state for managing messages if update was successful or not
     const [formValues, setFormValues] = useState({ //pre-fill form values inside the inputs with the userData
         email: userData.email,
@@ -49,8 +50,8 @@ const UpdateUserProfile = ({ student, userData, onClick, onUserDataUpdate }: Pro
             if (response.ok) {
                 const updatedData = await response.json();
                 setUpdateMessage('Update successful');
-                onUserDataUpdate(updatedData); //calling from the parent to update the global userData
-                console.log("Update successful:", updatedData);
+                onUserDataUpdate(updatedData); //notify the parent to update the global userData
+                refetch(); // refetch logged-in user data
               } else {
                 setUpdateMessage('Failed to upload');
                 console.error("Error response:", response.status, response.statusText);
