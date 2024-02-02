@@ -9,6 +9,7 @@ import { GuideType } from "@/models/guide";
 import { ReturnType } from "@/models/return";
 import React from "react";
 import Edit from "./editCard";
+// importing the styles for the fameCard
 import {
   GuideCardContainer,
   CardInfo,
@@ -30,7 +31,7 @@ type Props = {
 };
 
 // FameCard component definition
-const FameCard = ({ guide, returnData }: Props) => {
+const FameCard = ({ returnData }: Props) => {
   // state variables for handling hover and modal open/close
   const [isReturnHovered, setIsReturnHovered] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);

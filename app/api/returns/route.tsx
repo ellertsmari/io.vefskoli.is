@@ -3,8 +3,7 @@
 
 import { NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
-import { Return, ReturnType } from "@/models/return";
-import { NextApiResponse } from "next";
+import { Return } from "@/models/return";
 interface Success {
   message: string;
 }
@@ -37,7 +36,7 @@ export const POST = async (req: NextRequest) => {
   return res.json({ message: "Return created successfully", ...result }, {status: 200});
 }
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   await connectToDatabase();
   const returns = await Return.find({});
   if (returns === null) {
@@ -50,7 +49,7 @@ export const GET = async (req: NextRequest) => {
 
 // HALL OF FAME STUFF
 // defining an asynchronous function for handling HTTP PUT requests
-export const PUT = async (req: NextRequest, res: NextApiResponse) => {
+export const PUT = async (req: NextRequest) => {
   // connecting to the database
   await connectToDatabase()
   // parsing the JSON body of the request (dividing into readable/understandable chunks)
@@ -70,9 +69,9 @@ export const PUT = async (req: NextRequest, res: NextApiResponse) => {
 
   // if the document isn't found, respond with a 404 status and a JSON message
   if (!updatedReturn) {
-    return res.status(404).json({message: 'Return not found'})
+    return res.json({message: 'Return not found'}, {status: 404})
   }
 
   // respond with the updated document in JSON format
-  res.json(updatedReturn)
+  return res.json(updatedReturn)
 }

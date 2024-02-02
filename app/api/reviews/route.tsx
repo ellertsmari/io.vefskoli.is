@@ -1,9 +1,9 @@
 // HALL OF FAME STUFF IN THIS DOCUMENT
 // function to remove guides from Hall of Fame
 
-import { NextRequest, NextResponse } from "next/server";
+import {  NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
-import { Review, ReviewType } from "@/models/review";
+import { Review } from "@/models/review";
 import { ObjectId } from "mongodb";
 
 interface Success {
@@ -43,19 +43,19 @@ export const POST = async (req: NextRequest) => {
   console.log("r is: ", r);
   const result = await Review.create(r);
   console.log("result is: ", result);
-  return NextResponse.json(
+  return res.json(
     { message: "Review created successfully", ...result },
     { status: 200 }
   );
 };
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   await connectToDatabase();
   const reviews = await Review.find({});
   if (reviews === null) {
-    return NextResponse.json({ message: "Review not found" }, { status: 404 });
+    return res.json({ message: "Review not found" }, { status: 404 });
   }
-  return NextResponse.json(reviews, { status: 200 });
+  return res.json(reviews, { status: 200 });
 };
 
 // HALL OF FAME STUFF
@@ -76,12 +76,9 @@ export async function PUT(req: NextRequest) {
 
   // if no guide found, return a 404 status code and a message
   if (object === null) {
-    return NextResponse.json({message: 'Guide not found'}, {status: 404})
+    return res.json({message: 'Guide not found'}, {status: 404})
   }
 
   // Return a 200 status code and a message
-  return NextResponse.json(
-    { message: "Project successfully removed from Hall of fame." },
-    { status: 200 }
-  );
+  return res.json({message: "Project successfully removed from Hall of fame."},{status: 200});
 }
