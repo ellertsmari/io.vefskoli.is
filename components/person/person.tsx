@@ -10,14 +10,15 @@ import Image from "next/image";
 import dropdownArrow from "../../public/dropdownArrow.svg";
 
 type Props = {
-    user: UserWithIdType;
+    user: UserWithIdType; // information about the users
     isCurrentUser: boolean; // Prop to be able to update profile for the user that is logged in
-    isOpen: boolean;
-    toggleDropdown: () => void;
-    onUserDataUpdate: (updatedUserData: UserWithIdType) => void;
-    refetch: () => void;
+    isOpen: boolean; // state to control if the dropdown is open or closed
+    toggleDropdown: () => void; //Function to toggle the dropdown open or closed
+    onUserDataUpdate: (updatedUserData: UserWithIdType) => void; // Function to update user data
+    refetch: () => void; // Function to refetch user data, ensuring the displayed info is current
 };
 
+// Animation settings for the dropdown arrow
 const arrowAnimation = {
   closed: { rotate: 180 },
   open: { rotate: 0 },
@@ -28,18 +29,18 @@ const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown, onUserDat
     const student = user;
     const [userData, setUserData] = useState(user); // Initialize with default user data
 
+    // function to open the update profile window
     const openUpdateProfile = () => {
       setIsUpdateProfileOpen(!isUpdateProfileOpen);
     };
 
+    // function to close the update profile window
     const closeUpdateProfile = () => {
       setIsUpdateProfileOpen(false);
     };
 
-    const handleUserDataUpdate = (updatedUserData: UserWithIdType) => {
-      setUserData(updatedUserData); // Update the userData state with new data
-  };
-
+    // Effect hook to update the local state when the user prop changes
+    // so the displayed user data is always up-to-date
   useEffect(() =>{
     setUserData(user); //update local userData state when user information changes
   }, [user]);

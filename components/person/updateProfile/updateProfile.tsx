@@ -52,7 +52,6 @@ const UpdateUserProfile = ({ student, userData, onClick, onUserDataUpdate, refet
                 setUpdateMessage('Update successful');
                 onUserDataUpdate(updatedData); //notify the parent to update the global userData
                 refetch(); // refetch logged-in user data
-                console.log("Update successful:", updatedData);
               } else {
                 setUpdateMessage('Failed to upload');
                 console.error("Error response:", response.status, response.statusText);
