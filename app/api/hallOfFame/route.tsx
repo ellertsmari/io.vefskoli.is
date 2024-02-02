@@ -1,20 +1,17 @@
 // HALL OF FAME STUFF
 // using a GET request to fetch data from the database
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Review } from "@/models/review";
 import "@/models/return";
 import "@/models/guide";
 
-// this is an asynchronous function named 'GET' that takes a request object 'req' of type 'NextRequest'
-export const GET = async (req: NextRequest) => {
+// this is an asynchronous function named 'GET'
+export const GET = async() => {
   // connect to the database
   await connectToDatabase();
 
-  // Find all reviews in the 'Review' collection where the 'vote' field is "recommend to Hall of fame"
-  // The 'populate("guide")' function is used to replace the 'guide' field in the 'Review' documents
-  // with the actual 'guide' document from the 'Guide' collection
   // Start of the aggregation pipeline
   const reviews = await Review.aggregate([
     {
@@ -28,16 +25,16 @@ export const GET = async (req: NextRequest) => {
       $group: {
         _id: "$return", // Group by the 'return' field
         count: { $sum: 1 }, // For each group, count the number of documents
-        review: { $first: "$$ROOT" }, // For each group, take the first document that was encountered (in the order they were inputted)
+        review: { $first: "$$ROOT" }, // create a new field called 'review' for each group, value assigned to this field is the entire original document (ROOT), specifically first document in the group
       },
     },
     {
       // The $replaceRoot stage replaces the input document with the specified document.
-      $replaceRoot: { newRoot: "$review" }, // Replace each input document with the document specified by the 'review' field
+      $replaceRoot: { newRoot: "$review" }, // replace the root with the review (new document that replaced the original)
     },
     {
       $sort: {
-        createdAt: 1   // ascending order by createdAt
+        createdAt: 1 // ascending order by createdAt
       }
     }
   ]).exec(); // Execute the aggregation pipeline
@@ -49,10 +46,10 @@ export const GET = async (req: NextRequest) => {
   ]);
 
   // If no reviews are found (i.e., 'reviews' is null), return a JSON response with a message and a 404 status
-  if (reviews === null) {
-    return NextResponse.json({ message: "Review not found" }, { status: 404 });
+  if (reviews === null || !reviews.length ) {
+    return res.json({message: 'Guides not found'}, {status: 404});
   }
 
   // If reviews are found, return them as a JSON response with a 200 status
-  return NextResponse.json(populatedReviews, { status: 200 });
+  return res.json(populatedReviews, {status: 200});
 };

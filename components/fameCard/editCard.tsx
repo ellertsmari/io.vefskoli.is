@@ -11,8 +11,6 @@ import {
 } from "../../components/fameCard/styles";
 import Remove from "./removeCard";
 
-
-
 // defining the type of the props that the edit component will receive
 type Props = {
     returns: {
@@ -22,7 +20,6 @@ type Props = {
         vote: string;
     };
 };
-
 
 // the Edit component definition which receives one prop: 'returns'
 const Edit = ({ returns }: Props) => {
@@ -51,9 +48,11 @@ const Edit = ({ returns }: Props) => {
             if (response.ok) {
                 // if everything is ok, update the project name and picture url
                 const updatedReturn = await response.json()
-                setProjectName(updatedReturn.projectName);
-                setPictureUrl(updatedReturn.pictureUrl);
+                setProjectName(projectName === '' ? updatedReturn.projectName : projectName);
+                setPictureUrl(pictureUrl === '' ? updatedReturn.pictureUrl : pictureUrl);
                 console.log("Project updated successfully");
+                //reloading the page when the function is called
+                location.reload()
             } else {
                 console.error("Failed to update project");
             }

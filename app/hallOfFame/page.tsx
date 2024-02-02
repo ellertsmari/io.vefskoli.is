@@ -26,15 +26,23 @@ const guides = () => {
   useEffect(() => {
     // Define an asynchronous function 'logFameGuides' to fetch data from the API
     async function logFameGuides() {
-      // Fetch data from the API
-      const response = await fetch("http://localhost:3000/api/hallOfFame");
-      // Converting the response to JSON files
-      const fameReview = await response.json();
-      // Update the 'data' state variable with the parsed response
-      setData(fameReview);
-      // Logging the response into the console
-      console.log(fameReview);
-      // review ID þarf að vera til í returns ID
+      try {
+        // Fetch data from the API
+        const response = await fetch("/api/hallOfFame");
+        console.log(response.status)
+        // checking if the response was successful
+        if (response.status === 200) {
+          // Converting the response to JSON files
+          const fameReview = await response.json();
+          // Update the 'data' state variable with the parsed response
+          setData(fameReview);
+        } else {
+          console.error('Guides not found')
+        }
+      // error handling if the response wasn't successful
+      } catch (error) {
+        console.error('Error loading guides:', error)
+      }
     }
     // Call the 'logFameGuides' function
     logFameGuides();

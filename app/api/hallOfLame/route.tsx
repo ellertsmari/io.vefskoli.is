@@ -3,13 +3,13 @@
 
 // Import the function to connect to the database
 import { connectToDatabase } from "@/utils/mongoose-connector";
-// Import the types for the request and response objects from Next.js
-import { NextRequest, NextResponse } from "next/server";
+// Import the type for the response object from Next.js
+import { NextResponse as res } from "next/server";
 // Import the Review model
 import { Review } from "@/models/review";
 
 // Define the GET method for this endpoint
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   // Connect to the database
   await connectToDatabase();
   // Find all reviews in the 'Review' collection where the 'vote' field is 'no pass'
@@ -22,9 +22,9 @@ export const GET = async (req: NextRequest) => {
 
   // If no reviews were found, return a 404 status code and a message
   if (reviews === null) {
-    return NextResponse.json({ message: "Review not found" }, { status: 404 });
+    return res.json({message: "Review not found" }, { status: 404});
   }
 
   // If reviews were found, return a 200 status code and the reviews
-  return NextResponse.json(reviews, { status: 200 });
+  return res.json(reviews, { status: 200 });
 };
