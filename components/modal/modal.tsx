@@ -15,7 +15,6 @@ type Props = {
 }
 
 const Modal =({ZoomVideo}:Props) => {
-  console.log (ZoomVideo)
   
   const ClickArea = styled.div `
     width:250px;
@@ -75,7 +74,7 @@ const Modal =({ZoomVideo}:Props) => {
   const closeModal = () =>{
     setIsOpen (false)
   }
-   const videoUrl= ZoomVideo.recording_files [0].file_type==="MP4"? ZoomVideo.recording_files[0].download_url:ZoomVideo.recording_files[1].download_url
+   const videoUrl= ZoomVideo.recording_files [0].file_type==="MP4"? ZoomVideo.recording_files[0]?.download_url:ZoomVideo.recording_files[1]?.download_url 
   return (
     <div>
           <ClickArea onClick={showModal}>    
