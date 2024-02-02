@@ -1,5 +1,6 @@
 'use client';
-//this is a component for the "update profile" window, used on 'PeoplePage' through 'Person' component
+//<------ Module 5 group project ------>
+//this is a component: a "update profile" window, used in 'Person' component: app/components/person/person.tsx
 import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
 import { UserWithIdType } from '@/models/user';
@@ -7,14 +8,15 @@ import { UpdateContainer, IconContainer, ProfilePictureContainer, ProfilePicture
 
 
 type Props = {
-  student: UserWithIdType;
-  //handleUpload: (e: ChangeEvent<HTMLInputElement>) => void;
-  userData: UserWithIdType;
-  onClick:  React.MouseEventHandler<HTMLDivElement>;
+  student: UserWithIdType; // the student that will be updated
+  userData: UserWithIdType; // current user data to pre-fill the update form
+  onClick:  React.MouseEventHandler<HTMLDivElement>; //handle click events
+  onUserDataUpdate: (updatedUserData: UserWithIdType) => void; // function to display the updated user data.
 };
 
-const UpdateUserProfile = ({ student, userData, onClick }: Props) => {
-    const [formValues, setFormValues] = useState({
+const UpdateUserProfile = ({ student, userData, onClick, onUserDataUpdate }: Props) => {
+    const [updateMessage, setUpdateMessage] = useState(''); // state for managing messages if update was successful or not
+    const [formValues, setFormValues] = useState({ //pre-fill form values inside the inputs with the userData
         email: userData.email,
         name: userData.name,
         background: userData.background,
@@ -23,48 +25,47 @@ const UpdateUserProfile = ({ student, userData, onClick }: Props) => {
         favoriteArtists: userData.favoriteArtists,
     });
     
+    // function to handle changes in the inputs of the form (changing the text)
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target; // Get the name and value of the changed input
         setFormValues(prevState => ({
-            ...prevState,
-            [name]: value,
+            ...prevState, // keep all the other form values
+            [name]: value, // update the value that changed
         }));
     };
 
-    //Bjork figuring out how to update profile
+    // function to handle the submission of the form to be updated
     const handleUpdateProfile = async (e:ChangeEvent<HTMLFormElement>) => {
-        console.log("Form submission initiated");
-        e.preventDefault();
-        console.log("Form submission initiated");
+        e.preventDefault(); // prevent the default form submit action
         
-        try {
-            console.log(`/api/users/${student._id}`);
+        try { // a PUT request to api/users/[uid] with the updated data
             const response = await fetch(`/api/users/${student._id}`, {
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formValues),
+                method: 'PUT', 
+                headers: {'Content-Type': 'application/json'}, // telling where the JSON content should go
+                body: JSON.stringify(formValues), // Convert form values to JSON string
             });
 
+            // message displayed if update was successful or not
             if (response.ok) {
-                const responseData = await response.json();
-                console.log("Update successful:", responseData);
+                const updatedData = await response.json();
+                setUpdateMessage('Update successful');
+                onUserDataUpdate(updatedData); //calling from the parent to update the global userData
+                console.log("Update successful:", updatedData);
               } else {
+                setUpdateMessage('Failed to upload');
                 console.error("Error response:", response.status, response.statusText);
               }
-        } catch (error) {
+        } catch (error) { // if the fetch failed the console shows error message
             console.error('Error updating profile:', error);
         }
     };
   
+    // logout function - does not log you out - only redirects you to login page
     const x= { logout: () => {} };
 
+    // if the student is not found, this message shows
   if (!student) return <>you need to log in</>;
-  if (student) {
-    console.log("Logged in user ID:", student._id);
-  } else {
-    console.log("No logged in user found");
-  };
-
+  
   return (
     <UpdateContainer onClick={onClick}>
         <PrimaryContainer className="user-pic/name">
@@ -87,7 +88,6 @@ const UpdateUserProfile = ({ student, userData, onClick }: Props) => {
                 type='text'
                 name='image'
                 defaultValue={userData.avatarUrl || ''}
-                //onChange={handleUpload}
             ></ShortInput>
             <InputText>Background - What have you studied or worked with?</InputText>
             <ShortInput
@@ -120,6 +120,7 @@ const UpdateUserProfile = ({ student, userData, onClick }: Props) => {
             <ButtonWrapper>
                 <FilledButton type="submit">UPDATE</FilledButton>
                 <TextButton>CHANGE PASSWORD</TextButton>
+                {updateMessage && <Email>{updateMessage}</Email>}
             </ButtonWrapper>
         </FormUpdateProfile>
     </UpdateContainer>

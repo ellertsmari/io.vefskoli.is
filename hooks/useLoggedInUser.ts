@@ -1,5 +1,6 @@
+//<------ Module 5 group project ------>
 //this is a hook that fetches the logged in user from /api/loggedIn
-//I use this hook in /app/people to get the logged in user information
+//this hook is used in /app/people to get the logged in user information
 import { useState, useEffect } from "react";
 import { UserWithIdType } from "@/models/user"; 
 
@@ -9,7 +10,7 @@ const useLoggedInUser = () => {
   const [error, setError] = useState<string | null>(null); // state to store error messages if the request og fetching user data fails, set to null - no errors have occurred yet
 
   // useEffect hook to perform the api call as a side effect when the component mounts
-  useEffect(() => {
+  
     const fetchLoggedInUser = async () => { // async function to fetch the logged-in user's data
       try {
         const response = await fetch('/api/loggedIn'); // GET request to the api/loggedIn endpoint
@@ -27,10 +28,13 @@ const useLoggedInUser = () => {
       }
     };
 
+    useEffect(() => { // useEffect to perform the initial fetch on component mount
     fetchLoggedInUser(); // call the fetchLoggedInUser function
   }, []); // the empty square brackets should ensure this effect only runs once after the component mounts
 
-  return { user, loading, error }; // return the states to use in the component where we call the hook
+  const refetch = () => fetchLoggedInUser();
+
+  return { user, loading, error, refetch }; // return the states to use in the component where we call the hook
 };
 
 export default useLoggedInUser;
