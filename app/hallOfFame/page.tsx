@@ -1,6 +1,8 @@
 // HALL OF FAME STUFF
 // fetching the guides that are recommended to Hall of fame
 
+//On this page we’re fetching the guides that are recommended to the Hall of fame.
+
 "use client";
 
 import { MainContent } from "@/components/mainLayout";
@@ -57,7 +59,7 @@ const guides = () => {
           {data.map((review: Review) => {
             return (
               <FameCard
-                // Use the guide's title as the key
+                // Use the 'created at' as the key
                 key={review.return.createdAt.toString()}
                 // Pass the guide as a prop to the 'FameCard' component
                 returnData={review.return}

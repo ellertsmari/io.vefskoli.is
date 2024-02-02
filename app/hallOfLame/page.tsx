@@ -1,5 +1,7 @@
 // HALL OF LAME STUFF
 
+//On this page we’re fetching the guides that are voted as a 'no pass'
+
 'use client'
 
 import FameCard from "@/components/fameCard/fameCard";
@@ -30,8 +32,7 @@ const hallOfLame = () => {
       const lameReview = await response.json()
 //Update the 'data' state variable with the parsed response
       setData(lameReview)
-//Logging the response into the console
-      console.log(lameReview)
+
     }
 
     logLameGuides()
@@ -45,7 +46,7 @@ const hallOfLame = () => {
           {data.map((review: Review) => {
             return (
               <FameCard
-              // Use the guide's title as the key
+              // key identifier
                 key={review.guide.title.toString()}
                // Pass the guide as a prop to the 'FameCard' component
                 returnData={review.return}
