@@ -1,4 +1,5 @@
 'use client';
+//<------ Module 5 group project ------>
 //this is a component: a "update profile" window, used in 'Person' component: app/components/person/person.tsx
 import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';

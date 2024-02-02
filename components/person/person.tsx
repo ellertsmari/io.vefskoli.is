@@ -1,3 +1,4 @@
+//<------ Module 5 group project ------>
 // this is a PersonDropDown component, a dropdown that appears when clicking on a user in app/people/page.tsx
 import React, { useState } from 'react';
 import { UserWithIdType } from '@/models/user';
@@ -13,6 +14,7 @@ type Props = {
     isCurrentUser: boolean; // Prop to be able to update profile for the user that is logged in
     isOpen: boolean;
     toggleDropdown: () => void;
+    onUserDataUpdate: (updatedUserData: UserWithIdType) => void;
 };
 
 const arrowAnimation = {
@@ -20,7 +22,7 @@ const arrowAnimation = {
   open: { rotate: 0 },
 };
 
-const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown }: Props) => {
+const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown, onUserDataUpdate }: Props) => {
     const [isUpdateProfileOpen, setIsUpdateProfileOpen] = useState(false); // this state is for the update profile window
     const student = user;
     const [userData, setUserData] = useState(user); // Initialize with default user data
@@ -50,15 +52,15 @@ const PersonDropDown = ({ user, isCurrentUser, isOpen, toggleDropdown }: Props) 
             </Button>
             {isOpen && (
             <div>
-              <PersonInfo user={user} isCurrentUser={isCurrentUser} onOpenUpdateProfile={openUpdateProfile} userData={userData} />
+              <PersonInfo userData={userData} isCurrentUser={isCurrentUser} onOpenUpdateProfile={openUpdateProfile} />
               {isUpdateProfileOpen && (
                 /* here is the window that opens if you click on 'Update Profile'*/
               <Overlay onClick={closeUpdateProfile}> // when clicking outside of the update window, it closes
               <UpdateUserProfile
                 student={student}
-                userData={user}
+                userData={userData}
                 onClick={(e) => e.stopPropagation()} //making sure that when clicking on the window it doesn't close
-                onUserDataUpdate={handleUserDataUpdate}
+                onUserDataUpdate={onUserDataUpdate} // pass it down to UpdateUserProfile
               />
               </Overlay>
               )}

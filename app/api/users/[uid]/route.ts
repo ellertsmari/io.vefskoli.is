@@ -1,3 +1,4 @@
+//<------ Module 5 group project changes start in line 115 ------>
 import { NextRequest, NextResponse as res} from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { User } from "@/models/user";
@@ -111,6 +112,7 @@ export const POST = async ( req: NextRequest, { params }: { params: { uid: strin
   return res.json({ message: "User updated successfully" }, { status: 200});
 }
 
+//<------ Module 5 group project ------>
 // This function is an API route handler for updating user information in the database.
 // in app/components/person/updateProfile/updateProfile.tsx is the fetch function
 export const PUT = async (req: NextRequest, { params}: {params: {uid: string} }) => {

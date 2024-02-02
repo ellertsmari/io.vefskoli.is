@@ -1,4 +1,5 @@
 "use client";
+//<------ Module 5 group project ------>
 import React, { useEffect, useState } from 'react';
 import { UserWithIdType } from '@/models/user';
 import { MainContent } from '@/components/mainLayout';
@@ -29,6 +30,11 @@ const PeoplePage = () => {
     fetchUsers();
   }, []);
 
+  //Function that can be passed down to child components and called with updated user data
+  const updateUserInList = (updatedUser: UserWithIdType) => {
+    setUsers(currentUsers => currentUsers.map(user => user._id === updatedUser._id ? updatedUser : user));
+  };
+
   const toggleDropdown = (userId: string) => {
     setOpenDropdown((prevOpenDropdown) => (prevOpenDropdown === userId ? null : userId));
 };
@@ -37,7 +43,7 @@ const PeoplePage = () => {
     return <div>Loading...</div>; //maybe we could do a nicer loading thing
   }
   if (error) {
-    return <div>{error}</div>; //error message from the hook
+    return <div>Error: {error}</div>; //error message from the hook
   }
   if (!loggedInUser) {
     return <div>You have to log in to see the content of this page</div>
@@ -55,6 +61,7 @@ const PeoplePage = () => {
         isOpen={openDropdown === user._id.toString()}
         toggleDropdown={() => toggleDropdown(user._id.toString())}
         isCurrentUser={user._id.toString() === loggedInUser._id.toString()} //comparing the logged in user to the users in the list, if it's the same user then he get's an 'update profile' option (see in Person component) 
+        onUserDataUpdate={updateUserInList} //passing the function down to PersonDropDown
         />
         )}
       </ButtonContainer>
