@@ -2,7 +2,7 @@ import useServerUser from "@/utils/useServerUser";
 import { OmitPassword } from "@/utils/types/types";
 import Recordings from "@/components/resources/resources";
 
-//This fetches resources from an API and renders the Recordings component with the fetched data.
+//This page fetches resources from an API and renders the Recordings component with the fetched data.
 
 const resources = async () => {
 const user: OmitPassword | string = await useServerUser();
@@ -10,12 +10,11 @@ const user: OmitPassword | string = await useServerUser();
 if (!user) return <>Please login</>
 
 // This fetches data from the Zoom API.
-const response = await fetch("http://localhost:3000/api/zoomapi");  //this should eventually change to the io.vefskoli.is 
+const response = await fetch("http://localhost:3000/api/zoomapi");  //this should eventually change to io.vefskoli.is 
+
 // This parses the response data as JSON.
 const data = await response.json();
 if (!data || !data.meetings) return <>No resources found</>;
-console.log(data);
-
 
   return (
     <div style={{position:"relative"}}>
@@ -25,6 +24,10 @@ console.log(data);
 };
 
 export default resources;
+
+
+
+
 
 
 
