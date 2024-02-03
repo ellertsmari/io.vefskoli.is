@@ -47,7 +47,8 @@ const nameDrop: {[key:string]:string} = {
     'Vefskóli' : 'MISC',
     'Presenta'  : 'GUESTS',
     'Web appl' : 'MODULE 3',
-    'Returnin' : 'MISC',  
+    'Returnin' : 'MISC', 
+    'First La' : 'LAS PALMAS',  
 }; 
 
 //Our component that displays the zoom recordings. 
