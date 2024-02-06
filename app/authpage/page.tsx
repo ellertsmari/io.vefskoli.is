@@ -109,7 +109,6 @@ const authPage = () => {
       },
       body: JSON.stringify(user),
     });
-    
     const x = await res.json();
     console.log("this is x", x);
     if (x.message === "User created successfully") {
@@ -254,7 +253,7 @@ const authPage = () => {
                 <InputLabel>Favourite band/s or artist/s</InputLabel>
                 <ShortInput
                   type="text"
-                  name="favouriteBands"
+                  name="favoriteArtists"
                   value={credentials.favoriteArtists}
                   onChange={handleInputChange}
                 />
