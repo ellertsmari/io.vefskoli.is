@@ -27,6 +27,13 @@ interface Success {
  *         description: Successfully returned all returns
  *       404:
  *         description: No returns found
+ *    put:
+ *     description: Creates a new return
+ *     responses:
+ *      200:
+ *       description: return created successfully
+ *      400:
+ *       description: Bad request - Invalid return data
  */
 
 export const POST = async (req: NextRequest) => {
