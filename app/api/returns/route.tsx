@@ -4,6 +4,8 @@
 import { NextRequest, NextResponse as res } from "next/server";
 import { connectToDatabase } from "@/utils/mongoose-connector";
 import { Return } from "@/models/return";
+import useServerUser from "@/utils/useServerUser";
+import { ObjectId } from "mongodb";
 interface Success {
   message: string;
 }
@@ -55,6 +57,14 @@ export const PUT = async (req: NextRequest) => {
   // parsing the JSON body of the request (dividing into readable/understandable chunks)
   const body = await req.json()
   // find and update the document in the 'Return' collection based on the provided ID
+  const user = await useServerUser();
+  if (!user || typeof user === "string") {
+    return res.json({message:"You are not authorized to update this review"});
+  }
+  const your = await Return.find({owner: new ObjectId(user._id)});
+  if (!your || your.length === 0) {
+    return res.json({message:"You are not authorized to update this review"});
+  }
   const updatedReturn = await Return.findOneAndUpdate(
     {_id: body.id},
     {
@@ -71,6 +81,8 @@ export const PUT = async (req: NextRequest) => {
   if (!updatedReturn) {
     return res.json({message: 'Return not found'}, {status: 404})
   }
-
+  console.log(updatedReturn);
   // respond with the updated document in JSON format
   return res.json(updatedReturn)
+
+}

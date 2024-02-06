@@ -13,8 +13,7 @@ const NavBar = () => {
     ["guides", "/guides"],
     ["resources", "/resources"],
     ["hall of fame", "/hallOfFame"],
-    ["hall of lame", "/hallOfLame"],
-    // ["people", "/people"],
+    ["people", "/people"],
     ["calendar", "/calendar"],
   ];
 

@@ -20,6 +20,7 @@ const UpdateUserProfile = ({ student, userData, onClick, onUserDataUpdate, refet
     const [formValues, setFormValues] = useState({ //pre-fill form values inside the inputs with the userData
         email: userData.email,
         name: userData.name,
+        image: userData.avatarUrl,
         background: userData.background,
         careerGoals: userData.careerGoals,
         interests: userData.interests,
@@ -89,6 +90,7 @@ const UpdateUserProfile = ({ student, userData, onClick, onUserDataUpdate, refet
                 type='text'
                 name='image'
                 defaultValue={userData.avatarUrl || ''}
+                onChange={handleInputChange}
             ></ShortInput>
             <InputText>Background - What have you studied or worked with?</InputText>
             <ShortInput
