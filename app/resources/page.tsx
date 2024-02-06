@@ -10,7 +10,7 @@ const user: OmitPassword | string = await useServerUser();
 if (!user) return <>Please login</>
 
 // This fetches data from the Zoom API.
-const response = await fetch("http://localhost:3000/api/zoomapi");  //this should eventually change to io.vefskoli.is // tip from coder: use env URL for this or the production URL
+const response = await fetch("https://io.vefskoli.is/api/zoomapi");  //this should eventually change to io.vefskoli.is // tip from coder: use env URL for this or the production URL
 
 // This parses the response data as JSON.
 const data = await response.json();
