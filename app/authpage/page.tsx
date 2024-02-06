@@ -109,6 +109,7 @@ const authPage = () => {
       },
       body: JSON.stringify(user),
     });
+    
     const x = await res.json();
     console.log("this is x", x);
     if (x.message === "User created successfully") {
