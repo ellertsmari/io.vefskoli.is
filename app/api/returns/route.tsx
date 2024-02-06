@@ -74,4 +74,3 @@ export const PUT = async (req: NextRequest) => {
 
   // respond with the updated document in JSON format
   return res.json(updatedReturn)
-}
