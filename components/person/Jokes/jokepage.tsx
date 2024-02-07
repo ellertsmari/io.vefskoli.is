@@ -57,9 +57,9 @@ const JokePage = () => {
     };
 
 
-const ArrowImage = styled(motion.div)`
+const ArrowImage = motion(styled.div`
     margin-left: auto;
-    `;
+    `);
 
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);

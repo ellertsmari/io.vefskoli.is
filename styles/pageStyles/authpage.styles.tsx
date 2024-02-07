@@ -11,7 +11,7 @@ export const LoginLayout = styled.div`
 `;
 
 //div that wraps around login form
-export const LoginWrapper = styled(motion.div)`
+export const LoginWrapper = motion(styled.div`
   display: flex;
   width: 75rem;
   min-height: 65rem;
@@ -41,7 +41,7 @@ export const LoginWrapper = styled(motion.div)`
     width: 30rem;
     min-height: 30rem;
   }
-`;
+`);
 
 export const RegisterLayout = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ export const RegisterLayout = styled.div`
   padding-bottom: 10rem;
 `;
 
-export const RegisterWrapper = styled(motion.div)`
+export const RegisterWrapper = motion(styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -85,7 +85,7 @@ export const RegisterWrapper = styled(motion.div)`
     padding-top: 3rem;
     padding-bottom: 0rem;
   }
-`;
+`);
 
 //The form for loggin in which works as a wrapper
 export const InputForm = styled.form`

@@ -11,7 +11,7 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const StyledLink = styled(Link)`
+const StyledAnchor = styled.a`
   color: black;
   text-decoration: none;
   font-size: 1.5rem;
@@ -23,6 +23,22 @@ export const StyledLink = styled(Link)`
     max-width: 25rem; /* Adjust this value to the width of your card or desired truncation width */
   }
 `
+
+// Define props type for StyledLink
+interface StyledLinkProps {
+  children: React.ReactNode; // Type for any valid React child
+  href: string; // Assuming href is a string for simplicity, adjust as needed
+  className?: string; // Optional className prop
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void; // Optional onClick prop
+}
+
+// Use the StyledLinkProps type for your component props
+export const StyledLink: React.FC<StyledLinkProps> = ({ children, href, onClick, className }) => (
+  <Link href={href} passHref>
+    <StyledAnchor>{children}</StyledAnchor>
+  </Link>
+);
+
 
 export const Title = styled.h1`
   font-size: 1.8rem;

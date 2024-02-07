@@ -53,7 +53,7 @@ export const DropdownContainer = styled.div`
   align-items: center;
 `
 
-  export const GuidesContainer = styled(motion.div) `
+  export const GuidesContainer = motion(styled.div `
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 5rem;
@@ -61,7 +61,7 @@ export const DropdownContainer = styled.div`
     height: 100%;
     padding: 1rem;
     overflow-y: scroll;
-  ` 
+  `)
 
   export const Error = styled.p`
     color: red;

@@ -1,12 +1,33 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { createSwaggerSpec } from 'next-swagger-doc';
-import dynamic from 'next/dynamic';
+import dynamic, { DynamicOptions } from 'next/dynamic';
+import { ComponentType, ReactElement } from 'react';
 import 'swagger-ui-react/swagger-ui.css';
 
-const SwaggerUI = dynamic(() => import('swagger-ui-react'), { ssr: false });
+/*const SwaggerUI: ComponentType<{
+  spec: any;
+}> = dynamic(import('swagger-ui-react').then(mod => mod.default) as DynamicOptions, { ssr: false }) as ComponentType<{
+  spec: any;
+}> ;*/
+interface SwaggerUIProps {
+  spec: object;
+}
+
+// Dynamically import SwaggerUI with a more generic approach to circumvent the type issue
+const SwaggerUIWrapper: React.FC<SwaggerUIProps> = (props) => {
+  // Use a type assertion to 'any' to bypass detailed type checking
+  const SwaggerUI: any = dynamic(() => import('swagger-ui-react').then(mod => mod.default as any), {
+    ssr: false,
+  });
+
+  // Since SwaggerUI is typed as 'any', it bypasses TypeScript's strict type checks
+  return <SwaggerUI {...props} />;
+};
+
+
 
 function ApiDoc({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <SwaggerUI spec={spec} />;
+  return <SwaggerUIWrapper spec={spec} />;
 }
 
 export const getStaticProps: GetStaticProps = async () => {

@@ -28,7 +28,7 @@ export const DropdownButton = styled.button`
     background-color: #3b3a96;
   }
 `;
-export const DropdownContent = styled(motion.div)`
+export const DropdownContent = motion(styled.div`
   display: none;
   position: absolute;
   top: 100%;
@@ -58,8 +58,8 @@ export const DropdownContent = styled(motion.div)`
   ${DropdownContainer}:hover & {
     display: block;
   }
-`;
+`);
 
-export const ArrowImage = styled(motion.div)`
+export const ArrowImage = motion(styled.div`
   position: relative;
-`;
+`);

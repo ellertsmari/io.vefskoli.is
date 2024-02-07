@@ -15,10 +15,24 @@ export const GuideCardContainer = styled.div`
   margin-right: auto;
 `;
 
-export const StyledLink = styled(Link)`
+const StyledAnchor = styled.a`
   color: black;
   text-decoration: none;
-`
+`;
+
+// Define props type for StyledLink
+interface StyledLinkProps {
+  children: React.ReactNode; // Type for any valid React child
+  href: string; // Assuming href is a string for simplicity, adjust as needed
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void; // Optional onClick prop
+}
+
+// Use the StyledLinkProps type for your component props
+export const StyledLink: React.FC<StyledLinkProps> = ({ children, href, onClick }) => (
+  <Link href={href} passHref>
+    <StyledAnchor>{children}</StyledAnchor>
+  </Link>
+);
 
 export const CardInfo = styled.div`
   box-shadow: 2px 4px 3px rgba(139, 139, 139, 0.25);

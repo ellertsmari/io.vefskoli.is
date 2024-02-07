@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 type Review = {
   guide: GuideType;
   _id: string;
-  'return': ReturnType;
+  'return': ReturnType & {_id: string};
 }
 
 //Making a Hall of lame component

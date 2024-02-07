@@ -134,6 +134,6 @@ export const QuestionFont = styled.h3`
     font-size: 16px;
 `
 
-export const ArrowImage = styled(motion.div)`
+export const ArrowImage = motion(styled.div`
     margin-left: auto;
-    `;
+    `);

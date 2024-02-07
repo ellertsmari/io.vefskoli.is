@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 type Review = {
   guide: GuideType;
   _id: string;
-  "return": ReturnType;
+  "return": ReturnType & {_id: string};
 };
 
 // Define a React functional component named 'guides'

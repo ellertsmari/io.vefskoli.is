@@ -27,7 +27,7 @@ import {
 // defining the type of the props that the FameCard component will receive
 type Props = {
   guide: GuideType;
-  returnData: ReturnType;
+  returnData: ReturnType & {_id: string};
 };
 
 // FameCard component definition
