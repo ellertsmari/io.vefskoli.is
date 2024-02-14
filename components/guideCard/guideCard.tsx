@@ -236,6 +236,11 @@ if (nrOfReviews === 1) {
           {reviewStatus.text}
         </Status>
       </StyledLink>
+      <>{
+        ""+console.log("returnStatus is", returnStatus)+
+        console.log("needsGrading is", needsGrading)+
+        console.log("isOpened is", isOpen)
+      }</>
       {returnStatus && reviewStatus.condition === needsGrading && (
           <GradingForm
             guide={guide}
