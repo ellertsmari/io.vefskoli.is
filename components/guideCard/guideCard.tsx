@@ -227,11 +227,12 @@ if (nrOfReviews === 1) {
             </TitleWrapper>
         </CardInfo>
       </StyledLink>
-      <StyledLink onClick={() => setIsOpen(!isOpen)} href={reviewStatus.href}>
+      <StyledLink href={reviewStatus.href}>
         <Status
           style={{ background: reviewStatus.backgroundColor, filter: reviewModifiedColor }}
           onMouseEnter={ReviewHandleMouseEnter}
           onMouseLeave={ReviewHandleMouseLeave}
+          onClick={() => setIsOpen(!isOpen)}
         >
           {reviewStatus.text}
         </Status>
