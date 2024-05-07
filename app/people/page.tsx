@@ -40,7 +40,7 @@ const PeoplePage = () => {
 };
   //these are the states from 'useLoggedInUser' hook
   if (loading) {
-    return <div>Loading...</div>; //maybe we could do a nicer loading thing
+    return <MainContent>Loading...</MainContent>; //maybe we could do a nicer loading thing
   }
   if (error) {
     return <div>Error: {error}</div>; //error message from the hook

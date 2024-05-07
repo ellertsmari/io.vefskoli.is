@@ -5,6 +5,7 @@ import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
 import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
 import review from "@/app/review/[id]/page";
+import { getReturnStatus, getReviewStatus } from "./guideStates";
 
 
 
@@ -49,121 +50,10 @@ if (nrOfReviews === 1) {
   grade = (highestGrade + secondHighestGrade) / 2;
 } //if the grade is 0, it means that the review has not been graded yet
 
+const returnStatuses = getReturnStatus(isReturned, needsGrading, vote || "", guide._id);
+const reviewStatuses = getReviewStatus(isReturned, needsGrading, nrOfReviews, oldestReturnId, hasOldReview, guide._id, grade);
 
-
- const reviewStatuses = [
-  {
-    text: "Return guide",
-    condition: !isReturned,
-    backgroundColor: "#F1F1F1",
-    href: `/guide/${guide._id}`,
-  },
-  {
-    text: "Grade review",
-    condition: needsGrading,
-    backgroundColor: "#72BBFF",
-    href: `#`,
-  },
-  {
-    text: "nobody to review yet",
-    condition: nrOfReviews === 0 && !oldestReturnId,
-    backgroundColor: `#FECA9D`,
-    href: `#`,
-  },
-  {
-    text:"please finish review",
-    condition: nrOfReviews === 0 && hasOldReview,
-    backgroundColor: "#F99F9D",
-    href:`/review/${oldestReturnId}`
-  },
-  {
-    text: "Make review",
-    condition: nrOfReviews === 0,
-    backgroundColor: "#FECA9D",
-    href: `/review/${oldestReturnId}`,
-  },
-  {
-    text: "nobody to review yet",
-    condition: nrOfReviews === 1 && !oldestReturnId,
-    backgroundColor: "linear-gradient(to right, #B5E2A8, #FECA9D)",
-    href: `#`,
-  },
-  {
-    text: "please finish review",
-    condition: nrOfReviews === 1 && hasOldReview,
-    backgroundColor: "linear-gradient(to right, #B5E2A8, #F99F9D)",
-    href: `/review/${oldestReturnId}`,
-  },
-  {
-    text: "Make another review",
-    condition: nrOfReviews === 1,
-    backgroundColor: "linear-gradient(to right, #B5E2A8, #FECA9D)",
-    href: `/review/${oldestReturnId}`,
-  },
-  {
-    text: "Waiting for grade",
-    condition: !grade,
-    backgroundColor: "#B5E2A8",
-    href: `#`,
-  },
-  {
-    text: "grade: "+grade,
-    condition: grade,
-    backgroundColor: "#B5E2A8",
-    href: `#`,
-  },
-];
-
- const returnStatuses = [
-  {
-    text: "You have not returned the guide yet",
-    condition: !isReturned,
-    backgroundColor: "#F1F1F1",
-    backgroundImg: "none",
-    backgroundRepeat: "no-repeat",
-    href: `/guide/${guide._id}?isReturned=${isReturned}`,
-  },
-  {
-    text: "You have got a review, please grade it",
-    condition: needsGrading,
-    backgroundColor: "#72BBFF",
-    backgroundImg: `url("bell.svg")`,
-    backgroundRepeat: "no-repeat",
-    href: `#`,
-  },
-  {
-    text: "You have passed this guide, Well Done!",
-    condition: vote === "pass",
-    backgroundColor: "#B5E2A8",
-    backgroundImg: `url("check.svg")`,
-    backgroundRepeat: "no-repeat",
-    href: `/guide/${guide._id}?isReturned=${isReturned}`,
-  },
-  {
-    text: "You did not pass this guide, Try again!",
-    condition: vote === "no pass",
-    backgroundColor: "#F99F9D",
-    backgroundImg: `url("x.svg")`,
-    backgroundRepeat: "no-repeat",
-    href: `/guide/${guide._id}`,
-  },
-  {
-    text: "Your guide was recommended to Hall of fame, Well Done!",
-    condition: (vote === "recommend to Hall of fame"),
-    backgroundColor: "#A5A6F6",
-    backgroundImg: `url("star.svg")`,
-    backgroundRepeat: "no-repeat",
-    href: `/guide/${guide._id}?isReturned=${isReturned}`
-  },
-  {
-    text: "Waiting until someone reviews your project",
-    condition: !vote,
-    backgroundColor: "#B5E2A8",
-    backgroundImg: `url("hourglass.svg")`,
-    backgroundRepeat: "no-repeat",
-    href: `/guide/${guide._id}?isReturned=${isReturned}`,
-  },
-];
+ 
   //Return hover state
   const RetunrHandleMouseEnter = () => {
     setIsReturnHovered(true);

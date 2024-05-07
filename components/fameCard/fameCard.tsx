@@ -68,7 +68,7 @@ const FameCard = ({ returnData }: Props) => {
             <DescriptionWrapper>
               {/* if hovering, the click to view nad pencil icon is displayed */}
               <HoveredDescription isShown={isReturnHovered}>
-                <a href={returnData.liveVersion}>Click to view</a>
+                <a href={returnData.liveVersion} target="_blank">Click to view</a>
               </HoveredDescription>
             </DescriptionWrapper>
             {/* if hovering, pencil icon appears and if clicked, the modal opens */}
