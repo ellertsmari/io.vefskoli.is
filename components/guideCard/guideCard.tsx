@@ -26,7 +26,7 @@ const reviewsForLatestReturn = otherReviews.filter((review  ) => review.return?.
 
 //Getting vote(pass, no pass, recommended to Hall of fame) from "otherReviews" object
 const vote = reviewsForLatestReturn.length?reviewsForLatestReturn[0].vote:undefined;
-console.log("this is the guide", guide)
+//console.log("this is the guide", guide)
 //
 
 
@@ -149,7 +149,7 @@ if (nrOfReviews === 1) {
   },
   {
     text: "Your guide was recommended to Hall of fame, Well Done!",
-    condition: vote === "recommend to Hall of fame",
+    condition: (vote === "recommend to Hall of fame"),
     backgroundColor: "#A5A6F6",
     backgroundImg: `url("star.svg")`,
     backgroundRepeat: "no-repeat",
@@ -184,7 +184,7 @@ if (nrOfReviews === 1) {
 
   const returnStatus = returnStatuses.find((status) => status.condition);
   if (!returnStatus) {
-    console.log("no returnStatus found");
+    console.log("no returnStatus found", vote);
     return <>returnStatus not found</>;
   }
 

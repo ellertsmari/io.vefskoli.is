@@ -34,9 +34,9 @@ const MiniCalendar = ({}) => {
             <ArrowButton style={{justifyContent:"flex-start"}}>{">"}</ArrowButton>
         </CalendarNavGrid>
         <CalendarGrid >
-            {Days.map((day) => <DaysContainer>{day}</DaysContainer>)}
-            {empty.map((key, i)=><Cell></Cell>)}
-            {cells.map((key, i)=><Cell>{i + 1}</Cell>)}
+            {Days.map((day) => <DaysContainer key={day}>{day}</DaysContainer>)}
+            {empty.map((key, i)=><Cell key={i}></Cell>)}
+            {cells.map((key, i)=><Cell key={i}>{i + 1}</Cell>)}
         </CalendarGrid>
     </CalendarContainer>
 </>

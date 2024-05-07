@@ -17,7 +17,7 @@ export const GET = async() => {
     {
       // The $match stage filters the documents to pass only the documents that match the specified condition(s) to the next pipeline stage.
       $match: {
-        vote: "recommend to gallery", // Only pass the documents where the 'vote' field is 'recommend to Hall of fame'
+        vote: {"$regex":"^recommend"} // Only pass the documents where the 'vote' field is 'recommend to Hall of fame'
       },
     },
     {
