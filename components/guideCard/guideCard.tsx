@@ -4,7 +4,7 @@ import type { AggregatedGuide } from "@/utils/types/types";
 import { useState } from "react";
 import GradingForm from "../gradingForm/gradingForm";
 import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
-import review from "@/app/review/[id]/page";
+
 import { getReturnStatus, getReviewStatus } from "./guideStates";
 
 
