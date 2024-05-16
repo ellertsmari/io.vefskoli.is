@@ -95,11 +95,14 @@ export const POST = async ( req: NextRequest, { params }: { params: { uid: strin
   const encryptedSession = cookieStore.get("session")?.value;
   const session = await unsealData(encryptedSession as string, {password:process.env.SECRET_COOKIE_PASSWORD as string});
 
-  
+  console.log("noTeacher", session)
   if(session.role==="teacher"){
+    const setSession = {...session, _id:params.uid}
     const newSession = await sealData({...session, _id:params.uid}, {password:process.env.SECRET_COOKIE_PASSWORD as string});
+    console.log("teacher", setSession)
     const secure = process.env.NODE_ENV === 'production'?"; Secure":"";
     const headers = { 'Set-Cookie': `session=${newSession}; HttpOnly; ${secure}; Path=/`}
+    
     return new Response(JSON.stringify({message:"logged in"}), {
       status: 200,
       headers

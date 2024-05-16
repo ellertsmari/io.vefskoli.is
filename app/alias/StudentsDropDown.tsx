@@ -12,10 +12,9 @@ const StudentsDropDown = ({students}:Props) => {
 
   const selectStudent= (event:SyntheticEvent<HTMLSelectElement, Event>)=>{
     const s:Student = JSON.parse(event.currentTarget.value)
-    console.log(s)
-    if(student.name!=="sudo"){
-      fetch(`/api/users/${s._id}`, {method: "POST"})
-    }
+
+    fetch(`/api/users/${s._id}`, {method: "POST"})
+    
     setStudent(s)
 
   }
