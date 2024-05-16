@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const OverallLayout = styled.div`
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto;
+  grid-template-rows: 1fr 20fr;
   grid-template-areas: 
   "sidebar main main main main main main";
   gap: 5rem;
@@ -34,5 +34,6 @@ export const MainContent = styled.div`
 export const SidebarContainer = styled.div`
   max-height: 100vh;
   grid-area: sidebar;
+  grid-row: 1 / span 2;
 `
 

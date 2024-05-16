@@ -19,7 +19,7 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   const [isReturnHovered, setIsReturnHovered] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
 
-  const { isReturned, isReviewed, userReviews, userReturns, oldestReturnId, otherReviews } =
+  const { isReturned, userReviews, userReturns, oldestReturnId, otherReviews } =
   guide;
 const nrOfReviews = userReviews.length;
 const ungradedReviews = otherReviews.filter((review) => !review.grade);
@@ -50,8 +50,9 @@ if (nrOfReviews === 1) {
   grade = (highestGrade + secondHighestGrade) / 2;
 } //if the grade is 0, it means that the review has not been graded yet
 
-const returnStatuses = getReturnStatus(isReturned, needsGrading, vote || "", guide._id);
-const reviewStatuses = getReviewStatus(isReturned, needsGrading, nrOfReviews, oldestReturnId, hasOldReview, guide._id, grade);
+const id = JSON.parse(JSON.stringify(guide._id));
+const returnStatuses = getReturnStatus(isReturned, needsGrading, vote || "", id);
+const reviewStatuses = getReviewStatus(isReturned, needsGrading, nrOfReviews, oldestReturnId, hasOldReview, id, grade);
 
  
   //Return hover state

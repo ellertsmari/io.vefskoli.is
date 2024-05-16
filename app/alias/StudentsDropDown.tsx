@@ -1,27 +1,30 @@
 'use client'
-import { useState, useEffect } from "react";
-import Dropdown from '@/components/dropDown/dropDown';
-import { UserWithIdType } from "@/models/user";
+import { useState } from "react";
 import { Title } from "@/components/sidebar/sidebar.style";
+import { SyntheticEvent } from "react";
 
+type Student = {_id: string, name: string, email: string, role: string, password: string, createdAt: Date}
 type Props = {
-    students: Array<UserWithIdType>
+    students: [Student]
 }
 const StudentsDropDown = ({students}:Props) => {
-  const [student, setStudent] = useState("sudo");
-  useEffect(() => {
-    if(student!=="sudo"){
-      fetch(`/api/users/${JSON.parse(student)._id}`, {method: "POST"})
+  const [student, setStudent] = useState({_id : "", name: "sudo", email:"sudo", role:"sudo", password:"sudo", createdAt: new Date()});
+
+  const selectStudent= (event:SyntheticEvent<HTMLSelectElement, Event>)=>{
+    const s:Student = JSON.parse(event.currentTarget.value)
+    console.log(s)
+    if(student.name!=="sudo"){
+      fetch(`/api/users/${s._id}`, {method: "POST"})
     }
-    else{
-      console.log("no student selected");
-    }
-  }, [student])
+    setStudent(s)
+
+  }
   return (
     <div>
-      <Title>you are now: {student==="sudo"?"yourself":JSON.parse(student).name}</Title>
-      <Dropdown options={students.map(s=>JSON.stringify(s))} selected={student} setSelected={setStudent} />
-      {/* <Dropdown options={students.map(s=>s.name)} selected={student} setSelected={setStudent} /> */}
+      <Title>you are now: {student.name==="sudo"?"yourself":student.name}</Title>
+      <select onChange={selectStudent}>
+        {students.map(s=><option key={s._id} value={JSON.stringify(s)}>{s.name}</option>)}
+      </select>
     </div>
   )
 }
