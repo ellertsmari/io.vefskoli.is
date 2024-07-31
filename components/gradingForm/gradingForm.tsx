@@ -27,10 +27,11 @@ interface Props {
   review: ReviewWithId;
   guide: AggregatedGuide;
   isOpen: boolean;
+  canGrade: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
+const GradingForm = ({guide, review, isOpen, setIsOpen, canGrade}:Props) => {
   const [currentValue, setCurrentValue] = useState(5)
   const router = useRouter();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,10 +53,13 @@ const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
     console.log(updatedReview)
     router.refresh();
   }
+  const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
+    if  (e.target === e.currentTarget) setIsOpen(!isOpen)
+  }
   return (
     <>
       {isOpen && (
-        <BackgroundOverlay style={{zIndex:3}}>
+        <BackgroundOverlay style={{zIndex:3}} onClick={closeModal}>
           <Modal>
             <ProjectTitle>{guide.title}</ProjectTitle>
             <FormContainer>
@@ -65,20 +69,24 @@ const GradingForm = ({guide, review, isOpen, setIsOpen}:Props) => {
                 <Text>
                {review.comment}
                 </Text>
-                <SubTitle>Grade this feedback</SubTitle>
-                <SliderContainer>
-                <GradeSlider type="range" min='1' max='10' step='1' value={currentValue} onChange={handleInputChange}/>
-                <SliderLables>
-                  {Array.from({ length: 10 }, (_,i) => (
-                    <Grades key={i} isActive={i + 1 === currentValue}>
-                      {i + 1}
-                    </Grades>
-                  ))}
-                </SliderLables>
-                </SliderContainer>
-                <FilledButton onClick={updateReview}>
-                  SUBMIT
-                </FilledButton>
+                {canGrade && (
+                <>
+                  <SubTitle>Grade this feedback</SubTitle>
+                  <SliderContainer>
+                  <GradeSlider type="range" min='1' max='10' step='1' value={currentValue} onChange={handleInputChange}/>
+                  <SliderLables>
+                    {Array.from({ length: 10 }, (_,i) => (
+                      <Grades key={i} isActive={i + 1 === currentValue}>
+                        {i + 1}
+                      </Grades>
+                    ))}
+                  </SliderLables>
+                  </SliderContainer>
+                  <FilledButton onClick={updateReview}>
+                    SUBMIT
+                  </FilledButton>
+                </>
+                )}
               </FeedbackGrade>
             </FormContainer>
           </Modal>
