@@ -119,9 +119,20 @@ const Guides = ({guides}:Props) => {
       if (guide.category === "design") {
         designGrades.push(averageGradeForThisGuide);
       }
-
-      if (guide.category === "code") {
+      else if (guide.category === "code") {
         codingGrades.push(averageGradeForThisGuide);
+      }
+      else if ( guide.category === "codeSpeciality"){
+        codingGrades.push(averageGradeForThisGuide);
+        //delete the lowest grade from codingGrades
+        codingGrades.sort((a, b) => a - b);
+        codingGrades.shift();
+      }
+      else if ( guide.category === "designSpeciality"){
+        designGrades.push(averageGradeForThisGuide);
+        //delete the lowest grade from designGrades
+        designGrades.sort((a, b) => a - b);
+        designGrades.shift();
       }
     });
 
