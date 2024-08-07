@@ -38,7 +38,7 @@ const Guides = ({guides}:Props) => {
   const { user } = useUser();
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
-  
+
   //SELECTION MODULE
   const moduleParam = searchParams.get("module");
   const [module, setModule] = useState<string>(moduleParam || "");
@@ -114,13 +114,14 @@ const Guides = ({guides}:Props) => {
         grades = [0];
       }
 
+      const averageGradeForThisGuide = grades.reduce((a, b) => a + b, 0) / grades.length;
       //Pushing the grades into designGrades and codingGrdes arrays depending on category
       if (guide.category === "design") {
-        designGrades.push(...grades);
+        designGrades.push(averageGradeForThisGuide);
       }
 
       if (guide.category === "code") {
-        codingGrades.push(...grades);
+        codingGrades.push(averageGradeForThisGuide);
       }
     });
 
@@ -176,7 +177,7 @@ const Guides = ({guides}:Props) => {
           </CodeGradeContainer>
           <DesignGradeContainer>
           Design
-          <DesignGrade>{averageDesignGrade.toFixed(1)}</DesignGrade>  
+          <DesignGrade>{averageDesignGrade.toFixed(1)}</DesignGrade>
           </DesignGradeContainer>
         </>
       )}
