@@ -116,20 +116,22 @@ const Guides = ({guides}:Props) => {
 
       const averageGradeForThisGuide = grades.reduce((a, b) => a + b, 0) / grades.length;
       //Pushing the grades into designGrades and codingGrdes arrays depending on category
-      if (guide.category === "design") {
+      console.log(guide.category, guide.title)
+      if (guide.category.trim() === "design") {
         designGrades.push(averageGradeForThisGuide);
       }
-      else if (guide.category === "code") {
+      else if (guide.category.trim() === "code") {
         codingGrades.push(averageGradeForThisGuide);
       }
-      else if ( guide.category === "codeSpeciality"){
+      else if ( guide.category.trim() === "codeSpeciality"){
         codingGrades.push(averageGradeForThisGuide);
         //delete the lowest grade from codingGrades
         codingGrades.sort((a, b) => a - b);
         codingGrades.shift();
       }
-      else if ( guide.category === "designSpeciality"){
+      else if ( guide.category.trim() === "designSpeciality"){
         designGrades.push(averageGradeForThisGuide);
+        console.log("design grades are:",designGrades, averageGradeForThisGuide, guide.userReviews)
         //delete the lowest grade from designGrades
         designGrades.sort((a, b) => a - b);
         designGrades.shift();

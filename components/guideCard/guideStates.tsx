@@ -1,11 +1,11 @@
-//Here are going to be all the states for the guides 
+//Here are going to be all the states for the guides
 export const getReviewStatus = (
-    isReturned:boolean, 
-    needsGrading:boolean, 
-    nrOfReviews:number, 
-    oldestReturnId:string, 
-    hasOldReview:boolean, 
-    guide_id:string, 
+    isReturned:boolean,
+    needsGrading:boolean,
+    nrOfReviews:number,
+    oldestReturnId:string,
+    hasOldReview:boolean,
+    guide_id:string,
     grade:number
 ) => [
     {
@@ -69,7 +69,7 @@ export const getReviewStatus = (
       href: `#`,
     },
   ];
-  
+
   export const getReturnStatus = (isReturned:boolean, needsGrading:boolean, vote:string, guide_id:string)=>   [
     {
       text: "You have not returned the guide yet",
@@ -88,14 +88,6 @@ export const getReviewStatus = (
       href: `#`,
     },
     {
-      text: "You did not pass this guide, Try again!",
-      condition: vote === "no pass",
-      backgroundColor: "#F99F9D",
-      backgroundImg: `url("x.svg")`,
-      backgroundRepeat: "no-repeat",
-      href: `/guide/${guide_id}`,
-    },
-    {
       text: "You have passed this guide, Well Done!",
       condition: vote === "pass",
       backgroundColor: "#B5E2A8",
@@ -110,6 +102,14 @@ export const getReviewStatus = (
       backgroundImg: `url("star.svg")`,
       backgroundRepeat: "no-repeat",
       href: `/guide/${guide_id}?isReturned=${isReturned}`
+    },
+    {
+      text: "You did not pass this guide, Try again!",
+      condition: vote === "no pass",
+      backgroundColor: "#F99F9D",
+      backgroundImg: `url("x.svg")`,
+      backgroundRepeat: "no-repeat",
+      href: `/guide/${guide_id}`,
     },
     {
       text: "Waiting until someone reviews your project",
