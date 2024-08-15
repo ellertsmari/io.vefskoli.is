@@ -66,7 +66,7 @@ export const getReviewStatus = (
       text: "grade: "+grade,
       condition: grade,
       backgroundColor: "#B5E2A8",
-      href: `#`,
+      href: `/review/${oldestReturnId}`,
     },
   ];
 
