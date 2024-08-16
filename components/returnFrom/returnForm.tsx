@@ -27,11 +27,11 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
     if(shouldRedirect){
       console.log("redirecting to guides");
       router.push("/guides");
-      setIsLoading(false);
+      //setIsLoading(false);
       router.refresh();
     }
   },[shouldRedirect])
-  
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const stateMap = {
@@ -51,11 +51,11 @@ const ReturnForm = ({guideId}:{guideId:Types.ObjectId}) => {
     setComment(value)
   }
   const {user} = useUser();
-  
+
   console.log("user is: ",user);
   if (!user?._id) return <>You are not logged in, if you  want to return this guide you need to log in via authpage</>;
   if(searchParams.get("isReturned") === "true") return <>This guide has already been returned</>;
-  
+
 
   const createReturn = (e:FormEvent) => {
     e.preventDefault();
