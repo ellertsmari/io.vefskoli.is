@@ -13,7 +13,7 @@ export const POST = async (req: Request) => {
     const user = users.find((u: UserType) => u.email === email);
     if (!user) {
       return NextResponse.json({ message: "User was not found" }, {status:404});
-      
+
     }
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
@@ -22,7 +22,6 @@ export const POST = async (req: Request) => {
 
     const loggedInUser = { isLoggedIn: true, ...user._doc } as UserType;
     const session = await sealData(loggedInUser, {password:process.env.SECRET_COOKIE_PASSWORD as string});
-    
     //res.json(loggedInUser);
     const secure = process.env.NODE_ENV === 'production'?"; Secure":"";
     const headers = { 'Set-Cookie': `session=${session}; HttpOnly; ${secure}; Path=/`}
@@ -35,4 +34,3 @@ export const POST = async (req: Request) => {
     return NextResponse.json({ message: (error as Error).message }, { status: 500 });
   }
 }
-

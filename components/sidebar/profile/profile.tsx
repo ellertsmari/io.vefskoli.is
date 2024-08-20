@@ -3,7 +3,7 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { ProfileModal, ProfileImage } from './profile.style'
 import { Title } from '../sidebar.style'
-import Dropdown from '../../dropDown/dropDown'
+import { useRouter } from 'next/navigation'
 
 import { UserWithIdType } from '@/models/user'
 import { ChangeEvent } from 'react'
@@ -13,6 +13,7 @@ type Props = {
 }
 
 const Profile = ( { user }:Props ) => {
+  const router = useRouter();
   const student = user;
   const menuRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,23 @@ const Profile = ( { user }:Props ) => {
       }
     );
   }
-  const x = { logout: () => {} }
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      router.push('/authpage')
+      router.refresh()
+      if(response.ok){
+        console.error('Failed to logout')
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return(
     <div>
       <ProfileImage onClick={() => setIsOpen(!isOpen)} src="/default-profile-picture.svg"/>
@@ -44,7 +61,7 @@ const Profile = ( { user }:Props ) => {
       {isOpen && (
       <ProfileModal>
           <div className="user-pic/name">
-          <Link className="logout" onClick={x.logout} href="/authpage">Logout</Link>
+          <Link className="logout" onClick={() => handleLogout()} href="/authpage">Logout</Link>
           <div>
             <img className='default-profile-picture' src="/default-profile-picture.svg" alt="user-pic"/>
           </div>

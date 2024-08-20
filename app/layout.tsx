@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   description: "Welcome to Next.js",
 };
 
+import StyledComponentsRegistry from "@/utils/registry";
 import Sidebar from "@/components/sidebar/sidebar";
 import {
   MainAndNavContainer,
@@ -34,6 +35,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
+        <StyledComponentsRegistry>
         <AnimatedBackground />
         <OverallLayout>
           <SidebarContainer>
@@ -45,6 +47,7 @@ export default async function RootLayout({
             {children}
           </MainAndNavContainer>
         </OverallLayout>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
