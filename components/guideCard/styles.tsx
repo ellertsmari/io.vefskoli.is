@@ -29,7 +29,7 @@ interface StyledLinkProps {
 
 // Use the StyledLinkProps type for your component props
 export const StyledLink: React.FC<StyledLinkProps> = ({ children, href }) => (
-  <Link href={href} passHref>
+  <Link href={href} passHref legacyBehavior>
     <StyledAnchor>{children}</StyledAnchor>
   </Link>
 );
