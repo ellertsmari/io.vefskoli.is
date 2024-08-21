@@ -27,19 +27,19 @@ import { OmitPassword } from "@/utils/types/types";
 import { MainContent } from "@/components/mainLayout";
 
 const getReturn = async (id: string) => {
-  
+
 
   if (!Types.ObjectId.isValid(id)) {
     return null;
   }
- 
-  
+
+
   const objectId = new Types.ObjectId(id);
   await connectToDatabase();
   type OmitGuideFromReturn = Omit<ReturnType, 'guide'| 'owner'>; //because we want the guide populated but not the id
   type GuideWithId = Omit<GuideType, '_id'> & { _id: string };
   type OwnerWithId = Omit<UserType, '_id'> & { _id: string };
- 
+
   type ReturnWithGuide = OmitGuideFromReturn & {
     guide: GuideWithId;
     owner: OwnerWithId;
@@ -48,7 +48,7 @@ const getReturn = async (id: string) => {
   const r: ReturnWithGuide | null = await Return.findOne({ _id: objectId }).populate(['guide','owner']) as ReturnWithGuide | null;
   await Return.findByIdAndUpdate(objectId, { reviewedAt: new Date() } );
 
-  return r; 
+  return r;
 }
 
 const review = async ({params} : {params: { id: string}}) => {
@@ -62,7 +62,7 @@ const review = async ({params} : {params: { id: string}}) => {
     return <>{user}</>;
   }
   // make a styled div with contenteditable that looks nice:
- 
+
 
   const r = await getReturn(params.id);
   if (!r) {
@@ -74,15 +74,15 @@ const review = async ({params} : {params: { id: string}}) => {
         <MainContent style={{flexDirection:"row"}}>
           <ReturnDetailsSection>
             <SectionTitle>Return Details</SectionTitle>
-            {r.guide.title === "TypeScript In The Browser - Web APIs (24 - 28h.)" && 
-            
+            {r.guide.title === "TypeScript In The Browser - Web APIs (24 - 28h.)" &&
+
               <>
                 <SubTitle>
                   This guide was returned by <span style={{color:"#6563EB"}}>{r.owner.name}</span> please contact them either through slack
                   or in the classroom to make the review.
                 </SubTitle>
                 <MainText style={{marginBottom:"1000px"}}>
-                  <a target="_blank" href="https://drive.google.com/file/d/1L2U6Tk57qiWukHLEy10zQnH7Wz-DOguw/view?usp=sharing">Here </a> 
+                  <a target="_blank" href="https://drive.google.com/file/d/1L2U6Tk57qiWukHLEy10zQnH7Wz-DOguw/view?usp=sharing">Here </a>
                   is a very nice document where you can see how you could
                   prepare for your meeting and what you could talk about
                 </MainText>
@@ -141,9 +141,9 @@ const review = async ({params} : {params: { id: string}}) => {
             </ReviewFrame>
 
             <ReviewFrame>
-             
+              <ReviewComment returnId={JSON.parse(JSON.stringify(r._id))} userId={user._id} guideId={JSON.parse(JSON.stringify(r.guide._id))} />
             </ReviewFrame>
-            <ReviewComment returnId={JSON.parse(JSON.stringify(r._id))} userId={user._id} guideId={JSON.parse(JSON.stringify(r.guide._id))} />
+
 
           </ReviewSection>
         </MainContent>

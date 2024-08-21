@@ -34,6 +34,10 @@ export const SubTitle = styled.h2`
     text-align: left;
 `
 
+export const Label = styled.label`
+font-size: 1.4rem;
+`
+
 export const MainText = styled.p`
     font-family: poppins;
     font-size: 1.6rem;
@@ -51,7 +55,7 @@ export const LinkText = styled.a`
 //Return detail sections and all of it's styles
 export const ReturnDetailsSection = styled.div`
     width: 50%;
-    
+
 `
 export const Frame = styled.div`
     background-color: #F0EFFD;
@@ -64,28 +68,33 @@ export const Frame = styled.div`
 `
 
 export const Photo = styled.img`
-    
+
 `
 
 //Review sections and all of it's styles
 export const ReviewSection = styled.div`
     width: 50%;
+    display:flex;
+    flex-direction: column;
+    gap: 2rem;
 `
 export const ReviewFrame = styled.div`
-    margin-top: 3rem;
     display: flex;
     flex-direction: column;
     border-radius: 2rem;
+    margin-bottom: 2rem;
 `
 
 export const BulletList = styled.ul`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    font-size: 1.4rem;
 `
 export const VotingForm = styled.form`
     display:flex;
     flex-direction: column;
+    font-size: 1.4rem;
 `
 
 export const Comment = styled.div`

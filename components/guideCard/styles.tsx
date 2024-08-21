@@ -28,7 +28,7 @@ interface StyledLinkProps {
 }
 
 // Use the StyledLinkProps type for your component props
-export const StyledLink: React.FC<StyledLinkProps> = ({ children, href, onClick }) => (
+export const StyledLink: React.FC<StyledLinkProps> = ({ children, href }) => (
   <Link href={href} passHref>
     <StyledAnchor>{children}</StyledAnchor>
   </Link>
@@ -52,12 +52,14 @@ export const NumberWrapper = styled.div`
   position: relative;
   text-align: center;
   padding: 2rem;
+  text-decoration: none;
 `;
 
 export const Number = styled.h1`
   font-size: 2.5rem;
   font-family: "Poppins";
   font-weight: 500;
+  text-decoration: none;
 `;
 
 export const TitleWrapper = styled.div`
