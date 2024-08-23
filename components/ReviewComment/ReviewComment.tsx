@@ -7,6 +7,8 @@ import {
   ReviewFrame,
   Loader,
   Tip,
+  Label,
+  ReviewSection
 } from "@/styles/pageStyles/review.styles";
 import { ObjectId } from "mongodb";
 import { Error } from "../guides/styles";
@@ -70,15 +72,16 @@ const ReviewComment = ({ returnId, userId, guideId }: Props) => {
     setVote(value);
   };
   return (
-    <ReviewFrame>
+  <>
+  <ReviewFrame>
       <Error>{error}</Error>
       <SubTitle>Vote</SubTitle>
       <form>
         <input type="radio" name="vote" value="pass" onChange={createVote} />
-        <label>pass</label>
+        <Label>pass</Label>
         <br />
         <input type="radio" name="vote" value="no pass" onChange={createVote} />
-        <label>no pass</label>
+        <Label>no pass</Label>
         <br />
         <input
           type="radio"
@@ -86,8 +89,9 @@ const ReviewComment = ({ returnId, userId, guideId }: Props) => {
           value="recommend to Hall of fame"
           onChange={createVote}
         />
-        <label>recommend to Hall of fame</label>
+        <Label>recommend to Hall of fame</Label>
       </form>
+      </ReviewFrame>
       <SubTitle>Comment</SubTitle>
       <Comment ref={commentRef} contentEditable></Comment>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -104,7 +108,7 @@ const ReviewComment = ({ returnId, userId, guideId }: Props) => {
       {improvement ? (
         <Tip dangerouslySetInnerHTML={{ __html: improvement }}></Tip>
       ) : null}
-    </ReviewFrame>
+      </>
   );
 };
 

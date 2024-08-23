@@ -55,7 +55,7 @@ export const DropdownContainer = styled.div`
 
   export const GuidesContainer = motion(styled.div `
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 5rem;
     width: 100%;
     height: 100%;
