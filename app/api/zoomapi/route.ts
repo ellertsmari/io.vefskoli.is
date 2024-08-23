@@ -16,7 +16,7 @@ const getVideos= async(token:string)=>{
   Declare our loop counter as 0. Runs until it's no longer true, or less than the length of the months array.
   This ensures that the loop runs once for each element in the months array. i++ adds one month by each iteration*/
   for (let i = 0; i < months.length; i++) {
-
+    console.log("SPAM!!!!")
     const fromDate = new Date();   //our start date from fetching video to be used in our URL
     const isSpring = fromDate.getMonth() < 7  //Asking what month it is right now and if it is true (less than 7) it is spring.
     const isFetchingFromSpring = months[i]< 7  //If the month we picked is less than 7 it's true and it is indeed spring: tells us if the videos we’re fetching are from a spring term.
@@ -24,7 +24,8 @@ const getVideos= async(token:string)=>{
     fromDate.setFullYear(fromDate.getFullYear() - (Number(isSpring) - Number(isFetchingFromSpring)));  //This adjust our data according to when we are fetching it.
 
     fromDate.setMonth(months[i]); // sets our month in the fromDate to the first element in the array (7)
-    fromDate.setDate(1); // setting the day of the fromDate object to the first of each month.
+    if(months[i] === 7) fromDate.setDate(18); // setting the day of the fromDate object to the 18th of August if it is August.
+    else fromDate.setDate(1); // setting the day of the fromDate object to the first of each month.
     fromDate.setHours(0, 0, 0, 0); // set to midnight each day
 
     const toDate = new Date(fromDate); //creates a new Date object with the end date for fetching videos.
@@ -64,13 +65,13 @@ return {error:{},meetings:data, code:200}   //returning final results: an object
 
 // This function calls the getVideos, handles the response, refreshes the tokens when and if necessary and then returns the final response
 export const GET= async ()=> {
-
+  console.log("getting the gett gettity get gett of the getivity get gett")
   try {
     // This checks if the returned code is 124, indicating an invalid access token.
     let data = await getVideos(token)
     if (data.code===124){
       if (!process.env.BASIC_AUTH )  // This checks if the BASIC_AUTH environment variable is set.
-      return NextResponse.json({error:'You need the BASIC_AUTH in your .env.local file for this!'})   // If not, it returns an error.
+      return NextResponse.json({error:'You need the  in your .env.local file for this!'})   // If not, it returns an error.
 
       // We make a post request to the api oauth endpoint for a new access token. Await is used to wait for the promise returned by the fetch to resolve.
       const tokenResponse = await fetch ("https://zoom.us/oauth/token?grant_type=account_credentials&account_id=xTmwVbNdQRGv5XBIuyvI2A",{
