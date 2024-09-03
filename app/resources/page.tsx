@@ -3,7 +3,7 @@ import { OmitPassword } from "@/utils/types/types";
 import Recordings from "@/components/resources/resources";
 
 //This page fetches resources from an API and renders the Recordings component with the fetched data.
-export const revalidate = 600;
+export const revalidate = false;
 const resources = async () => {
 const user: OmitPassword | string = await useServerUser();
 // If there is no user, it returns a message asking the user to log in.
