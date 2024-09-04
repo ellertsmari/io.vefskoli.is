@@ -19,7 +19,7 @@ const MiniCalendar = ({}) => {
     const weekDay = Days[now.getDay()]
     const month = now.getMonth()
 
-    
+
     const empty = new Array((new Date(2023, month, 1)).getDay()).fill(undefined)
     console.log(empty)
     const cells = new Array(
@@ -34,7 +34,7 @@ const MiniCalendar = ({}) => {
             <ArrowButton style={{justifyContent:"flex-start"}}>{">"}</ArrowButton>
         </CalendarNavGrid>
         <CalendarGrid >
-            {Days.map((day) => <DaysContainer key={day}>{day}</DaysContainer>)}
+            {Days.map((day, i) => <DaysContainer key={i}>{day}</DaysContainer>)}
             {empty.map((key, i)=><Cell key={i}></Cell>)}
             {cells.map((key, i)=><Cell key={i}>{i + 1}</Cell>)}
         </CalendarGrid>
@@ -42,5 +42,5 @@ const MiniCalendar = ({}) => {
 </>
     );
 }
- 
+
 export default MiniCalendar;

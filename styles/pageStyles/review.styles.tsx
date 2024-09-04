@@ -145,3 +145,33 @@ export const Tip = styled.div`
     text-align: left;
     color: #6563EB;
 `
+export const Container = styled.div`
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+`;
+
+
+export const Title = styled.h1`
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+`;
+
+export const Checklist = styled.div`
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+`;
+
+export const ChecklistItem = styled.div`
+  margin-bottom: 15px;
+`;
+
+export const SubList = styled.ul`
+  margin-left: 30px;
+`;

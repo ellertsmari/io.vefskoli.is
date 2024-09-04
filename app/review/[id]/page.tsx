@@ -141,7 +141,7 @@ const review = async ({params} : {params: { id: string}}) => {
             </ReviewFrame>
 
             <ReviewFrame>
-              <ReviewComment returnId={JSON.parse(JSON.stringify(r._id))} userId={user._id} guideId={JSON.parse(JSON.stringify(r.guide._id))} />
+              <ReviewComment returnId={JSON.parse(JSON.stringify(r._id))} userId={user._id} guide={JSON.parse(JSON.stringify(r.guide))} />
             </ReviewFrame>
 
 
