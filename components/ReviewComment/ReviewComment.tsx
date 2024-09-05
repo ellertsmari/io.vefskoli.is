@@ -102,6 +102,7 @@ const ReviewComment = ({ returnId, userId, guide }: Props) => {
               <p>Are animations and transitions used thoughtfully?</p>
             </ChecklistItem>
           </Checklist>
+          <h4>More details on how to do good feedback can be found <a href="https://docs.google.com/document/d/1DS0-GvOanO5IEphI0VbdMNRmSbQAYRIJIcK9NGi5PBQ/edit?usp=sharing">here</a></h4>
         </Container>
       )
     };
