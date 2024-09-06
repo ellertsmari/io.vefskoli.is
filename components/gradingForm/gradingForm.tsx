@@ -16,12 +16,14 @@ import {
   ReviewComment,
   GradingContainer,
 } from "./gradingForm.style";
+import { StyledLink } from "../sidebar/nextup/nextUp.style";
 import { FilledButton } from "../buttons";
 import { useEffect, useState } from "react";
 import { ReviewType } from "@/models/review";
 import { AggregatedGuide } from "@/utils/types/types";
 import { useRouter } from "next/navigation";
 import { set } from "mongoose";
+import { Dispatch, SetStateAction } from "react";
 
 type ReviewWithId = ReviewType & { _id: string };
 
@@ -30,10 +32,12 @@ interface Props {
   guide: AggregatedGuide;
   isOpen: boolean;
   canGrade: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  getNextReview?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  newReviewURL?: string;
 }
 
-const GradingForm = ({ guide, review, isOpen, setIsOpen, canGrade }: Props) => {
+const GradingForm = ({ guide, review, isOpen, setIsOpen, canGrade, getNextReview, newReviewURL }: Props) => {
   const [currentValue, setCurrentValue] = useState<number | undefined>(
     undefined
   );
@@ -97,9 +101,9 @@ const GradingForm = ({ guide, review, isOpen, setIsOpen, canGrade }: Props) => {
                 </div>
                 <SubTitle>Feedback</SubTitle>
                 <ReviewComment>
-                  <Text>{review.comment}</Text>
+                  <Text>{review? review.comment:"You have not received any reviews yet..."}</Text>
                 </ReviewComment>
-                {canGrade && (
+                {canGrade? (
                   <GradingContainer>
                     <SubTitle>Grade this feedback</SubTitle>
                     <SliderContainer>
@@ -133,6 +137,12 @@ const GradingForm = ({ guide, review, isOpen, setIsOpen, canGrade }: Props) => {
                       SUBMIT
                     </FilledButton>
                   </GradingContainer>
+                ):(
+                  <SliderLables>
+                    <FilledButton><a href={newReviewURL || ""}>Make another review</a></FilledButton>
+                    <FilledButton>Show Given Reviews</FilledButton>
+                    <FilledButton onClick={getNextReview}>show another review</FilledButton>
+                  </SliderLables>
                 )}
               </FeedbackGrade>
             </FormContainer>

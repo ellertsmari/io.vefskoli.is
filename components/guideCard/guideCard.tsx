@@ -3,6 +3,7 @@
 import type { AggregatedGuide } from "@/utils/types/types";
 import { useState, useEffect } from "react";
 import GradingForm from "../gradingForm/gradingForm";
+import ReviewsModal from "../reviewsModal/reviewsModal"
 import {GuideCardContainer, CardInfo, Number, Title, Status, StyledLink, TitleWrapper, NumberWrapper, DefaultTitle, HoveredTitle} from "./styles"
 
 import { getReturnStatus, getReviewStatus } from "./guideStates";
@@ -21,14 +22,9 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   const [reviewToShow, setReviewToShow] = useState(0);
 
 
- 
+
   const { isReturned, userReviews, userReturns, oldestReturnId, otherReviews } = guide;
-  useEffect(() => {
-    if(isOpen){
-      console.log("reviewToShow", reviewToShow);
-      setReviewToShow((reviewToShow+1)%otherReviews.length)
-    } 
-  },[isOpen])
+
   const nrOfReviews = userReviews.length;
   const ungradedReviews = otherReviews.filter((review) => !review.grade);
   const reviewsForLatestReturn = otherReviews.filter((review  ) => review.return?.toString() === userReturns[userReturns.length-1]._id);
@@ -62,7 +58,7 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   const returnStatuses = getReturnStatus(isReturned, needsGrading, vote || "", id);
   const reviewStatuses = getReviewStatus(isReturned, needsGrading, nrOfReviews, oldestReturnId, hasOldReview, id, grade);
 
- 
+
   //Return hover state
   const RetunrHandleMouseEnter = () => {
     setIsReturnHovered(true);
@@ -94,12 +90,12 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   }
 
 
-  
+
 
   return (
     <GuideCardContainer>
       <StyledLink href={returnStatus.href}>
-        <CardInfo 
+        <CardInfo
           style={{
             backgroundPosition:"center",
             backgroundImage:
@@ -110,7 +106,7 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
               returnStatus.condition === !isReturned ? "#F1F1F1" : returnStatus.backgroundColor,
             filter: returnModifiedColor,
           }}
-          onMouseEnter={RetunrHandleMouseEnter} 
+          onMouseEnter={RetunrHandleMouseEnter}
           onMouseLeave={ReturnHandleMouseLeave}
         >
           <NumberWrapper>
@@ -146,9 +142,10 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
           />
         )}
         {returnStatus && reviewStatus.condition === grade && (
-          <GradingForm
+          <ReviewsModal
             guide={guide}
-            review={otherReviews[reviewToShow]}
+            reviews={{ received: otherReviews, given: userReviews }}
+            newReviewURL={`/review/${oldestReturnId}`}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             canGrade={false}

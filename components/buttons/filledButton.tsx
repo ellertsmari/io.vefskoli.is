@@ -8,7 +8,7 @@ export const FilledButton = styled.button`
     align-items: center;
     text-decoration: none;
     text-align: center;
-    width: 12rem;
+    width: auto;
     height: 4rem;
     border-radius: 10.0rem;
     background-color: #6563EB;
@@ -27,19 +27,19 @@ export const FilledButton = styled.button`
 
 
   @media screen and (max-width: 1540px) {
-      width: 10rem;
+
       height: 3.5rem;
       font-size: 1.4rem;
   }
 
   @media screen and (max-width: 1000px) {
-      width: 10rem;
+
       height: 3.5rem;
       font-size: 1.4rem;
   }
 
   @media screen and (max-width: 600px) {
-      width: 8rem;
+
       height: 3rem;
       font-size: 1.1rem;
   }`
