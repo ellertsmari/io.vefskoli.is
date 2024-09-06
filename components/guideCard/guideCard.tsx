@@ -89,9 +89,6 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
     return <>reviewStatus not found</>;
   }
 
-
-
-
   return (
     <GuideCardContainer>
       <StyledLink href={returnStatus.href}>
