@@ -38,14 +38,17 @@ interface Props {
 const ReviewsModal = ({ guide, reviews, isOpen, setIsOpen, newReviewURL }: Props) => {
   const [index, setIndex] = useState(0);
   const [givenOrReceived, setGivenOrReceived] = useState(reviews.received);
-  const showReceived = givenOrReceived[0]._id === reviews.received[0]._id;
+  const [showReceived, setShowReceived] = useState(true);
+  useEffect(()=>{
+    setShowReceived(givenOrReceived[0].comment === reviews.received[0]?.comment);
+  },[givenOrReceived])
 
   const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) setIsOpen(!isOpen);
   };
   const getNextReview=(e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    if(givenOrReceived[0]._id === reviews.received[0]._id){
+    if(showReceived){
       setIndex((index+1)%reviews.received.length)
     }else{
       setIndex((index+1)%reviews.given.length)
@@ -72,7 +75,7 @@ const ReviewsModal = ({ guide, reviews, isOpen, setIsOpen, newReviewURL }: Props
                 <div style={{ padding: "40px 0", width: "80%" }}>
                   <ProjectTitle>{guide.title}</ProjectTitle>
                 </div>
-                <SubTitle>Feedback</SubTitle>
+                <SubTitle>{showReceived?"Received ":"Given "}Feedback</SubTitle>
                 <ReviewComment>
 
                       <Text>{givenOrReceived? givenOrReceived[index].comment : "You have not received any reviews yet..."}</Text>
