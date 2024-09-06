@@ -148,7 +148,6 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
             newReviewURL={`/review/${oldestReturnId}`}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            canGrade={false}
           />
         )}
     </GuideCardContainer>

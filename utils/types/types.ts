@@ -19,7 +19,7 @@ export type AggregatedGuide = {
   category: string;
   isReturned: boolean;
   isReviewed: boolean;
-  userReviews: ReviewType[];
+  userReviews: ReviewWithId[];
   otherReviews: ReviewWithId[];
   guide: GuideType;
   returnDate: Date;
