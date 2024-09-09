@@ -40,7 +40,7 @@ const ReviewsModal = ({ guide, reviews, isOpen, setIsOpen, newReviewURL }: Props
   const [givenOrReceived, setGivenOrReceived] = useState(reviews.received);
   const [showReceived, setShowReceived] = useState(true);
   useEffect(()=>{
-    setShowReceived(givenOrReceived[0].comment === reviews.received[0]?.comment);
+    setShowReceived(givenOrReceived[0]?.comment === reviews.received[0]?.comment);
   },[givenOrReceived])
 
   const closeModal = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -78,7 +78,7 @@ const ReviewsModal = ({ guide, reviews, isOpen, setIsOpen, newReviewURL }: Props
                 <SubTitle>{showReceived?"Received ":"Given "}Feedback</SubTitle>
                 <ReviewComment>
 
-                      <Text>{givenOrReceived? givenOrReceived[index].comment : "You have not received any reviews yet..."}</Text>
+                      <Text>{givenOrReceived? givenOrReceived[index]?.comment : "You have not received any reviews yet..."}</Text>
 
                 </ReviewComment>
                 <SubTitle>GRADE: {givenOrReceived ? <span style={{ color: "red" }}>{givenOrReceived[index].grade}</span> : "N/A"}</SubTitle>

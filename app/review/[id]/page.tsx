@@ -106,7 +106,7 @@ const review = async ({params} : {params: { id: string}}) => {
             </Frame>
             <Frame>
               <SubTitle>Comment</SubTitle>
-              <MainText>{r.comment}</MainText>
+              <MainText>{r?.comment}</MainText>
             </Frame>
             <Frame>
               <SubTitle>Photo</SubTitle>
