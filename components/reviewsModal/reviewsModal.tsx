@@ -35,6 +35,7 @@ interface Props {
   newReviewURL: string;
 }
 
+
 const ReviewsModal = ({ guide, reviews, isOpen, setIsOpen, newReviewURL }: Props) => {
   const [index, setIndex] = useState(0);
   const [givenOrReceived, setGivenOrReceived] = useState(reviews.received);
