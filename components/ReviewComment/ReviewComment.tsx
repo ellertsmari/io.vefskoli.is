@@ -77,30 +77,52 @@ const ReviewComment = ({ returnId, userId, guide }: Props) => {
         <Container>
           <Title>Design Review Checklist</Title>
           <Checklist>
-            <ChecklistItem>
-              <p>Is the design easy to understand and navigate?</p>
-            </ChecklistItem>
-            <ChecklistItem>
-              <p>Is the spacing and alignment consistent?</p>
-            </ChecklistItem>
-            <ChecklistItem>
-              <p>Is the visual hierarchy clear?</p>
-            </ChecklistItem>
-            <ChecklistItem>
-              <p>Is the design accessible?</p>
-            </ChecklistItem>
-            <ChecklistItem>
-              <p>Is the file setup optimized for collaboration and future updates?</p>
-            </ChecklistItem>
-            <ChecklistItem>
-              <p>Does the design reflect a cohesive and modern brand identity?</p>
-              <SubList>
-                <li>Is there consistency in the use of branding elements?</li>
-              </SubList>
-            </ChecklistItem>
-            <ChecklistItem>
-              <p>Are animations and transitions used thoughtfully?</p>
-            </ChecklistItem>
+              <ChecklistItem>
+                <p>Is the design consistent?</p>
+                  <SubList>
+                    <li>Do colors, fonts, and styles match throughout the project?</li>
+                  </SubList>
+                  <SubList>
+                    <li>Are UI components like buttons, headers, and icons used consistently?</li>
+                  </SubList>
+              </ChecklistItem>
+
+              <ChecklistItem>
+                <p>Is there a clear visual hierarchy?</p>
+                  <SubList>
+                    <li>Are important elements (like headings or calls to action) more prominent?</li>
+                  </SubList>
+                  <SubList>
+                    <li>Are less important elements appropriately styled to draw less attention?</li>
+                  </SubList>
+              </ChecklistItem>
+
+              <ChecklistItem>
+                <p>Is the design easy to understand and navigate?</p>
+                  <SubList>
+                    <li>Is the layout clear and intuitive for users?</li>
+                  </SubList>
+                  <SubList>
+                    <li>Are interactive elements (like buttons or links) easily recognizable?</li>
+                  </SubList>
+              </ChecklistItem>
+
+              <ChecklistItem>
+                <p>Is the design visually appealing?</p>
+                <SubList>
+                  <li>Does the project make good use of white space and alignment?</li>
+                </SubList>
+                  <SubList>
+                    <li>Do the colors, images, and typography work well together?</li>
+                  </SubList>
+              </ChecklistItem>
+
+                <ChecklistItem>
+                  <p>Is the design accessible for everyone?</p>
+                  <SubList>
+                    <li>Is contrast and font sizes appropriate for people with disabilities?</li>
+                  </SubList>
+                </ChecklistItem>
           </Checklist>
           <h4>More details on how to do good feedback can be found <a href="https://docs.google.com/document/d/1DS0-GvOanO5IEphI0VbdMNRmSbQAYRIJIcK9NGi5PBQ/edit?usp=sharing">here</a></h4>
         </Container>
