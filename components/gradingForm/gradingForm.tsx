@@ -47,8 +47,7 @@ const GradingForm = ({ guide, review, isOpen, setIsOpen, canGrade, getNextReview
     setCurrentValue(value);
   };
 
-  const body = document.querySelector("body") as HTMLBodyElement;
-  const defaultOverflowStyle = body.style.overflow;
+
 
   const updateReview = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsOpen(!isOpen);
@@ -68,9 +67,12 @@ const GradingForm = ({ guide, review, isOpen, setIsOpen, canGrade, getNextReview
   };
 
   useEffect(() => {
+    const body = document.querySelector("body") as HTMLBodyElement;
+    const defaultOverflowStyle = body.style.overflow;
     if (isOpen) {
       body!.style.overflow = "hidden";
     }
+
     return () => {
       body.style.overflow = defaultOverflowStyle;
       setCurrentValue(undefined);
