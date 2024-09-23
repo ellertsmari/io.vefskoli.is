@@ -72,7 +72,6 @@ const GradingForm = ({ guide, review, isOpen, setIsOpen, canGrade, getNextReview
     if (isOpen) {
       body!.style.overflow = "hidden";
     }
-
     return () => {
       body.style.overflow = defaultOverflowStyle;
       setCurrentValue(undefined);
