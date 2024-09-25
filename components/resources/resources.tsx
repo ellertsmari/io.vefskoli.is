@@ -76,6 +76,7 @@ const Recordings =  ({ data}: Props) => {
     }
     , [data]);
 
+    //Sorting the meetings with date
     data.meetings.sort((a, b) => new Date(b.start_time).getTime() - new Date(a.start_time).getTime());
 
     return (
