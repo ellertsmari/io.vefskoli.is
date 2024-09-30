@@ -81,7 +81,7 @@ const ReviewsModal = ({ guide, reviews, isOpen, setIsOpen, newReviewURL }: Props
                       <Text>{givenOrReceived? givenOrReceived[index]?.comment : "You have not received any reviews yet..."}</Text>
 
                 </ReviewComment>
-                <SubTitle>GRADE: {givenOrReceived ? <span style={{ color: "red" }}>{givenOrReceived[index].grade}</span> : "N/A"}</SubTitle>
+                <SubTitle>GRADE: {givenOrReceived ? <span style={{ color: "red" }}>{givenOrReceived[index]?.grade}</span> : "N/A"}</SubTitle>
                   <SliderLables>
                     <FilledButton><a href={newReviewURL || ""}>Make another review</a></FilledButton>
                   <FilledButton onClick={toggleGivenReceived}>{showReceived ? "Show Given Reviews" : "Show Received Reviews"}</FilledButton>
