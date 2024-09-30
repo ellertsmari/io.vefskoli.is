@@ -11,6 +11,7 @@ import Modal from "../modal/modal"
 type Props = {
     data: {
         meetings: {
+            start_time: string
             recording_files:{
                 download_url:string
                 file_type: string
@@ -75,6 +76,9 @@ const Recordings =  ({ data}: Props) => {
     }
     , [data]);
 
+    //Sorting the meetings with date
+    data.meetings.sort((a, b) => new Date(b.start_time).getTime() - new Date(a.start_time).getTime());
+
     return (
         <MainContent>
             <TopContainer>
@@ -91,7 +95,7 @@ const Recordings =  ({ data}: Props) => {
             <FilledButton onClick={() => window.open('https://drive.google.com/drive/folders/1dj_oY9zQcXcCXy_2D5f5r4GzxErjJiw5?usp=drive_link', '_blank', 'noopener')}>
                 DRIVE
             </FilledButton>
-            <GuidesContainer> {data.meetings.filter((meeting) => selectedOption ==='ALL VIDEOS' || nameDrop[meeting.topic.substring(0,8)] == selectedOption).map((meeting) => {
+            <GuidesContainer> {data.meetings.filter((meeting, index, self) => self.findIndex((t) => t.topic === meeting.topic) === index && selectedOption ==='ALL VIDEOS' || nameDrop[meeting.topic.substring(0,8)] == selectedOption).map((meeting) => {
                 return (
                     <Modal key={meeting.recording_files[0].download_url} ZoomVideo= {meeting}/>
                 )
