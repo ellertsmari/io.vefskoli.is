@@ -30,7 +30,14 @@ const GuideCard = ({ guide, nr }: GuideCardProps) => {
   const reviewsForLatestReturn = otherReviews.filter((review  ) => review.return?.toString() === userReturns[userReturns.length-1]._id);
 
   //Getting vote(pass, no pass, recommended to Hall of fame) from "otherReviews" object
-  const vote = reviewsForLatestReturn.length?reviewsForLatestReturn[0].vote:undefined;
+  //const vote = reviewsForLatestReturn.length?reviewsForLatestReturn[0].vote:undefined;
+  const vote = reviewsForLatestReturn.reduce((acc:string|undefined, review:any):string|undefined=>{
+    if (review.vote === acc) return acc;
+    if (acc === "recommend to Hall of fame") return acc
+    if (review.vote==="recommend to Hall of fame") return review.vote
+    if (review.vote==="pass") return review.vote
+    return "no pass";
+  }, undefined)
   //console.log("this is the guide", guide)
   //
 
