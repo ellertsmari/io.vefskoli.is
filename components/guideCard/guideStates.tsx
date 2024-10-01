@@ -88,20 +88,20 @@ export const getReviewStatus = (
       href: `#`,
     },
     {
-      text: "You have passed this guide, Well Done!",
-      condition: vote === "pass",
-      backgroundColor: "#B5E2A8",
-      backgroundImg: `url("check.svg")`,
-      backgroundRepeat: "no-repeat",
-      href: `/guide/${guide_id}?isReturned=${isReturned}`,
-    },
-    {
       text: "Your guide was recommended to Hall of fame, Well Done!",
       condition: (vote === "recommend to Hall of fame"),
       backgroundColor: "#A5A6F6",
       backgroundImg: `url("star.svg")`,
       backgroundRepeat: "no-repeat",
       href: `/guide/${guide_id}?isReturned=${isReturned}`
+    },
+    {
+      text: "You have passed this guide, Well Done!",
+      condition: vote === "pass",
+      backgroundColor: "#B5E2A8",
+      backgroundImg: `url("check.svg")`,
+      backgroundRepeat: "no-repeat",
+      href: `/guide/${guide_id}?isReturned=${isReturned}`,
     },
     {
       text: "You did not pass this guide, Try again!",
