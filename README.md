@@ -6,7 +6,7 @@
 io.vefskoli.is is an LMS ( Learning Management System) for the [Reykjavik Academy of Web Development](https://en.tskoli.is/study-programme/reykjavik-academy-of-web-development/). In this system students can review each other's projects and give the review they got a grade on the scale from 0 to 10. This encourages students to make good reviews, they look more into their co students projects, get another perspective of the projects they have been doing and get better at giving feedback to others, which is a very good skill to have when they go into the working life.
 
 
-# How to contribute to this project
+# How to contribute to this project.
 
 
 ### Make an issue and fork
