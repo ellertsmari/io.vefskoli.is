@@ -38,3 +38,4 @@ SECRET_COOKIE_PASSWORD="some strange sentence that we can use as secret"
 After creating this file you should be able to run the page by typing yarn run dev into your terminal. Once you have run the page you can click sign up and create a user. Then you will see a new user collection in your database and you should see the user there. You will want to change the role of the user into a teacher so that you can create a new guide in “[http://localhost:3000/guides/uglyAdmin](http://localhost:3000/guides/uglyAdmin)”. After that you should create some more users to be able to make reviews and as you make more content on the page more data will start to generate in your database. Feel free to mess around with the code a bit before you start, try changing some things or adding something just to see how it feels. Good luck!.
  
 
+ 
