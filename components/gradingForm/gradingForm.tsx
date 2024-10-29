@@ -82,13 +82,13 @@ const GradingForm = ({ guide, review, isOpen, setIsOpen, canGrade, getNextReview
     'The feedback was not helpfull at all (could be something like just "good" or "bad")',
     'The feedback was not very helpfull (could be something like "good job" or "I liked it")',
     "The feedback was not helpfull (maybe just one line of text or something like that)",
-    "The feedback was hardly helpfull (was maybe just one sentence or two)",
+    "The feedback was hardly helpfull (was maybe less than a paragraph long)",
     "The feedback pointed out some specific things that could be improved or that they liked (maybe a few sentences)",
     "The feedback was helpfull (it was clear that the reviewer had looked at the project and thought about it)",
     "The feedback was very helpfull (it was clear that the reviewer had looked at the project and thought about it and they gave some specific advice)",
     "The feedback was very helpfull (it was a thoughtful and a very thorough review with specific advice)",
-    "The feedback was very helpfull (it was a thoughtful and thorough review with specific advice and suggestions for improvement or praise for the good parts)",
-    "The feedback was very helpfull (it was a thoughtful and thorough review with specific advice and suggestions for improvement and praise for the good parts)",
+    "The feedback was very helpfull (it was a thoughtful and thorough review with specific advice and suggestions for improvement OR praise for the good parts)",
+    "The feedback was very helpfull (it was a thoughtful and thorough review with specific advice and suggestions for improvement AND praise for the good parts)",
   ];
   return (
     <>
