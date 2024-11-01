@@ -11,7 +11,7 @@ io.vefskoli.is is an LMS ( Learning Management System) for the [Reykjavik Academ
 
 ### Make an issue and fork
 
-To contribute to this project it is best to start by creating an issue here on GitHub (see “Issues” in the upper-left corner of the screen). Then fork this project to your own account by clicking the “Fork” in the upper-right corner of the screen. You will then get a screen with a green button in the lower-right corner saying “Create fork”. Now you have a copy of the project on your own GitHub account.
+To contribute to this project it is best to start by creating an issue here on GitHub (see “Issues” in the upper-left corner of the screen). Then fork this project to your own account by clicking the “Fork” in the upper-right corner of the screen. You will then get a screen with a green button in the lower-right corner saying “Create fork”. Now you have a copy of the project on your own GitHub account
 
 
 ### Clone the repository
