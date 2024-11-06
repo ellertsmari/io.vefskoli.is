@@ -16,7 +16,7 @@ To contribute to this project it is best to start by creating an issue here on G
 
 ### Clone the repository
 
-To clone the repository open a terminal in the folder where you store your projects (don’t make a new folder for the project because the clone command will make a folder called “io.vefskoli.is”). Write:
+To clone the repository open a terminal in the folder where you store your projects (don’t make a new folder for the project because the clone command will make a folder called “io.vefskoli.is”) Write:
 
 ```git clone https://github.com/YOUR_USERNAME/io.vefskoli.is```
 
