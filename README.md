@@ -23,7 +23,7 @@ To clone the repository open a terminal in the folder where you store your proje
 and press enter. This will start a short process that takes a few seconds and after that you should be able to see the folder when you write `ls` in your terminal. Now open the folder in VSCode ( if you used the VSCode terminal to do this I recommend still opening the new folder in VSCode because if you don’t do that you will need to write `cd io.tskoli.is` to open the folder in the terminal and whenever you open a new terminal you would again need to remember to type in `cd io.tskoli.is` )
 
 
-### Prepare the local instance.
+### Prepare the local instance
 
 To start with you will need to run the command `npm install` or just `yarn` without anything else to install all the libraries. After that you need to create a .env.local file in the root folder. You can do that by clicking on the new file icon that appears when you hover over the IO.VEFSKOLI.IS in the upper right corner of your VSCode or you can just write `touch .env.local` in the terminal. Then add two environment variables in there like so:
 
