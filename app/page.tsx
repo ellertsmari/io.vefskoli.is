@@ -10,7 +10,7 @@ export default function Home() {
   console.log(user);
   if (!user) return <div>loading...</div>;
   if(user._id) redirect("/guides"); 
-
+  //triggering rebuild
   return (
     <>
       <Head>
