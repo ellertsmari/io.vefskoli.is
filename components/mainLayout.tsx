@@ -36,3 +36,15 @@ export const SidebarContainer = styled.div`
   grid-row: 1 / span 2;
 `
 
+export const GroupsPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  border: 1px solid #6563eb;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`
+

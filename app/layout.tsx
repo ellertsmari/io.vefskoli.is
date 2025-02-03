@@ -35,7 +35,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
+        
         <StyledComponentsRegistry>
+        <div>
         <AnimatedBackground />
         <OverallLayout>
           <SidebarContainer>
@@ -47,6 +49,7 @@ export default async function RootLayout({
             {children}
           </MainAndNavContainer>
         </OverallLayout>
+        </div>
         </StyledComponentsRegistry>
       </body>
     </html>
