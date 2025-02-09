@@ -21,7 +21,6 @@ const MiniCalendar = ({}) => {
 
 
     const empty = new Array((new Date(2023, month, 1)).getDay()).fill(undefined)
-    console.log(empty)
     const cells = new Array(
         (new Date(2023, month + 1, 0)).getDate()
     ).fill(undefined)
